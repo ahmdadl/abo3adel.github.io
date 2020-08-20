@@ -1,7 +1,7 @@
 <template>
     <div>
         <Nuxt />
-        <notifications group="foo" :place="notPlace" />
+        <notifications group="foo" :position="notPlace" />
     </div>
 </template>
 <script lang="ts">
