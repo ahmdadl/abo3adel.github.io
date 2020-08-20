@@ -12,7 +12,15 @@
 import { Vue, Component } from 'vue-property-decorator'
 @Component
 export default class BlogIndex extends Vue {
-    
+    public posts = []
+
+    mounted() {
+        setTimeout((_) => {
+            // console.log(posts)
+
+            
+        }, 2500)
+    }
 }
 </script>
 <style lang="scss"></style>

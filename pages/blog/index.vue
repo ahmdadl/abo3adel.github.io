@@ -12,7 +12,12 @@ import { Vue, Component } from 'vue-property-decorator'
 })
 export default class PostList extends Vue {
     get title(): string {
-        return this.$i18n.t('blog.title') as string
+        return this.$i18n.t('post_list.title') as string
+    }
+    
+    mounted() {
+        this.$nf.error('asdasd')
+        this.$nf.info()
     }
 }
 </script>

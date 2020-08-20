@@ -33,12 +33,15 @@ export default {
     /*
      ** Global CSS
      */
-    css: ['@\\assets\\css\\app.scss'],
+    css: ['@/assets/css/app.scss'],
     /*
      ** Plugins to load before mounting the App
      ** https://nuxtjs.org/guide/plugins
      */
-    plugins: [],
+    plugins: [
+        '~/plugins/axios.js',
+        '~/plugins/notify.ts',
+    ],
     /*
      ** Auto import components
      ** See https://nuxtjs.org/api/configuration-components
@@ -62,12 +65,24 @@ export default {
      ** Axios module configuration
      ** See https://axios.nuxtjs.org/options
      */
-    axios: {},
+    axios: {
+        baseURL: 'http://nc.test/api/'
+    },
     /*
      ** Build configuration
      ** See https://nuxtjs.org/api/configuration-build/
      */
     build: {},
+
+    /**
+     * Vue config
+     */
+    vue: {
+        config: {
+            productionTip: false,
+            devtools: true,
+        }
+    },
 
     /**
      * I18n configuration
@@ -84,6 +99,7 @@ export default {
         defaultLocale: 'en',
         vueI18n: {
             fallbackLocale: 'en',
+            silentTranslationWarn: true
         },
     },
 
