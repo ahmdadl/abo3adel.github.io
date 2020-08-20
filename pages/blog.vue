@@ -4,23 +4,28 @@
             <div class="col-md-9">
                 <nuxt-child />
             </div>
-            <div class="col-md-3"></div>
+            <sidebar />
         </div>
     </div>
 </template>
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
-@Component
+import PostInterface from '~/interfaces/PostInterface'
+import CategoryInterface from '~/interfaces/category-interface'
+import Sidebar from '~/components/sidebar.vue'
+
+@Component({
+    components: { Sidebar },
+})
 export default class BlogIndex extends Vue {
-    public posts = []
-
-    mounted() {
-        setTimeout((_) => {
-            // console.log(posts)
-
-            
-        }, 2500)
+    public posts: PostInterface[] = []
+    public cats: CategoryInterface[] = []
+    public loading = {
+        posts: true,
+        cats: true,
     }
+
+    mounted() {}
 }
 </script>
 <style lang="scss"></style>
