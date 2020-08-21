@@ -1,0 +1,17 @@
+{
+  "root": true,
+  "parserOptions": {
+    "parser": "@typescript-eslint/parser",
+    "ecmaVersion": 2017,
+    "sourceType": "module"
+  },
+  "extends": [
+    "plugin:vue/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "standard"
+  ],
+  "rules": {
+    "vue/max-attributes-per-line": "off",
+    "quotes": [2, "single", {"avoidEscape": true}]
+  }
+}
