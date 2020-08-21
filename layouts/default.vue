@@ -1,13 +1,17 @@
 <template>
     <div>
-        <Nuxt />
+        <Nav />
+        <Nuxt class="mt-4" />
         <notifications group="foo" :position="notPlace" />
     </div>
 </template>
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
+import Nav from '~/components/nav.vue'
 
-@Component
+@Component({
+    components: { Nav },
+})
 export default class Default extends Vue {
     public notPlace: string = 'bottom right'
 
