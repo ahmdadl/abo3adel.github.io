@@ -47,6 +47,7 @@ Route::get('post/popular', 'PostController@loadPopular');
 Route::get('post/{post}', 'PostController@show');
 
 // comments
+Route::get('/post/{post}/comments', 'CommentController@index');
 Route::post('/post/{post}/comments', 'CommentController@store');
 
 // categories

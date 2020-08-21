@@ -31,12 +31,23 @@ class CommentControllerTest extends TestCase
         $this->assertCount(2, Post::find($post->id)->comments);
     }
 
-    public function testCannotCommentWithInvalidData() {
+    public function testCannotCommentWithInvalidData()
+    {
         $post = PostBuilder::wCom(1)->create();
 
         $this->postJson(
             '/api/post/' . $post->slug . '/comments',
             []
         )->assertStatus(422);
+    }
+
+    public function testAnyoneCanLoadAllComments()
+    {
+        $post = PostBuilder::wCom(5)->create();
+
+        $this->getJson('/api/post/' . $post->slug . '/comments')
+            ->assertOk()
+            ->assertJsonCount(5)
+            ->assertJson($post->comments->toArray());
     }
 }

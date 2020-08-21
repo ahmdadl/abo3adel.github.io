@@ -104,6 +104,7 @@
 <script lang="ts">
 import { Vue, Component, Prop, Ref } from 'vue-property-decorator'
 import Card from './card.vue'
+import CommentInterface from '~/interfaces/comments-interface'
 
 @Component({
     components: { Card },
@@ -113,7 +114,6 @@ export default class Comments extends Vue {
     @Prop({ type: String, required: true }) readonly postSlug!: string
 
     @Ref('form') readonly form!: HTMLFormElement
-    @Ref('name') readonly name!: HTMLInputElement
     @Ref('email') readonly email!: HTMLInputElement
 
     public sending: boolean = false
@@ -127,6 +127,8 @@ export default class Comments extends Vue {
         email: null,
         mess: null,
     }
+    // comment list
+    public comments: CommentInterface[] = []
 
     public sendComment() {
         // validate data
@@ -169,12 +171,16 @@ export default class Comments extends Vue {
             })
     }
 
-    public validateEmail(): boolean {
+    private validateEmail(): boolean {
         if (!this.email || !this.email.value.length) {
             return false
         }
 
         return this.email.checkValidity()
+    }
+
+    public async loadComments() {
+        // const res = 
     }
 
     mounted() {}

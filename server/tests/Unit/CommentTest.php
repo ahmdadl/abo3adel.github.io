@@ -18,4 +18,20 @@ class CommentTest extends TestCase
 
         $this->assertSame($post->id, $comment->post->id);
     }
+
+    public function testItHasUpdaedAttr()
+    {
+        $c = factory(Comment::class)->create();
+
+        $this->assertIsString($c->updated);
+        $this->assertSame(
+            $c->updated_at->format('d M Y'),
+            $c->updated
+        );
+
+        $this->assertArrayHasKey(
+            'updated',
+            $c->toArray()
+        );
+    }
 }
