@@ -66,7 +66,7 @@ export default {
      ** See https://axios.nuxtjs.org/options
      */
     axios: {
-        baseURL: 'http://nc.test/api/'
+        baseURL: 'https://nx.test/server/public/api/'
     },
     /*
      ** Build configuration

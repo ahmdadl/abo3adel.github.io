@@ -4203,6 +4203,11 @@ extend-shallow@^3.0.0, extend-shallow@^3.0.2:
     assign-symbols "^1.0.0"
     is-extendable "^1.0.1"
 
+extend@3.0.2:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/extend/-/extend-3.0.2.tgz#f8b1136b4071fbd8eb140aff858b1019ec2915fa"
+  integrity sha512-fjquC59cD7CyW6urNXK0FBufkZcoiGG80wTuPujX590cB5Ttln20E2UB4S/WARVqhXffZl2LNgS+gQdPIIim/g==
+
 external-editor@^3.0.3:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/external-editor/-/external-editor-3.1.0.tgz#cb03f740befae03ea4d283caed2741a83f335495"
@@ -7912,6 +7917,11 @@ schema-utils@^1.0.0:
     ajv-errors "^1.0.0"
     ajv-keywords "^3.1.0"
 
+scope-eval@1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/scope-eval/-/scope-eval-1.0.0.tgz#e182db1a1ef26f3e79d4bf48423b25e22839f0ff"
+  integrity sha1-4YLbGh7ybz551L9IQjsl4ig58P8=
+
 "semver@2 || 3 || 4 || 5", semver@^5.4.1, semver@^5.5.0, semver@^5.5.1, semver@^5.6.0:
   version "5.7.1"
   resolved "https://registry.yarnpkg.com/semver/-/semver-5.7.1.tgz#a954f931aeba508d307bbf069eff0c01c96116f7"
@@ -8962,6 +8972,14 @@ vue-eslint-parser@^7.0.0:
     espree "^6.2.1"
     esquery "^1.0.1"
     lodash "^4.17.15"
+
+vue-form@^4.10.3:
+  version "4.10.3"
+  resolved "https://registry.yarnpkg.com/vue-form/-/vue-form-4.10.3.tgz#0172aa86cb751cb74bb0dc268b157a8eb0af3c4f"
+  integrity sha512-qkdgmbBIz9ZgQUvU3Wx/kttqGoVtUjXCDl7X0KzWqU9gKHG9aRqVZZyC0Bb9BtP3CjAnjDYTxUVt9vRxO3RFxA==
+  dependencies:
+    extend "3.0.2"
+    scope-eval "1.0.0"
 
 vue-hot-reload-api@^2.3.0:
   version "2.3.4"

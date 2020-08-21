@@ -63,7 +63,7 @@
         <p v-html="post.body"></p>
 
         <!-- post comments -->
-        <comments :post-slug="post.slug" />
+        <comments :post-slug="post.slug" :post-id="post.id" />
     </div>
 </template>
 <script lang="ts">
