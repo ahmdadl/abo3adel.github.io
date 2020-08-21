@@ -172,7 +172,6 @@ export default class PostList extends Vue {
 
     mounted() {
         this.loadPosts()
-        this.$nf.success()
     }
 }
 </script>
