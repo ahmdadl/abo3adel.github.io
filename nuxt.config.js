@@ -39,8 +39,8 @@ export default {
      ** https://nuxtjs.org/guide/plugins
      */
     plugins: [
-        '~/plugins/axios.js',
         '~/plugins/notify.ts',
+        '~/plugins/axios.js',
     ],
     /*
      ** Auto import components
