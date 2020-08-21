@@ -39,7 +39,7 @@
                     <div
                         class="col-sm-10 offset-sm-2 invalid-feedback mt-md-n3"
                     >
-                        {{ $t('err.invalid_name') }}
+                        {{ this.errors.name || $t('err.invalid_name') }}
                     </div>
                 </div>
                 <div class="form-group row">
@@ -64,7 +64,7 @@
                     <div
                         class="col-sm-10 offset-sm-2 invalid-feedback mt-md-n3"
                     >
-                        {{ $t('err.invalid_email') }}
+                        {{ this.errors.email || $t('err.invalid_email') }}
                     </div>
                 </div>
                 <div class="form-group row">
@@ -80,16 +80,18 @@
                         minlength="10"
                         required
                     ></textarea>
-                    <div
-                        class="col-sm-10 offset-sm-2 invalid-feedback mt-md-n3"
-                    >
-                        {{ $t('err.invalid_message') }}
+                    <div class="col-sm-10 offset-sm-2 invalid-feedback">
+                        {{ this.errors.mess || $t('err.invalid_message') }}
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary btn-block">
+                <button
+                    type="submit"
+                    class="btn btn-primary btn-block"
+                    :disabled="sending"
+                >
                     <span
                         v-if="sending"
-                        class="spinner-border spinner-border-sm"
+                        class="spinner-border spinner-border-sm align-middle mx-2"
                         role="status"
                         aria-hidden="true"
                     ></span>
@@ -126,7 +128,7 @@ export default class Comments extends Vue {
         mess: null,
     }
 
-    public async sendComment() {
+    public sendComment() {
         // validate data
         if (
             !this.model.name.length ||
@@ -134,19 +136,37 @@ export default class Comments extends Vue {
             !this.model.mess.length ||
             !this.validateEmail()
         ) {
+            this.form.classList.add('was-validated')
             return
         }
 
         this.sending = true
-        const res = await this.$axios.$post('comments')
+        this.$axios
+            .$post(`post/${this.postSlug}/comments`, {
+                user_mail: this.model.email,
+                user_name: this.model.name,
+                body: this.model.mess,
+            })
+            .then((res) => {
+                if (!res || !res.user_name) {
+                    this.sending = false
+                    this.$nf.error()
+                    return
+                }
 
-        console.log(res.status)
-
-        if (!res || !res.data) {
-            this.sending = false
-            this.$nf.error()
-            return
-        }
+                this.sending = false
+                this.$nf.success()
+            })
+            .catch((err) => {
+                this.sending = false
+                if (err.response.status === 422) {
+                    // validation error
+                    const e = err.response.data.errors
+                    this.errors.name = e.user_name[0]
+                    this.errors.email = e.user_mail[0]
+                    this.errors.mess = e.body[0]
+                }
+            })
     }
 
     public validateEmail(): boolean {
