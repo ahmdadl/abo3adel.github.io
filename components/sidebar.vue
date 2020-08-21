@@ -1,5 +1,5 @@
 <template>
-    <div class="col-md-3">
+    <div class="col-md-4">
         <!-- search bar -->
         <card
             :title="$t('sidebar.search_title')"

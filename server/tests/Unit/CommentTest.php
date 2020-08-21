@@ -34,4 +34,20 @@ class CommentTest extends TestCase
             $c->toArray()
         );
     }
+
+    public function testItHasGravatarUrl()
+    {
+        $c = factory(Comment::class)->create();
+
+        $this->assertIsString($c->gravatar);
+        $this->assertSame(
+            'https://www.gravatar.com/avatar/'.md5(strtolower($c->user_mail)).'.jpg?s=200&d=mm',
+            $c->gravatar
+        );
+
+        $this->assertArrayHasKey(
+            'gravatar',
+            $c->toArray()
+        );
+    }
 }

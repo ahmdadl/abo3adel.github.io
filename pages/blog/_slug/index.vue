@@ -18,14 +18,14 @@
             </content-loader>
         </template>
         <div class="pb-1" v-if="!loading">
-            <div class="breadcrump-head position-absolute" style="top: 0;">
-                <ol class="breadcrumb rounded-0 bg-dark text-light">
+            <div class="breadcrump-head" style="top: 0;">
+                <ol class="breadcrumb rounded">
                     <li class="breadcrumb-item">
                         <nuxt-link to="/blog">
                             {{ $t('post_list.home') }}
                         </nuxt-link>
                     </li>
-                    <li class="breadcrumb-item active text-light text-break">
+                    <li class="breadcrumb-item active text-break">
                         {{ post.title }}
                     </li>
                 </ol>

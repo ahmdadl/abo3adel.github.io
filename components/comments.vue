@@ -98,11 +98,41 @@
                     {{ $t('comment.send') }}
                 </button>
             </form>
+            <div class="mt-5">
+                <div class="text-center w-100" v-if="commentLoading">
+                    <div
+                        class="spinner-border text-info"
+                        role="status"
+                        style="width: 3rem; height: 3rem;"
+                    >
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
+                <!-- comment list -->
+                <div
+                    class="media mt-2 border-top pt-2"
+                    v-for="c in comments"
+                    :key="c.id + '-' + c.user_mail"
+                >
+                    <img :src="c.gravatar" class="mr-3 img-thumbnail" :alt="c.user_name" width="100" height="100" />
+                    <div class="media-body">
+                        <h5 class="mt-0">
+                            {{ c.user_name }}
+                        </h5>
+                        <span class="badge badge-primary p-1">
+                            {{ c.updated }}
+                        </span>
+                        <p>
+                            {{ c.body }}
+                        </p>
+                    </div>
+                </div>
+            </div>
         </card>
     </div>
 </template>
 <script lang="ts">
-import { Vue, Component, Prop, Ref } from 'vue-property-decorator'
+import { Vue, Component, Prop, Ref, Watch } from 'vue-property-decorator'
 import Card from './card.vue'
 import CommentInterface from '~/interfaces/comments-interface'
 
@@ -128,6 +158,7 @@ export default class Comments extends Vue {
         mess: null,
     }
     // comment list
+    public commentLoading: boolean = true
     public comments: CommentInterface[] = []
 
     public sendComment() {
@@ -158,6 +189,8 @@ export default class Comments extends Vue {
 
                 this.sending = false
                 this.$nf.success()
+                this.comments.unshift(res)
+                this.form.reset()
             })
             .catch((err) => {
                 this.sending = false
@@ -180,10 +213,26 @@ export default class Comments extends Vue {
     }
 
     public async loadComments() {
-        // const res = 
+        const res = await this.$axios.$get(`post/${this.postSlug}/comments`)
+
+        if (!res) {
+            this.commentLoading = false
+            this.$nf.error()
+            return
+        }
+
+        this.comments = res
+        this.commentLoading = false
     }
 
-    mounted() {}
+    @Watch('postSlug')
+    onPostSlugChanged(val: string) {
+        this.loadComments()
+    }
+
+    mounted() {
+        
+    }
 }
 </script>
 <style lang="scss"></style>

@@ -9,11 +9,19 @@ class Comment extends Model
 {
     protected $guarded = [];
 
-    protected $appends = ['updated'];
+    protected $appends = [
+        'updated',
+        'gravatar',
+    ];
 
     public function getUpdatedAttribute(): ?string
     {
         return $this->updated_at->format('d M Y');
+    }
+
+    public function getGravatarAttribute(): ?string
+    {
+        return  'https://www.gravatar.com/avatar/' . md5(strtolower($this->user_mail)) . '.jpg?s=200&d=mm';
     }
 
     public function post(): BelongsTo

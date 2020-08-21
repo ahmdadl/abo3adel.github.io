@@ -16,7 +16,7 @@ class CommentController extends Controller
     public function index(Post $post)
     {
         return response()->json(
-            $post->comments
+            Comment::where('post_id', $post->id)->latest()->get()
         );
     }
 
