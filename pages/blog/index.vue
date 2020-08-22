@@ -91,9 +91,9 @@
                                 :alt="p.title"
                             />
                         </template>
-                        <router-link :to="'/blog/' + p.slug">
+                        <nuxt-link :to="localePath('/blog/' + p.slug)">
                             {{ p.title }}
-                        </router-link>
+                        </nuxt-link>
                         <p class="mt-1">
                             <span
                                 class="badge badge-info p-1 float-left"
@@ -104,8 +104,10 @@
                                 <i class="fas fa-clock"></i>
                                 {{ p.updated }}
                             </span>
-                            <router-link
-                                :to="'/blog/' + p.slug + '/#comments'"
+                            <nuxt-link
+                                :to="
+                                    localePath('/blog/' + p.slug + '/#comments')
+                                "
                                 class="float-right badge badge-info p-1 text-light"
                                 data-toggle="tooltip"
                                 data-placement="top"
@@ -113,7 +115,7 @@
                             >
                                 <i class="fas fa-comment-alt"></i>
                                 {{ p.comments_count }}
-                            </router-link>
+                            </nuxt-link>
                         </p>
                         <template v-slot:footer>
                             <div class="text-center">

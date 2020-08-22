@@ -90,7 +90,7 @@
                     />
                     <div class="media-body">
                         <h5 class="mt-0">
-                            <nuxt-link :to="'/blog/' + p.slug">
+                            <nuxt-link :to="localePath('/blog/' + p.slug)">
                                 {{ p.title }}
                             </nuxt-link>
                         </h5>
@@ -105,7 +105,9 @@
                                 {{ p.updated }}
                             </span>
                             <nuxt-link
-                                :to="'/blog/' + p.slug + '/#comments'"
+                                :to="
+                                    localePath('/blog/' + p.slug + '/#comments')
+                                "
                                 class="float-right badge badge-info p-1 text-light"
                                 data-toggle="tooltip"
                                 data-placement="top"
@@ -181,7 +183,7 @@
             <nuxt-link
                 v-for="c in cats"
                 :key="c.slug"
-                :to="'/blog/categories/' + c.slug"
+                :to="localePath('/blog/categories/' + c.slug)"
                 class="btn btn-primary m-1"
             >
                 {{ c.title }}

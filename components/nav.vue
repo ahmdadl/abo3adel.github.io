@@ -1,6 +1,6 @@
 <template>
     <nav class="navbar navbar-expand-sm navbar-dark bg-primary">
-        <nuxt-link to="/" class="navbar-brand">
+        <nuxt-link :to="localePath('/')" class="navbar-brand">
             NinjaCoder
         </nuxt-link>
         <button

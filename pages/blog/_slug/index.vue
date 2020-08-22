@@ -21,7 +21,7 @@
             <div class="breadcrump-head" style="top: 0;">
                 <ol class="breadcrumb rounded">
                     <li class="breadcrumb-item">
-                        <nuxt-link to="/blog">
+                        <nuxt-link :to="localePath('/blog')">
                             {{ $t('post_list.home') }}
                         </nuxt-link>
                     </li>
@@ -30,14 +30,14 @@
                     </li>
                 </ol>
             </div>
-            <img
-                src="~assets/1.jpg"
-                class="img img-responsive w-100"
-            />
+            <img src="~assets/1.jpg" class="img img-responsive w-100" />
         </div>
 
         <!-- post meta -->
-        <ul v-if="!loading" class="list-group list-group-horizontal flex-row py-3">
+        <ul
+            v-if="!loading"
+            class="list-group list-group-horizontal flex-row py-3"
+        >
             <li class="list-group-item border-0 bg-dark text-light">
                 <div class="py-2">
                     <div
