@@ -67,7 +67,7 @@
     </div>
 </template>
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
+import { Vue, Component, Watch } from 'vue-property-decorator'
 // @ts-ignore
 import { ContentLoader } from 'vue-content-loader'
 import Card from '~/components/card.vue'
@@ -126,8 +126,13 @@ export default class Page extends Vue {
         )
     }
 
+    @Watch('slug')
+    onSlugChanged(val: string) {
+        this.loadPost()
+    }
+
     mounted() {
-        setTimeout(() => this.loadPost(), 4500)
+        this.loadPost()
     }
 }
 </script>

@@ -23,7 +23,7 @@
             </div>
         </card>
 
-        <!-- change layout -->
+        <!-- popular posts -->
         <card
             :title="$t('sidebar.pop_title')"
             header-cls="bg-primary text-light text-capitalize"
@@ -32,7 +32,7 @@
                 <div
                     class="col-12"
                     v-for="lod in loadingArr"
-                    :key="lod * Math.random()"
+                    :key="lod + Math.random()"
                 >
                     <content-loader
                         :width="240"
@@ -79,7 +79,7 @@
                 <div
                     class="media col-12 my-2"
                     v-for="p in popPosts"
-                    :key="p.id"
+                    :key="p.id + Math.random()"
                 >
                     <img
                         src="~/assets/1.jpg"
@@ -104,7 +104,7 @@
                                 <i class="fas fa-clock"></i>
                                 {{ p.updated }}
                             </span>
-                            <router-link
+                            <nuxt-link
                                 :to="'/blog/' + p.slug + '/#comments'"
                                 class="float-right badge badge-info p-1 text-light"
                                 data-toggle="tooltip"
@@ -113,7 +113,7 @@
                             >
                                 <i class="fas fa-comment-alt"></i>
                                 {{ p.comments_count }}
-                            </router-link>
+                            </nuxt-link>
                         </p>
                     </div>
                 </div>
@@ -178,7 +178,7 @@
                     ></i>
                 </span>
             </div>
-            <router-link
+            <nuxt-link
                 v-for="c in cats"
                 :key="c.slug"
                 :to="'/blog/categories/' + c.slug"
@@ -188,7 +188,7 @@
                 <span class="badge badge-light">
                     {{ c.posts_count }}
                 </span>
-            </router-link>
+            </nuxt-link>
         </card>
     </div>
 </template>

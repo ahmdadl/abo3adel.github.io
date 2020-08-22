@@ -112,7 +112,7 @@
                 <div
                     class="media mt-2 border-top pt-2"
                     v-for="c in comments"
-                    :key="c.id + '-' + c.user_mail"
+                    :key="c.id + '-' + Math.random()"
                 >
                     <img :src="c.gravatar" class="mr-3 img-thumbnail" :alt="c.user_name" width="100" height="100" />
                     <div class="media-body">

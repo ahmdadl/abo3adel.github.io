@@ -33,13 +33,13 @@ export default class Default extends Vue {
             // @ts-ignore
             if (BSN) {
                 // @ts-ignore
-                BSN.initCallback(document.getElementById('app'))
+                BSN.initCallback(document.getElementById('__layout'))
             } else {
                 setTimeout((_) => {
                     // @ts-ignore
                     if (BSN) {
                         // @ts-ignore
-                        BSN.initCallback(document.getElementById('app'))
+                        BSN.initCallback(document.getElementById('__layout'))
                     }
                 }, 700)
             }
