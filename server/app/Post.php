@@ -18,7 +18,7 @@ class Post extends Model
         'updated'
     ];
 
-     /**
+    /**
      * Return the sluggable configuration array for this model.
      *
      * @return array
@@ -39,7 +39,9 @@ class Post extends Model
 
     public function getUpdatedAttribute(): ?string
     {
-        return $this->updated_at->format('d M Y');
+        return $this->updated_at
+            ->locale(app()->getLocale())
+            ->translatedFormat('d M Y');
     }
 
     public function comments(): HasMany

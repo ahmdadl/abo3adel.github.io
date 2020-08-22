@@ -75,4 +75,16 @@ class PostTest extends TestCase
             $p->tags->first()->id
         );
     }
+
+    public function testCarbonWillUseCurrentLocale()
+    {
+        $post = PostBuilder::create();
+
+        app()->setLocale('ar');
+
+        $this->assertSame(
+            $post->updated_at->locale('ar')->translatedFormat('d M Y'),
+            $post->updated
+        );
+    }
 }

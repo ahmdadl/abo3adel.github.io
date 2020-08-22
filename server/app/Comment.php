@@ -16,7 +16,9 @@ class Comment extends Model
 
     public function getUpdatedAttribute(): ?string
     {
-        return $this->updated_at->format('d M Y');
+        return $this->updated_at
+            ->locale(app()->getLocale())
+            ->translatedFormat('d M Y');
     }
 
     public function getGravatarAttribute(): ?string
