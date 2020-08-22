@@ -53,3 +53,4 @@ Route::post('/post/{post}/comments', 'CommentController@store');
 
 // categories
 Route::get('categories', 'CategoryController@index');
+Route::get('categories/{id}/posts', 'CategoryController@listPosts');

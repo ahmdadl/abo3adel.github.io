@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Category;
+use App\Post;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -27,5 +28,22 @@ class CategoryControllerTest extends TestCase
             $cats->last()->posts->count(),
             (int) $res['cats'][0]['posts_count']
         );
+    }
+
+    public function testAnyoneCanSeePostsRelatedToCategory()
+    {
+        $this->withoutExceptionHandling();
+        $c = factory(Category::class)->create();
+
+        $c->posts()->createMany(
+            factory(Post::class, 5)->raw()
+        );
+
+        $res = $this->getJson('api/categories/' . $c->id . '/posts')
+            ->assertOk()
+            ->assertJsonCount(5, 'posts.data')
+            ->json();
+
+        $this->assertIsNumeric($res['posts']['data'][0]['comments_count']);
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Post;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -18,6 +19,16 @@ class CategoryController extends Controller
             'cats' => Category::withCount('posts')
                 ->orderByDesc('posts_count')
                 ->get()
+        ]);
+    }
+
+    public function listPosts(int $id)
+    {
+        return response()->json([
+            'posts' => Post::whereCategoryId($id)
+                ->withCount('comments')
+                ->latest()
+                ->paginate()
         ]);
     }
 
