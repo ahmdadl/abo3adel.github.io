@@ -1,5 +1,5 @@
 <template>
-    <nav class="navbar navbar-expand navbar-dark bg-primary">
+    <nav class="navbar navbar-expand-sm navbar-dark bg-primary">
         <nuxt-link to="/" class="navbar-brand">
             NinjaCoder
         </nuxt-link>
@@ -55,8 +55,15 @@
                             v-for="locale in availableLocales"
                             :key="locale.code"
                             :to="switchLocalePath(locale.code)"
-                            >{{ locale.name }}</nuxt-link
+                            class="dropdown-item"
+                            :class="
+                                locale.code === 'ar'
+                                    ? 'text-right'
+                                    : 'text-left'
+                            "
                         >
+                            {{ locale.name }}
+                        </nuxt-link>
                     </div>
                 </li>
             </ul>

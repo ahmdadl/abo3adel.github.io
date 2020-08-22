@@ -27,6 +27,24 @@ export default class Default extends Vue {
         document.documentElement.dir = dir
         document.documentElement.lang = lang
     }
+
+    mounted() {
+        try {
+            // @ts-ignore
+            if (BSN) {
+                // @ts-ignore
+                BSN.initCallback(document.getElementById('app'))
+            } else {
+                setTimeout((_) => {
+                    // @ts-ignore
+                    if (BSN) {
+                        // @ts-ignore
+                        BSN.initCallback(document.getElementById('app'))
+                    }
+                }, 700)
+            }
+        } catch (e) {}
+    }
 }
 </script>
 <style>

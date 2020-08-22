@@ -38,10 +38,7 @@ export default {
      ** Plugins to load before mounting the App
      ** https://nuxtjs.org/guide/plugins
      */
-    plugins: [
-        '~/plugins/notify.ts',
-        '~/plugins/axios.js',
-    ],
+    plugins: ['~/plugins/notify.ts', '~/plugins/axios.js'],
     /*
      ** Auto import components
      ** See https://nuxtjs.org/api/configuration-components
@@ -66,7 +63,7 @@ export default {
      ** See https://axios.nuxtjs.org/options
      */
     axios: {
-        baseURL: 'https://nx.test/server/public/api/'
+        baseURL: 'https://nx.test/server/public/api/',
     },
     /*
      ** Build configuration
@@ -81,7 +78,7 @@ export default {
         config: {
             productionTip: false,
             devtools: true,
-        }
+        },
     },
 
     /**
@@ -91,15 +88,15 @@ export default {
     i18n: {
         vueI18nLoader: false,
         locales: [
-            { code: 'en', iso: 'en-US', file: 'en.js' },
-            { code: 'ar', iso: 'ar-EG', file: 'ar.js' },
+            { code: 'en', iso: 'en-US', file: 'en.js', name: 'English' },
+            { code: 'ar', iso: 'ar-EG', file: 'ar.js', name: 'العربية' },
         ],
         lazy: true,
         langDir: 'lang/',
         defaultLocale: 'en',
         vueI18n: {
             fallbackLocale: 'en',
-            silentTranslationWarn: true
+            silentTranslationWarn: true,
         },
     },
 
