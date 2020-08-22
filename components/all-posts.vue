@@ -190,7 +190,7 @@ import CategoryInterface from '~/interfaces/category-interface'
         return {
             title:
                 (this as AllPostsList).title +
-                    `(${(this as AllPostsList).page.current})` || '',
+                    ` (${(this as AllPostsList).page.current})` || '',
         }
     },
     components: { ContentLoader, Card },
@@ -204,7 +204,7 @@ export default class AllPostsList extends Vue {
     public loadingArr: number[] = Array(15).fill(Math.random())
     public page = {
         first: 1,
-        current: this.$route.query.page,
+        current: this.$route.query.page || 1,
         last: 1,
         path: this.path,
     }
@@ -215,7 +215,8 @@ export default class AllPostsList extends Vue {
         path: string = this.page.path
     ): void {
         this.loading = true
-        this.$axios.get(`${path}?page=${page}`).then((res) => {
+        const addon = path.indexOf('?') > -1 ? '&' : '?'
+        this.$axios.get(`${path}${addon}page=${page}`).then((res) => {
             if (!res || !res.data || !res.data.posts) {
                 this.loading = false
                 this.$nf.error()
@@ -227,21 +228,22 @@ export default class AllPostsList extends Vue {
 
             // set pagination object
             const d = res.data.posts
+            const q = this.$route.query.q ? 'q=' + this.$route.query.q : ''
             this.page = {
                 first: d.from,
                 current: d.current_page,
                 last: d.last_page,
-                path: d.path,
+                path: d.path + '?' + q,
             }
             this.pages = Array(this.page.last)
                 .fill(1)
                 .map((x, inx) => x + inx)
 
-            history.pushState(
-                {},
-                '',
-                this.$route.path + '?page=' + this.page.current
-            )
+            let path = this.$route.path + '?page=' + this.page.current
+            if (this.$route.query.q) {
+                path += addon + q
+            }
+            history.pushState({}, '', path)
             window.scrollTo(0, 0)
         })
     }
@@ -255,6 +257,7 @@ export default class AllPostsList extends Vue {
             // @ts-ignore
             current: 1,
         }
+        this.loadPosts()
     }
 
     mounted() {

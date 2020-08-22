@@ -1,5 +1,5 @@
 <template>
-    <all-posts :title="this.title" path="post" />
+    <all-posts :title="title" path="post" />
 </template>
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'

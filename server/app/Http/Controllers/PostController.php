@@ -52,11 +52,14 @@ class PostController extends Controller
             'q' => 'required|string|max:255'
         ]);
 
-        return response()->json(
-            Post::where('title', 'LIKE', "%$q%")
-                ->orWhere('q', 'LIKE', "%$q%")
+        return response()->json([
+            'posts' => Post::where('title', 'LIKE', "%$q%")
+                ->orWhere('slug', 'LIKE', "%$q%")
+                ->withCount('comments')
+                ->with('tags')
+                ->latest()
                 ->paginate()
-        );
+        ]);
     }
 
     /**

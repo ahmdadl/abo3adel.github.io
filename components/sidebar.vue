@@ -13,12 +13,23 @@
                         id="search-inp"
                         class="form-control"
                         :placeholder="$t('sidebar.search_placeholder')"
+                        v-model.trim="searchKey"
                     />
                 </div>
                 <div class="form-group">
-                    <button class="btn btn-primary">
+                    <nuxt-link
+                        class="btn btn-primary"
+                        :to="
+                            localePath({
+                                path: '/blog/find',
+                                query: {
+                                    q: this.searchKey,
+                                },
+                            })
+                        "
+                    >
                         {{ $t('sidebar.search_btn') }}
-                    </button>
+                    </nuxt-link>
                 </div>
             </div>
         </card>
@@ -214,6 +225,7 @@ export default class Sidebar extends Vue {
         keys: 'programming,php,vueJs,web_development,laravel',
     }
     public loadCats: boolean = true
+    public searchKey: string = ''
 
     public loadPopPosts(): void {
         this.$axios
