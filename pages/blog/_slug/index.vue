@@ -86,7 +86,7 @@ const PostDefault: PostInterface = {
 }
 
 @Component({
-    // auth: false,
+    scrollToTop: true,
     head() {
         return {
             title: (this as Page).title || '',

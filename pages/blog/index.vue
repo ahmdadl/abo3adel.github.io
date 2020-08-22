@@ -183,6 +183,7 @@ import PostInterface from '~/interfaces/PostInterface'
 import CategoryInterface from '~/interfaces/category-interface'
 
 @Component({
+    scrollToTop: true,
     head() {
         return {
             title: (this as PostList).title || '',
