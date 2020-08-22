@@ -22,10 +22,10 @@ class CategoryController extends Controller
         ]);
     }
 
-    public function listPosts(int $id)
+    public function listPosts(Category $category)
     {
         return response()->json([
-            'posts' => Post::whereCategoryId($id)
+            'posts' => Post::whereCategoryId($category->id)
                 ->withCount('comments')
                 ->latest()
                 ->paginate()

@@ -12,6 +12,10 @@ class Category extends Model
 
     protected $guarded = [];
 
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
 
     /**
      * Return the sluggable configuration array for this model.

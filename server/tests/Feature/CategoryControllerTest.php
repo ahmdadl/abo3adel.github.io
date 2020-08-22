@@ -39,7 +39,7 @@ class CategoryControllerTest extends TestCase
             factory(Post::class, 5)->raw()
         );
 
-        $res = $this->getJson('api/categories/' . $c->id . '/posts')
+        $res = $this->getJson('api/categories/' . $c->slug . '/posts')
             ->assertOk()
             ->assertJsonCount(5, 'posts.data')
             ->json();
