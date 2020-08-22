@@ -1,9 +1,11 @@
 import { Notify } from './notify.ts'
 
 export default function (context, inject) {
-    // context.app.$axios.onRequest((config) => {
-    //     console.log('Making request to ' + config.url)
-    // })
+    context.app.$axios.onRequest((config) => {
+        config.headers = {
+            'X-Laravel-Locale': context.app.i18n.locale,
+        }
+    })
 
     context.app.$axios.onError((error) => {
         new Notify(context.app.i18n).error()
