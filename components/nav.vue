@@ -27,13 +27,13 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <nuxt-link class="nav-link" to="/">
+                    <nuxt-link class="nav-link" :to="localePath('/')">
                         {{ $t('nav.portfolio') }}
                         <span class="sr-only">(current)</span>
                     </nuxt-link>
                 </li>
                 <li class="nav-item">
-                    <nuxt-link class="nav-link" to="/blog">
+                    <nuxt-link class="nav-link" :to="localePath('/blog')">
                         {{ $t('nav.blog') }}
                     </nuxt-link>
                 </li>
