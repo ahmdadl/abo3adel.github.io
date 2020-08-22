@@ -130,6 +130,48 @@
                 </div>
             </div>
         </template>
+        <div>
+            <nav aria-label="Page navigation example" class="my-3">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item">
+                        <button
+                            class="page-link"
+                            aria-label="Previous"
+                            @click.prevent="loadPosts(page.first)"
+                            :class="{
+                                'text-muted': page.current === page.first,
+                            }"
+                            :disabled="page.current === page.first"
+                        >
+                            <span aria-hidden="true">&laquo;</span>
+                            <span class="sr-only">Previous</span>
+                        </button>
+                    </li>
+                    <li class="page-item" v-for="pa in pages" :key="pa">
+                        <button
+                            class="page-link"
+                            @click.prevent="loadPosts(pa)"
+                        >
+                            {{ pa }}
+                        </button>
+                    </li>
+                    <li class="page-item">
+                        <button
+                            class="page-link"
+                            aria-label="Next"
+                            :class="{
+                                'text-muted': page.current === page.last,
+                            }"
+                            @click.prevent="loadPosts(page.last)"
+                            :disabled="page.current === page.last"
+                        >
+                            <span aria-hidden="true">&raquo;</span>
+                            <span class="sr-only">Next</span>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+        </div>
     </div>
 </template>
 <script lang="ts">
@@ -152,9 +194,20 @@ export default class PostList extends Vue {
     public loading: boolean = true
     public posts: PostInterface[] = []
     public loadingArr: number[] = Array(15).fill(Math.random())
+    public page = {
+        first: 1,
+        current: this.$route.query.page,
+        last: 1,
+        path: 'post',
+    }
+    public pages: number[] = []
 
-    public loadPosts(): void {
-        this.$axios.get('post').then((res) => {
+    public loadPosts(
+        page: number | string = this.page.current as string,
+        path: string = this.page.path
+    ): void {
+        this.loading = true
+        this.$axios.get(`${path}?page=${page}`).then((res) => {
             if (!res || !res.data || !res.data.posts) {
                 this.loading = false
                 this.$nf.error()
@@ -162,12 +215,36 @@ export default class PostList extends Vue {
             }
 
             this.posts = res.data.posts.data
-            setTimeout(() => (this.loading = false), 900)
+            this.loading = false
+
+            // set pagination object
+            const d = res.data.posts
+            this.page = {
+                first: d.from,
+                current: d.current_page,
+                last: d.last_page,
+                path: d.path,
+            }
+            this.pages = Array(this.page.last)
+                .fill(1)
+                .map((x, inx) => x + inx)
+
+            history.pushState(
+                {},
+                '',
+                this.$route.path + '?page=' + this.page.current
+            )
+            window.scrollTo(0, 0)
         })
     }
 
     get title(): string {
-        return this.$i18n.t('post_list.title') as string
+        return (
+            (this.$i18n.t('post_list.title') as string) +
+            ' (' +
+            this.page.current +
+            ')'
+        )
     }
 
     mounted() {
