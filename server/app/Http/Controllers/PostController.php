@@ -39,6 +39,26 @@ class PostController extends Controller
         ]);
     }
 
+
+    /**
+     * search for post by slug or title
+     *
+     * @param string $slug
+     * @return Response
+     */
+    public function search()
+    {
+        ['q' => $q] = request()->validate([
+            'q' => 'required|string|max:255'
+        ]);
+
+        return response()->json(
+            Post::where('title', 'LIKE', "%$q%")
+                ->orWhere('q', 'LIKE', "%$q%")
+                ->paginate()
+        );
+    }
+
     /**
      * Store a newly created resource in storage.
      *

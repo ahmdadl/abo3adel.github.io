@@ -150,4 +150,16 @@ class PostControllerTest extends TestCase
             (int) $res['posts'][0]['comments_count']
         );
     }
+
+    public function testAnyoneCanSearchForPosts()
+    {
+        $this->withoutExceptionHandling();
+        $post = PostBuilder::amount(5)->create([
+            'title' => 'asd' . $this->faker->sentence,
+        ]);
+
+        $this->getJson('/api/post/find?q=' . 'asd')
+            ->assertOk()
+            ->assertJsonCount(5, 'data');
+    }
 }

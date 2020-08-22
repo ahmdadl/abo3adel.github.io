@@ -43,6 +43,7 @@ Route::group(['middleware' => 'guest:api'], function () {
 // post
 Route::get('post', 'PostController@index');
 Route::get('post/popular', 'PostController@loadPopular');
+Route::get('post/find', 'PostController@search');
 
 Route::get('post/{post}', 'PostController@show');
 
