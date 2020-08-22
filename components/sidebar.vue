@@ -90,9 +90,9 @@
                     />
                     <div class="media-body">
                         <h5 class="mt-0">
-                            <router-link :to="'/blog/' + p.slug">
+                            <nuxt-link :to="'/blog/' + p.slug">
                                 {{ p.title }}
-                            </router-link>
+                            </nuxt-link>
                         </h5>
                         <p class="mt-1">
                             <span

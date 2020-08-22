@@ -15,7 +15,7 @@ import Nav from '~/components/nav.vue'
 export default class Default extends Vue {
     public notPlace: string = 'bottom right'
 
-    beforeCreated() {
+    created() {
         let dir: string = 'ltr'
         let lang: string = 'en-US'
 
