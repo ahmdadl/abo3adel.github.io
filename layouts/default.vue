@@ -1,7 +1,7 @@
 <template>
     <div>
         <Nav />
-        <Nuxt class="mt-4" />
+        <Nuxt :class="{'mt-4': $route.path !== '/'}" />
         <notifications group="foo" :position="notPlace" />
     </div>
 </template>

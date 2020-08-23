@@ -1,5 +1,5 @@
 <template>
-    <nav class="navbar navbar-expand-sm navbar-dark bg-primary">
+    <nav id="navbar-top" class="navbar navbar-expand-sm navbar-dark bg-primary">
         <nuxt-link :to="localePath('/')" class="navbar-brand">
             NinjaCoder
         </nuxt-link>
