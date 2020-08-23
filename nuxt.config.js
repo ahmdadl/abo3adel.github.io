@@ -20,7 +20,8 @@ export default {
             { charset: 'utf-8' },
             {
                 name: 'viewport',
-                content: 'width=device-width, initial-scale=1, shrink-to-fit=no',
+                content:
+                    'width=device-width, initial-scale=1, shrink-to-fit=no',
             },
             {
                 hid: 'description',
@@ -29,7 +30,13 @@ export default {
             },
         ],
         link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
-        link: [{rel: 'stylesheet', type: 'text/css', href: '/css/fontawesome.min.css'}]
+        link: [
+            {
+                rel: 'stylesheet',
+                type: 'text/css',
+                href: '/css/fontawesome.min.css',
+            },
+        ],
     },
     /*
      ** Global CSS
@@ -56,7 +63,7 @@ export default {
         // Doc: https://axios.nuxtjs.org/usage
         '@nuxtjs/axios',
         'nuxt-i18n',
-        '@nuxtjs/auth',
+        '@nuxtjs/auth-next',
     ],
 
     /*
@@ -65,6 +72,13 @@ export default {
      */
     axios: {
         baseURL: 'https://nx.test/server/public/api/',
+        // proxy: true,
+    },
+    proxy: {
+        '/laravel': {
+            target: 'https://nx.test/server/public/api/',
+            pathRewrite: { '^/laravel': '/' },
+        },
     },
     /*
      ** Build configuration
@@ -106,11 +120,16 @@ export default {
      */
     auth: {
         strategies: {
-            'laravel.passport': {
-                url: '...',
-                client_id: '...',
-                client_secret: '...',
+          'laravelJWT': {
+            provider: 'laravel/jwt',
+            url: 'https://nx.test/server/public',
+            token: {
+              maxAge: 60 * 60 // same as ttl but in seconds
             },
-        },
-    },
+            refreshToken: {
+              maxAge: 20160 * 60 // same as refresh_ttl but in seconds
+            }
+          }
+        }
+      }
 }

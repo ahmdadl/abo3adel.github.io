@@ -19,6 +19,8 @@
                 <div class="form-group">
                     <nuxt-link
                         class="btn btn-primary"
+                        tag="button"
+                        :disabled="!searchKey.length"
                         :to="
                             localePath({
                                 path: '/blog/find',

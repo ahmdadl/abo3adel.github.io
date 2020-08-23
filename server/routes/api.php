@@ -13,11 +13,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['middleware' => 'auth:api'], function () {
+Route::group([
+
+    'middleware' => ['api', 'auth:api'],
+    'prefix' => 'auth'
+
+], function () {
+
+    Route::post('login', 'Auth\LoginController@login')->withoutMiddleware(['auth:api']);
     Route::post('logout', 'Auth\LoginController@logout');
+    Route::post('refresh', 'Auth\LoginController@refresh')->withoutMiddleware(['auth:api']);
+    Route::get('me', 'Auth\UserController@current');
+});
 
-    Route::get('/user', 'Auth\UserController@current');
-
+Route::group(['middleware' => 'auth:api'], function () {
     Route::patch('settings/profile', 'Settings\ProfileController@update');
     Route::patch('settings/password', 'Settings\PasswordController@update');
 
@@ -27,7 +36,6 @@ Route::group(['middleware' => 'auth:api'], function () {
 });
 
 Route::group(['middleware' => 'guest:api'], function () {
-    Route::post('login', 'Auth\LoginController@login');
     Route::post('register', 'Auth\RegisterController@register');
 
     Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');

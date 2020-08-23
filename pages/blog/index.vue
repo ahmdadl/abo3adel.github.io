@@ -12,6 +12,11 @@ export default class PostList extends Vue {
     get title(): string {
         return this.$i18n.t('post_list.title') as string
     }
+
+    mounted() {
+        // @ts-ignore
+        console.log(this.$auth.user)
+    }
 }
 </script>
 <style lang="scss"></style>
