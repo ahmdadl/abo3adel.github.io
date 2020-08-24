@@ -13,7 +13,8 @@
         sans-serif, Arial;
 }
 
-body, .navbar a {
+body,
+.navbar a {
     color: #fff;
 }
 
@@ -77,4 +78,14 @@ input[type='password']:focus {
 
 .wyg:hover i {
     animation: fa-spin 2s infinite linear;
+}
+
+// page transition
+.page-enter-active,
+.page-leave-active {
+    transition: opacity 0.5s;
+}
+.page-enter,
+.page-leave-to {
+    opacity: 0;
 }

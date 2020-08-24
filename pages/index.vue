@@ -47,7 +47,7 @@
                 id="about"
                 class="about bg-dark text-light text-center pt-3 col-12"
             >
-                <span v-html="h2($t('home.about'))"></span>
+                <span v-html="h2($t('home.title.about'))"></span>
                 <div class="row">
                     <div
                         class="pros col-6 col-md-4 p-0"
@@ -78,7 +78,7 @@
                 id="skills"
                 class="skills bg-transparent text-light text-center pt-2 col-12"
             >
-                <span v-html="h2($t('home.skills'))"></span>
+                <span v-html="h2($t('home.title.skills'))"></span>
                 <div class="row text-center">
                     <div class="col-12 col-md-6 mt-3 mb-5">
                         <img
@@ -112,6 +112,36 @@
                         ></progress-skill>
                     </div>
                 </div>
+            </section>
+
+            <!-- projects -->
+            <section
+                id="projects"
+                class="skills bg-dark text-light text-center mt-5 col-12"
+            >
+                <span v-html="h2($t('home.title.project'))"></span>
+                <ul class="nav nav-pills">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">
+                            {{ $t('home.pills.all') }}
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            {{ $t('home.pills.laravel') }}
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            {{ $t('home.pills.spa') }}
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            {{ $t('home.pills.android') }}
+                        </a>
+                    </li>
+                </ul>
             </section>
         </div>
     </div>
@@ -184,15 +214,7 @@ export default class Home extends Vue {
     ]
 
     public h2(str: any): string {
-        return `<h2>${str}<hr class='mx-auto bg-dark pt-1 rounded w-25 px-5' /></h2>`
-    }
-
-    created() {
-        // document.querySelectorAll('section').forEach(x => {
-        //     x.style.width = window.innerWidth + 'px'
-        //     x.style.height = window.innerHeight + 'px'
-        //     console.log(x, window.innerHeight)
-        // })
+        return `<h2>${str}<hr class='mx-auto bg-secondary pt-1 rounded w-25 px-5' /></h2>`
     }
 
     mounted() {
