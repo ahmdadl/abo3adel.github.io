@@ -138,7 +138,7 @@
                 </ul>
                 <div class="row mt-3">
                     <div
-                        class="col-12 col-sm-6 col-md-3 col-xl-4 mb-3"
+                        class="col-12 col-sm-6 col-md-4 col-xl-4 mb-3"
                         v-for="inp in projectsLoad"
                         :key="inp * Math.random()"
                     >
@@ -294,9 +294,9 @@
                     v-html="h2($t('home.title.contact'))"
                 ></span>
                 <div class="row mt-3">
-                    <div class="col-sm-12 col-md-3">
+                    <div class="col-sm-12 col-md-4">
                         <div
-                            class="card card-body bg-transparent border-secondary m-2"
+                            class="card card-body bg-transparent border-secondary m-1"
                         >
                             <p class="pb-2 border-bottom border-light mx-auto">
                                 <i class="fas fa-certificate"></i>
@@ -319,12 +319,12 @@
                             </strong>
                         </div>
                     </div>
-                    <div class="col-sm-6 col-md-3">
+                    <div class="col-sm-6 col-md-4">
                         <div
-                            class="card card-body bg-transparent border-secondary m-2"
+                            class="card card-body bg-transparent border-secondary m-1"
                         >
                             <p class="pb-2 border-bottom border-light mx-auto">
-                                <i class="fas fa-person"></i>
+                                <i class="fas fa-user-tie"></i>
                                 {{ $t('home.contact.personal') }}
                             </p>
                             <ul class="list-group list-group-flush">
@@ -361,12 +361,76 @@
                                         ninjacoder.rf.gd/
                                     </a>
                                 </li>
-                                <li
-                                    class="list-group-item bg-transparent border-bottom border-secondary"
-                                >
+                                <li class="list-group-item bg-transparent">
                                     <i class="fas fa-map-marker-alt"></i>
                                     Abu Hammad,<br />
                                     Sharkia, Egypt
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-4">
+                        <div
+                            class="card card-body bg-transparent border-secondary m-1"
+                        >
+                            <p class="pb-2 border-bottom border-light mx-auto">
+                                <i class="fas fa-address-card"></i>
+                                {{ $t('home.contact.social') }}
+                            </p>
+                            <ul class="list-group list-group-flush">
+                                <li
+                                    class="list-group-item bg-transparent border-bottom border-secondary"
+                                >
+                                    <a
+                                        href="https://github.com/abo3adel"
+                                        class="text-light"
+                                        target="_blank"
+                                    >
+                                        <i class="fab fa-github-alt text-warning"></i>
+                                        GitHub
+                                    </a>
+                                </li>
+                                <li
+                                    class="list-group-item bg-transparent border-bottom border-secondary"
+                                >
+                                    <a
+                                        href="https://wa.me/201143647417"
+                                        class="text-light"
+                                        target="_blank"
+                                    >
+                                        <i
+                                            class="fab fa-whatsapp text-success"
+                                        ></i>
+                                        WhatsApp
+                                    </a>
+                                </li>
+                                <li
+                                    class="list-group-item bg-transparent border-bottom border-secondary"
+                                >
+                                    <a
+                                        href="https://www.linkedin.com/in/ahmed-adel-30a932119/"
+                                        class="text-light"
+                                        target="_blank"
+                                    >
+                                        <i
+                                            class="fab fa-linkedin text-info"
+                                        ></i>
+                                        LinkedIn
+                                    </a>
+                                </li>
+                                <li
+                                    class="list-group-item bg-transparent border-bottom border-secondary"
+                                >
+                                    <a
+                                        href="https://fb.com/a7md200"
+                                        class="text-light"
+                                        target="_blank"
+                                    >
+                                        <i
+                                            class="fab fa-facebook-square text-info"
+                                        ></i>
+                                        FaceBook
+                                    </a>
                                 </li>
                             </ul>
                         </div>
