@@ -208,6 +208,7 @@ export default class AnimatedDots extends Vue {
     }
 
     mounted() {
+        return
         this.el = <HTMLCanvasElement>this.$el
 
         this.ctx = <CanvasRenderingContext2D>this.el.getContext('2d')
