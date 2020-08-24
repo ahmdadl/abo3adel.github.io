@@ -66,6 +66,24 @@ export default {
         '@nuxtjs/auth-next',
     ],
 
+    /**
+     * loading until page is loaded
+     */
+    loadingIndicator: {
+        name: 'cube-grid',
+        color: '#3B8070',
+        background: '#040221',
+    },
+
+    /**
+     * customize loading bar
+     */
+    loading: {
+        color: '#00ff7e',
+        height: '5px',
+        continuous: true
+    },
+
     /*
      ** Axios module configuration
      ** See https://axios.nuxtjs.org/options
@@ -120,16 +138,16 @@ export default {
      */
     auth: {
         strategies: {
-          'laravelJWT': {
-            provider: 'laravel/jwt',
-            url: 'https://nx.test/server/public',
-            token: {
-              maxAge: 60 * 60 // same as ttl but in seconds
+            laravelJWT: {
+                provider: 'laravel/jwt',
+                url: 'https://nx.test/server/public',
+                token: {
+                    maxAge: 60 * 60, // same as ttl but in seconds
+                },
+                refreshToken: {
+                    maxAge: 20160 * 60, // same as refresh_ttl but in seconds
+                },
             },
-            refreshToken: {
-              maxAge: 20160 * 60 // same as refresh_ttl but in seconds
-            }
-          }
-        }
-      }
+        },
+    },
 }
