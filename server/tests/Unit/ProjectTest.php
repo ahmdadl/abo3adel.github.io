@@ -28,4 +28,12 @@ class ProjectTest extends TestCase
             $p->tags->first()->id
         );
     }
+
+    public function testItWillLoadTags()
+    {
+        $this->testItHasTags();
+        $p = Project::first();
+
+        $this->assertArrayHasKey('tags', $p->toArray());
+    }
 }

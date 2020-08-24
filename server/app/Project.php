@@ -14,6 +14,8 @@ class Project extends Model
         'img' => 'array',
     ];
 
+    protected $with = ['tags'];
+
     public function tags(): MorphToMany
     {
         return $this->morphToMany(Tag::class, 'taggable');
