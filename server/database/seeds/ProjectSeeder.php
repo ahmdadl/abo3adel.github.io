@@ -12,6 +12,10 @@ class ProjectSeeder extends Seeder
      */
     public function run()
     {
+        DB::beginTransaction();
         factory(Project::class, 8)->create();
+        DB::commit();
+
+        // tags will be attached at TagSeeder class
     }
 }

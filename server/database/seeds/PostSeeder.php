@@ -21,5 +21,7 @@ class PostSeeder extends Seeder
         ));
 
         DB::commit();
+
+        // tags will be attached at TagSeeder class
     }
 }
