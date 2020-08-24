@@ -132,7 +132,7 @@
                 </div>
             </div>
         </template>
-        <div>
+        <div v-if="!limit">
             <nav aria-label="Page navigation example" class="my-3">
                 <ul class="pagination justify-content-center">
                     <li class="page-item">
@@ -198,6 +198,7 @@ import CategoryInterface from '~/interfaces/category-interface'
 export default class AllPostsList extends Vue {
     @Prop({ type: String, required: true }) readonly title!: string
     @Prop({ type: String, required: true }) readonly path!: string
+    @Prop({ type: Number, required: false }) readonly limit!: number
 
     public loading: boolean = true
     public posts: PostInterface[] = []
@@ -223,7 +224,12 @@ export default class AllPostsList extends Vue {
                 return
             }
 
-            this.posts = res.data.posts.data
+            let data = res.data.posts.data
+            if (this.limit) {
+                data = data.splice(data.length - this.limit)
+            }
+
+            this.posts = data
             this.loading = false
 
             // set pagination object

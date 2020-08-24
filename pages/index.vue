@@ -277,7 +277,14 @@
                 </div>
             </section>
 
-            
+            <!-- blog posts -->
+            <section
+                id="blog"
+                class="skills text-center col-12 pt-4"
+            >
+                <span v-html="h2($t('home.title.blog'))"></span>
+                <all-posts :title="$t('home.title.index')" path="post" :limit="6"></all-posts>
+            </section>
         </div>
 
         <!-- Project Modal -->
@@ -380,6 +387,7 @@ import ProjectInterface from '~/interfaces/project-interface'
 import Card from '~/components/card.vue'
 // @ts-ignore
 import { ContentLoader } from 'vue-content-loader'
+import AllPosts from '~/components/all-posts'
 
 const defaultProject: ProjectInterface = {
     id: 0,
@@ -400,6 +408,7 @@ const defaultProject: ProjectInterface = {
         ProgressSkill,
         Card,
         ContentLoader,
+        AllPosts,
     },
 })
 export default class Home extends Vue {

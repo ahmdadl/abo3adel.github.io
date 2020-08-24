@@ -1,5 +1,5 @@
 <template>
-    <div class="card" :class="cls">
+    <div class="card bg-dark" :class="cls">
         <div v-if="title" :class="['card-header', headerCls]">
             {{ title }}
         </div>
