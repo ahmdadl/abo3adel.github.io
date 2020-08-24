@@ -60,7 +60,7 @@
                             <div
                                 class="wyg pointer btn btn-outline-primary btn-lg fa-3x rounded w-50 mx-auto"
                             >
-                                <i :class="'fas fa-' + p.icon"></i>
+                                <i :class="'fas fa-2x fa-' + p.icon"></i>
                             </div>
                             <h3 class="d-block mt-3">
                                 {{ p.title }}
@@ -121,24 +121,18 @@
             >
                 <span v-html="h2($t('home.title.project'))"></span>
                 <ul class="nav nav-pills">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#">
-                            {{ $t('home.pills.all') }}
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            {{ $t('home.pills.laravel') }}
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            {{ $t('home.pills.spa') }}
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            {{ $t('home.pills.mobile') }}
+                    <li
+                        class="nav-item"
+                        v-for="type in projectsTypes"
+                        :key="type.txt"
+                    >
+                        <a
+                            class="nav-link"
+                            href="#"
+                            :class="{ active: activeType === type.val }"
+                            @click.stop.prevent="filterProjects(type.val)"
+                        >
+                            {{ type.txt }}
                         </a>
                     </li>
                 </ul>
@@ -324,7 +318,7 @@ const defaultProject: ProjectInterface = {
     id: 0,
     title: '',
     client: '',
-    img: ['asd', 'www', 'weasd'],
+    img: [],
     link: '',
     info: '',
     updated_at: '',
@@ -400,6 +394,28 @@ export default class Home extends Vue {
         amount: this.mp.img.length,
         interval: {},
     }
+    public activeType: string = 'all'
+    public projectsTypes: {
+        txt: any
+        val: string
+    }[] = [
+        {
+            txt: this.$i18n.t('home.pills.all'),
+            val: 'all',
+        },
+        {
+            txt: this.$i18n.t('home.pills.laravel'),
+            val: 'laravel',
+        },
+        {
+            txt: this.$i18n.t('home.pills.spa'),
+            val: 'spa',
+        },
+        {
+            txt: this.$i18n.t('home.pills.mobile'),
+            val: 'mobile',
+        },
+    ]
 
     public h2(str: any): string {
         return `<h2>${str}<hr class='mx-auto bg-secondary pt-1 rounded w-25 px-5' /></h2>`
@@ -418,6 +434,9 @@ export default class Home extends Vue {
         console.log(res.data)
     }
 
+    /**
+     * open project modal
+     */
     public openModal(id: number = 0) {
         const project = this.projects.filter((x) => x.id === id)
         Object.assign(this.mp, project[0])
@@ -433,6 +452,9 @@ export default class Home extends Vue {
         }, 5000)
     }
 
+    /**
+     * carousel move slide
+     */
     public move(inx: number) {
         this.slides.forEach((x, index) => {
             x.classList.remove('active')
@@ -443,6 +465,9 @@ export default class Home extends Vue {
         })
     }
 
+    /**
+     * show next carousel slide
+     */
     public next() {
         if (this.carousel.current >= this.carousel.amount) {
             this.carousel.current = 0
@@ -451,11 +476,33 @@ export default class Home extends Vue {
         this.move(this.carousel.current++)
     }
 
+    /**
+     * show previous carousel slide
+     */
     public prev() {
         if (this.carousel.current <= 1) {
             this.carousel.current = this.carousel.amount + 1
         }
         this.move(this.carousel.current--)
+    }
+
+    /**
+     * filter projects based on selected tap
+     *
+     * 0 => all
+     * 1 => laravel
+     * 2 => spa
+     * 3 => mobile
+     */
+    public filterProjects(type: string = '') {
+        this.activeType = type
+        if (type === 'all') {
+            this.projects = [...this.allProjects]
+            return
+        }
+
+        const filterd = this.allProjects.filter((x) => x.type === type)
+        this.projects = [...filterd]
     }
 
     public removeClass(id: string, cls: string = 'd-none') {
@@ -465,7 +512,6 @@ export default class Home extends Vue {
 
     mounted() {
         this.loadProjects()
-
         ;(document.getElementById(
             'modalProject'
         ) as HTMLDivElement).addEventListener('hidden.bs.modal', () => {
@@ -476,10 +522,10 @@ export default class Home extends Vue {
 
     destroyed() {
         // @ts-ignore
-        clearInterval(this.carousel.interval);
-        (
-            document.getElementById('modalProject') as HTMLDivElement
-        ).removeEventListener('hidden.bs.modal', () => {})
+        clearInterval(this.carousel.interval)
+        ;(document.getElementById(
+            'modalProject'
+        ) as HTMLDivElement).removeEventListener('hidden.bs.modal', () => {})
     }
 }
 </script>
