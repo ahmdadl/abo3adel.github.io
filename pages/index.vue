@@ -45,7 +45,7 @@
             <!-- about section -->
             <section
                 id="about"
-                class="about bg-dark text-light text-center pt-3 col-12"
+                class="about bg-dark text-light text-center pt-4 col-12"
             >
                 <span v-html="h2($t('home.title.about'))"></span>
                 <div class="row">
@@ -76,7 +76,7 @@
             <!-- skills -->
             <section
                 id="skills"
-                class="skills bg-transparent text-light text-center pt-2 col-12"
+                class="skills bg-transparent text-light text-center pt-4 col-12"
             >
                 <span v-html="h2($t('home.title.skills'))"></span>
                 <div class="row text-center">
@@ -117,7 +117,7 @@
             <!-- projects -->
             <section
                 id="projects"
-                class="skills bg-dark text-light text-center mt-5 col-12"
+                class="skills bg-dark text-light text-center pt-4 col-12"
             >
                 <span v-html="h2($t('home.title.project'))"></span>
                 <ul class="nav nav-pills">
@@ -138,25 +138,206 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">
-                            {{ $t('home.pills.android') }}
+                            {{ $t('home.pills.mobile') }}
                         </a>
                     </li>
                 </ul>
+                <div class="row mt-3">
+                    <div
+                        class="col-12 col-sm-6 col-md-3 col-xl-4 mb-3 project-card"
+                        v-for="project in projects"
+                        :key="project.id + project.title"
+                    >
+                        <card :overlay="true" cls="text-left">
+                            <template slot="img">
+                                <span
+                                    class="projectType badge badge-danger text-uppercase position-absolute"
+                                    style="top: 0; left: 0;"
+                                >
+                                    {{ project.type }}
+                                </span>
+                                <img
+                                    :src="'/img/' + project.img[0]"
+                                    class="card-img"
+                                />
+                            </template>
+                            <h5 class="card-title">
+                                <a
+                                    :href="project.link"
+                                    target="_blank"
+                                    class="text-light"
+                                >
+                                    {{ project.title }}
+                                </a>
+                            </h5>
+                            <p class="card-text">
+                                <strong class="text-capitalize"
+                                    >{{ $t('home.project.client') }}:</strong
+                                >
+                                <span class="text-capitalize">
+                                    {{ project.client }}
+                                </span>
+                            </p>
+                            <p class="card-text text-center">
+                                <a
+                                    :href="project.link"
+                                    class="btn btn-primary btn-sm mb-2"
+                                    target="_blank"
+                                >
+                                    <i class="fas fa-link"></i>
+                                    {{ $t('home.project.visit') }}
+                                </a>
+                                <button
+                                    class="btn btn-info btn-sm mb-2"
+                                    @click.prevent="openModal(project.id)"
+                                >
+                                    <span
+                                        :id="'spinnerView' + project.id"
+                                        class="spinner-border spinner-border-sm d-none"
+                                        role="status"
+                                        aria-hidden="true"
+                                    ></span>
+                                    <i class="fas fa-info"></i>
+                                    {{ $t('home.project.more_info') }}
+                                </button>
+                            </p>
+
+                            <template slot="footer">
+                                <div class="text-center">
+                                    <span
+                                        class="badge badge-primary p-1 mx-1"
+                                        v-for="t in project.tags"
+                                        :key="
+                                            t.id + project.title + Math.random()
+                                        "
+                                    >
+                                        {{ t.title }}
+                                    </span>
+                                </div>
+                            </template>
+                        </card>
+                    </div>
+                </div>
             </section>
+        </div>
+
+        <!-- Project Modal -->
+        <div
+            class="modal fade"
+            id="modalProject"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="modalProjectLabel"
+            aria-hidden="true"
+        >
+            <div class="modal-dialog modal-xl" role="document">
+                <div class="modal-content bg-dark">
+                    <div class="modal-header bg-primary">
+                        <h5 class="modal-title" id="modalProjectLabel">
+                            {{ mp.title }}
+                        </h5>
+                        <button
+                            type="button"
+                            class="close"
+                            data-dismiss="modal"
+                            aria-label="Close"
+                        >
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- product image carsoul -->
+                        <div
+                            id="project-carousel"
+                            class="carousel slide"
+                            data-ride="carousel"
+                        >
+                            <div class="carousel-inner">
+                                <div
+                                    ref="slide"
+                                    class="carousel-item"
+                                    v-for="(i, index) in mp.img"
+                                    :key="i + Math.random()"
+                                    :class="{ active: index === 0 }"
+                                    data-interval="5000"
+                                >
+                                    <img
+                                        :src="'/img/' + i"
+                                        class="d-block w-100"
+                                        :alt="mp.title"
+                                    />
+                                </div>
+                            </div>
+                            <a
+                                class="carousel-control-prev"
+                                href="#project-carousel"
+                                role="button"
+                                data-slide="prev"
+                                @click.prevent="prev"
+                            >
+                                <span
+                                    class="carousel-control-prev-icon"
+                                    aria-hidden="true"
+                                ></span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            <a
+                                class="carousel-control-next"
+                                href="#project-carousel"
+                                role="button"
+                                data-slide="next"
+                                @click.prevent="next"
+                            >
+                                <span
+                                    class="carousel-control-next-icon"
+                                    aria-hidden="true"
+                                ></span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </div>
+                        {{ mp.info }}
+                    </div>
+                    <div class="modal-footer">
+                        <button
+                            type="button"
+                            class="btn btn-danger"
+                            data-dismiss="modal"
+                        >
+                            {{ $t('home.modal.close') }}
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
+import { Vue, Component, Model, Ref } from 'vue-property-decorator'
 import AnimatedDots from '~/components/animatedDots.vue'
 import AnimateText from '~/components/animate-text.vue'
 import ProgressSkill from '~/components/progress.vue'
+import ProjectInterface from '~/interfaces/project-interface'
+import Card from '~/components/card.vue'
+
+const defaultProject: ProjectInterface = {
+    id: 0,
+    title: '',
+    client: '',
+    img: ['asd', 'www', 'weasd'],
+    link: '',
+    info: '',
+    updated_at: '',
+    type: '',
+    tags: [],
+}
 
 @Component({
-    components: { AnimatedDots, AnimateText, ProgressSkill },
+    components: { AnimatedDots, AnimateText, ProgressSkill, Card },
 })
 export default class Home extends Vue {
+    @Ref('slide') readonly slides!: HTMLDivElement[]
+
     public readonly myProps: Array<{
         title: any
         icon: string
@@ -193,7 +374,6 @@ export default class Home extends Vue {
             txt: this.$i18n.t('home.Multi_LanguageTxt'),
         },
     ]
-
     public readonly skills: Array<{
         title: string
         value: number
@@ -212,23 +392,112 @@ export default class Home extends Vue {
         { title: 'vue', value: 85 },
         { title: 'angular', value: 70 },
     ]
+    public projects: ProjectInterface[] = []
+    public allProjects: ProjectInterface[] = []
+    public mp: ProjectInterface = defaultProject
+    public carousel = {
+        current: 1,
+        amount: this.mp.img.length,
+        interval: {},
+    }
 
     public h2(str: any): string {
         return `<h2>${str}<hr class='mx-auto bg-secondary pt-1 rounded w-25 px-5' /></h2>`
     }
 
+    public async loadProjects() {
+        const res = await this.$axios.get('projects')
+
+        if (!res || !res.data) {
+            this.$nf.error()
+            return
+        }
+
+        this.allProjects = res.data
+        this.projects = [...res.data]
+        console.log(res.data)
+    }
+
+    public openModal(id: number = 0) {
+        const project = this.projects.filter((x) => x.id === id)
+        Object.assign(this.mp, project[0])
+
+        this.carousel.amount = project[0].img.length
+
+        // @ts-ignore
+        new Modal(document.querySelector(`#modalProject`)).show()
+
+        this.carousel.current = 1
+        this.carousel.interval = setInterval(() => {
+            this.next()
+        }, 5000)
+    }
+
+    public move(inx: number) {
+        this.slides.forEach((x, index) => {
+            x.classList.remove('active')
+
+            if (index === inx) {
+                x.classList.add('active')
+            }
+        })
+    }
+
+    public next() {
+        if (this.carousel.current >= this.carousel.amount) {
+            this.carousel.current = 0
+        }
+
+        this.move(this.carousel.current++)
+    }
+
+    public prev() {
+        if (this.carousel.current <= 1) {
+            this.carousel.current = this.carousel.amount + 1
+        }
+        this.move(this.carousel.current--)
+    }
+
+    public removeClass(id: string, cls: string = 'd-none') {
+        const el = document.querySelector(`#${id}`) as HTMLDivElement
+        el?.classList.remove(cls)
+    }
+
     mounted() {
-        // console.log(this.$route.path)
+        this.loadProjects()
+
+        ;(document.getElementById(
+            'modalProject'
+        ) as HTMLDivElement).addEventListener('hidden.bs.modal', () => {
+            // @ts-ignore
+            clearInterval(this.carousel.interval)
+        })
+    }
+
+    destroyed() {
+        // @ts-ignore
+        clearInterval(this.carousel.interval);
+        (
+            document.getElementById('modalProject') as HTMLDivElement
+        ).removeEventListener('hidden.bs.modal', () => {})
     }
 }
 </script>
 
 <style lang="scss" scoped>
-section {
-    // width: 100vw;
-    // height: 100vh;
-    #about {
-        word-break: break-all;
+// width: 100vw;
+// height: 100vh;
+#about {
+    word-break: break-all;
+}
+</style>
+<style lang="scss">
+.project-card {
+    .card-img-overlay {
+        background: rgba($color: #000000, $alpha: 0.6);
+    }
+    .projectType {
+        border-end-end-radius: 0;
     }
 }
 </style>
