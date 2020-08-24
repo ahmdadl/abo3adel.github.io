@@ -132,7 +132,7 @@
                 </div>
             </div>
         </template>
-        <div v-if="!limit && page.last > page.first">
+        <div v-if="!limit && page.last > 1">
             <nav aria-label="Page navigation example" class="my-3">
                 <ul class="pagination justify-content-center">
                     <li class="page-item">
