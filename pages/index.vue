@@ -419,7 +419,7 @@
                                     </a>
                                 </li>
                                 <li
-                                    class="list-group-item bg-transparent border-bottom border-secondary"
+                                    class="list-group-item bg-transparent"
                                 >
                                     <a
                                         href="https://fb.com/a7md200"
@@ -788,5 +788,8 @@ export default class Home extends Vue {
     .projectType {
         border-end-end-radius: 0;
     }
+}
+.card > .list-group {
+    border: none;
 }
 </style>

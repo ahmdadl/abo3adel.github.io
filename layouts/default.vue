@@ -2,15 +2,17 @@
     <div>
         <Nav />
         <Nuxt :class="{'mt-4': $route.path !== '/'}" />
+        <Footer />
         <notifications group="foo" :position="notPlace" />
     </div>
 </template>
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
 import Nav from '~/components/nav.vue'
+import Footer from '~/components/footer.vue'
 
 @Component({
-    components: { Nav },
+    components: { Nav, Footer },
 })
 export default class Default extends Vue {
     public notPlace: string = 'bottom right'

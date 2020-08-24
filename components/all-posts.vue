@@ -232,6 +232,8 @@ export default class AllPostsList extends Vue {
             this.posts = data
             this.loading = false
 
+            if (this.limit) return
+
             // set pagination object
             const d = res.data.posts
             const q = this.$route.query.q ? 'q=' + this.$route.query.q : ''
