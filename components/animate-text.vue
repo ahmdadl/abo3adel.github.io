@@ -11,6 +11,7 @@ export default class AnimateText extends Vue {
     public j = 0
     public str = this.arr[3]
     public speed = 90
+    public interval = {}
 
     public typeWriter() {
         if (this.arr[this.i] && this.j >= this.arr[this.i].length) return
@@ -20,7 +21,7 @@ export default class AnimateText extends Vue {
     }
 
     mounted() {
-        setInterval((_) => {
+        this.interval = setInterval((_) => {
             if (this.i > 2) this.i = 0
             let speed = 90
             if (this.j >= this.arr[this.i].length) this.j = 0
@@ -29,6 +30,11 @@ export default class AnimateText extends Vue {
             this.typeWriter()
             this.i++
         }, 4000)
+    }
+
+    destroyed() {
+        // @ts-ignore
+        clearInterval(this.interval)
     }
 }
 </script>

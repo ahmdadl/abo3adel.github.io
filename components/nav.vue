@@ -1,5 +1,9 @@
 <template>
-    <nav id="navbar-top" class="navbar navbar-expand-sm navbar-dark bg-primary trans">
+    <nav
+        id="navbar-top"
+        class="navbar sticky-top navbar-expand-sm navbar-dark trans"
+        :class="cls"
+    >
         <nuxt-link :to="localePath('/')" class="navbar-brand">
             NinjaCoder
         </nuxt-link>
@@ -88,9 +92,31 @@ import { Vue, Component } from 'vue-property-decorator'
 
 @Component
 export default class Nav extends Vue {
+    public cls: string = 'bg-primary'
+
     get availableLocales() {
         // @ts-ignore
         return this.$i18n.locales.filter((i) => i.code !== this.$i18n.locale)
+    }
+
+    public isScrolled() {
+        if (this.$route.path !== '/') {
+            window.removeEventListener('scroll', this.isScrolled)
+        }
+
+        const header = document.querySelector(`#canvasHeader`) as HTMLDivElement
+        if (window.scrollY >= header.offsetHeight) {
+            this.cls = 'bg-primary'
+            return
+        }
+        this.cls = 'bg-transparent'
+    }
+
+    mounted() {
+        if (this.$route.path === '/') {
+            this.cls = 'bg-transparent'
+            window.addEventListener('scroll', this.isScrolled)
+        }
     }
 }
 </script>
