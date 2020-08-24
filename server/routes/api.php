@@ -62,3 +62,6 @@ Route::post('/post/{post}/comments', 'CommentController@store');
 // categories
 Route::get('categories', 'CategoryController@index');
 Route::get('categories/{category}/posts', 'CategoryController@listPosts');
+
+// projects
+Route::get('projects', 'ProjectController@index');
