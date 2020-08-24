@@ -54,7 +54,9 @@
                         v-for="p in myProps"
                         :key="p.title"
                     >
-                        <div class="card card-body bg-transparent text-center border-0 mb-2">
+                        <div
+                            class="card card-body bg-transparent text-center border-0 mb-2"
+                        >
                             <div
                                 class="wyg pointer btn btn-outline-primary btn-lg fa-3x rounded w-50 mx-auto"
                             >
@@ -70,48 +72,48 @@
                     </div>
                 </div>
             </section>
-        </div>
 
-        <!-- skills -->
-        <section
-            id="skills"
-            class="skills bg-transparent text-light text-center pt-2 col-12"
-        >
-            <span v-html="h2($t('home.skills'))"></span>
-            <div class="row text-center">
-                <div class="col-12 col-md-6 mt-3 mb-5">
-                    <img
-                        src="~assets/img/meLarge.jpg"
-                        class="img w-75 p-1 border border-secondary rounded"
-                    />
-                    <p class="text-secondary mt-2 text-capitalize">
-                        {{ $t('home.skill_info') }}
-                        <!-- <a
+            <!-- skills -->
+            <section
+                id="skills"
+                class="skills bg-transparent text-light text-center pt-2 col-12"
+            >
+                <span v-html="h2($t('home.skills'))"></span>
+                <div class="row text-center">
+                    <div class="col-12 col-md-6 mt-3 mb-5">
+                        <img
+                            src="~assets/img/meLarge.jpg"
+                            class="img w-75 p-1 border border-secondary rounded"
+                        />
+                        <p class="text-secondary mt-2 text-capitalize">
+                            {{ $t('home.skill_info') }}
+                            <!-- <a
                             href="#projects"
                             v-scroll-to="'#projects'"
                             class="btn btn-outline-primary btn-sm"
                         >
                             {{ $t('home.my_projects') }}
                         </a> -->
-                    </p>
-                    <!-- <a
+                        </p>
+                        <!-- <a
                         href="#contact"
                         v-scroll-to="{ el: '#contact', duration: 2500 }"
                         class="btn btn-primary"
                     >
                         {{ $t('home.hire') }}
                     </a> -->
+                    </div>
+                    <div class="col-12 col-md-6 mt-3">
+                        <progress-skill
+                            v-for="sk in skills"
+                            :key="sk.title"
+                            :txt="sk.title"
+                            :val="sk.value"
+                        ></progress-skill>
+                    </div>
                 </div>
-                <div class="col-12 col-md-6 mt-3">
-                    <progress-skill
-                        v-for="sk in skills"
-                        :key="sk.title"
-                        :txt="sk.title"
-                        :val="sk.value"
-                    ></progress-skill>
-                </div>
-            </div>
-        </section>
+            </section>
+        </div>
     </div>
 </template>
 
