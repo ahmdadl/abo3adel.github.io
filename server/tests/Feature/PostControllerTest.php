@@ -160,6 +160,6 @@ class PostControllerTest extends TestCase
 
         $this->getJson('/api/post/find?q=' . 'asd')
             ->assertOk()
-            ->assertJsonCount(5, 'data');
+            ->assertJsonCount(5, 'posts.data');
     }
 }

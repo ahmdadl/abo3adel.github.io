@@ -1,6 +1,7 @@
 <?php
 
 use App\Post;
+use App\Project;
 use App\Tag;
 use Illuminate\Database\Seeder;
 
@@ -21,6 +22,15 @@ class TagSeeder extends Seeder
         Post::all()->each(function (Post $post) use ($tags) {
             foreach (range(0, random_int(1, 2)) as $i) {
                 $post->tags()->attach(
+                    Arr::random($tags)
+                );
+            }
+        });
+
+        // add Tags to projects
+        Project::all()->each(function (Project $project) use ($tags) {
+            foreach (range(0, random_int(1, 2)) as $i) {
+                $project->tags()->attach(
                     Arr::random($tags)
                 );
             }
