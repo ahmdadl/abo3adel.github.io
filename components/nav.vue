@@ -54,7 +54,7 @@
                         <i class="fas fa-language"></i>
                         {{ $t('nav.lang') }}
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <div class="dropdown-menu bg-dark text-light" aria-labelledby="navbarDropdown">
                         <nuxt-link
                             v-for="locale in availableLocales"
                             :key="locale.code"
@@ -88,10 +88,12 @@
     </nav>
 </template>
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
+import { Vue, Component, Watch, Prop } from 'vue-property-decorator'
 
 @Component
 export default class Nav extends Vue {
+    @Prop({ type: String, required: true }) readonly path!: string
+
     public cls: string = 'bg-primary'
 
     get availableLocales() {
@@ -100,10 +102,6 @@ export default class Nav extends Vue {
     }
 
     public isScrolled() {
-        if (this.$route.path !== '/') {
-            window.removeEventListener('scroll', this.isScrolled)
-        }
-
         const header = document.querySelector(`#canvasHeader`) as HTMLDivElement
         if (window.scrollY >= header.offsetHeight - 30) {
             this.cls = 'bg-primary'
@@ -112,10 +110,22 @@ export default class Nav extends Vue {
         this.cls = 'bg-transparent'
     }
 
-    mounted() {
-        if (this.$route.path === '/') {
+    @Watch('path')
+    onPathChanged(val: string) {
+        if (this.path === '/' || this.path === '/ar') {
             this.cls = 'bg-transparent'
             window.addEventListener('scroll', this.isScrolled)
+            return
+        }
+
+        window.removeEventListener('scroll', this.isScrolled)
+    }
+
+    mounted() {
+        if (this.path === '/' || this.path === '/ar') {
+            this.cls = 'bg-transparent'
+            window.addEventListener('scroll', this.isScrolled)
+            return
         }
     }
 }

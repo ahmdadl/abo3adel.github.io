@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Nav />
+        <Nav :path="$route.path" />
         <Nuxt :class="{'mt-4': $route.path !== '/'}" />
         <Footer />
         <notifications group="foo" :position="notPlace" />
