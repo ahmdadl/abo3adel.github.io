@@ -1,6 +1,6 @@
 <template>
     <footer
-        class="text-light p-5 border-top border-secondary"
+        class="footer text-light p-5 border-top border-secondary"
         :class="$route.path === '/' ? 'bg-transparent' : 'bg-dark'"
     >
         <div class="container">
@@ -70,4 +70,11 @@ import { Vue, Component } from 'vue-property-decorator'
 @Component
 export default class Footer extends Vue {}
 </script>
-<style lang="scss"></style>
+<style lang="scss">
+footer {
+    div {
+        z-index: 9;
+    }
+    background: rgba($color: #000000, $alpha: 0.1);
+}
+</style>

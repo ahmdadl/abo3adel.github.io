@@ -30,15 +30,16 @@ export default class AnimatedDots extends Vue {
     @Prop({ type: Boolean, default: true }) fullHeight!: boolean
     @Prop({ type: Number }) readonly ch!: number
 
+    public interval = {}
     public el!: HTMLCanvasElement
     public ctx!: CanvasRenderingContext2D
     public width = window.innerWidth
     public height = window.innerHeight
     public config = {
         particleNumber: 50,
-        maxParticleSize: 5,
+        maxParticleSize: 11,
         maxSpeed: 5,
-        colorVariation: 150,
+        colorVariation: 255,
     }
     public colorPalette = {
         bg: { r: 12, g: 9, b: 29 },
@@ -167,9 +168,10 @@ export default class AnimatedDots extends Vue {
     }
 
     public cleanUpArray(): void {
-        this.particles = this.particles.filter((p) => {
-            return p.x > -100 && p.y > -100
-        })
+        // this.particles = this.particles.filter((p) => {
+        //     return p.x > -50 && p.y > -50
+        // })
+        this.particles.splice(0)
     }
 
     public initParticles(
@@ -208,7 +210,6 @@ export default class AnimatedDots extends Vue {
     }
 
     mounted() {
-        return
         this.el = <HTMLCanvasElement>this.$el
 
         this.ctx = <CanvasRenderingContext2D>this.el.getContext('2d')
@@ -221,18 +222,23 @@ export default class AnimatedDots extends Vue {
         this.frame()
         // First particle explosion
         this.initParticles(this.config.particleNumber)
-        setInterval((x: any) => {
+        this.interval = setInterval((x: any) => {
             this.cleanUpArray()
             this.initParticles(this.config.particleNumber)
-        }, 3000)
+        }, 8000)
 
         // set header height to the same as canvas
         const nav = document.querySelector('#navbar-top') as HTMLDivElement
-        this.el.style.marginTop = `-${nav.offsetHeight}px`
-        nav.classList.add('bg-transparent')
+        // this.el.style.marginTop = `-${nav.offsetHeight}px`
+        // nav.classList.add('bg-transparent')
 
         const header = document.querySelector(`#canvasHeader`) as HTMLDivElement
         header.style.height = `${window.innerHeight}px`
+    }
+
+    destroyed() {
+        // @ts-ignore
+        clearInterval(this.interval)
     }
 }
 </script>

@@ -1,7 +1,7 @@
 <template>
     <nav
         id="navbar-top"
-        class="navbar sticky-top navbar-expand-sm navbar-dark trans"
+        class="navbar fixed-top navbar-expand-sm navbar-dark trans"
         :class="cls"
     >
         <nuxt-link :to="localePath('/')" class="navbar-brand">
@@ -105,7 +105,7 @@ export default class Nav extends Vue {
         }
 
         const header = document.querySelector(`#canvasHeader`) as HTMLDivElement
-        if (window.scrollY >= header.offsetHeight) {
+        if (window.scrollY >= header.offsetHeight - 30) {
             this.cls = 'bg-primary'
             return
         }

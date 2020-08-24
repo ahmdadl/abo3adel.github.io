@@ -27,14 +27,14 @@ $breakpoints: (
 // @import "./iclude_media.scss";
 
 #canvas {
-    position: absolute;
+    position: fixed;
     z-index: -1;
     top: 0;
     left: 0;
     // min-height: 100%;
 }
 #navbar-top {
-    z-index: 9;
+    z-index: 9999;
 }
 .masthead {
     position: relative;

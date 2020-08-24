@@ -45,7 +45,7 @@
             <!-- about section -->
             <section
                 id="about"
-                class="about bg-dark text-light text-center pt-4 col-12"
+                class="about bg-dark text-light text-center py-4 col-12"
             >
                 <span v-html="h2($t('home.title.about'))"></span>
                 <div class="row">
@@ -76,7 +76,7 @@
             <!-- skills -->
             <section
                 id="skills"
-                class="skills bg-transparent text-light text-center pt-4 col-12"
+                class="skills bg-transparent text-light text-center py-4 col-12"
             >
                 <span v-html="h2($t('home.title.skills'))"></span>
                 <div class="row text-center">
@@ -117,7 +117,7 @@
             <!-- projects -->
             <section
                 id="projects"
-                class="skills bg-dark text-light text-center pt-4 col-12"
+                class="skills bg-dark text-light text-center py-4 col-12"
             >
                 <span v-html="h2($t('home.title.project'))"></span>
                 <ul class="nav nav-pills">
@@ -278,7 +278,7 @@
             </section>
 
             <!-- blog posts -->
-            <section id="blog" class="skills text-center col-12 pt-4">
+            <section id="blog" class="skills text-center col-12 py-4">
                 <span v-html="h2($t('home.title.blog'))"></span>
                 <all-posts
                     :title="$t('home.title.index')"
@@ -288,7 +288,7 @@
             </section>
 
             <!-- contact -->
-            <section id="contact" class="skills col-12 pt-4 bg-dark">
+            <section id="contact" class="skills col-12 py-4 bg-dark">
                 <span
                     class="text-center"
                     v-html="h2($t('home.title.contact'))"
@@ -779,15 +779,21 @@ export default class Home extends Vue {
 #about {
     word-break: break-all;
 }
+.bg-dark {
+    background: rgba($color: #343a40, $alpha: .6) !important;
+}
 </style>
 <style lang="scss">
+.container-fluid section{
+    z-index: 9;
+}
 .project-card {
     .card-img-overlay {
         background: rgba($color: #000000, $alpha: 0.6);
     }
-    .projectType {
-        border-end-end-radius: 0;
-    }
+    // .projectType {
+    //     border-end-end-radius: 0;
+    // }
 }
 .card > .list-group {
     border: none;
