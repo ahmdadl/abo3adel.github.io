@@ -54,7 +54,10 @@
                         <i class="fas fa-language"></i>
                         {{ $t('nav.lang') }}
                     </a>
-                    <div class="dropdown-menu bg-dark text-light" aria-labelledby="navbarDropdown">
+                    <div
+                        class="dropdown-menu bg-dark text-light"
+                        aria-labelledby="navbarDropdown"
+                    >
                         <nuxt-link
                             v-for="locale in availableLocales"
                             :key="locale.code"
@@ -119,6 +122,13 @@ export default class Nav extends Vue {
         }
 
         window.removeEventListener('scroll', this.isScrolled)
+
+        // handle lang changes
+        if (this.path.indexOf('/ar') > -1) {
+            if (document.documentElement.lang !== 'ar') location.reload()
+        } else {
+            if (document.documentElement.lang !== 'en') location.reload()
+        }
     }
 
     mounted() {
