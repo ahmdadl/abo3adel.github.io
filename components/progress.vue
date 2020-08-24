@@ -68,6 +68,10 @@ export default class ProgressSkill extends Vue {
     mounted() {
         window.addEventListener('scroll', this.isScrolled)
     }
+
+    destroyed() {
+        window.removeEventListener('scroll', this.isScrolled)
+    }
 }
 </script>
 <style lang="scss" scoped>
