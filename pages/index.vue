@@ -138,6 +138,69 @@
                 </ul>
                 <div class="row mt-3">
                     <div
+                        class="col-12 col-sm-6 col-md-3 col-xl-4 mb-3"
+                        v-for="inp in projectsLoad"
+                        :key="inp * Math.random()"
+                    >
+                        <content-loader
+                            class="card card-body bg-transparent border-light p-0 m-0"
+                            :width="240"
+                            :height="130"
+                            primaryColor="#dbdbdb"
+                            secondaryColor="#6b6b6b"
+                        >
+                            <rect
+                                x="9"
+                                y="25"
+                                rx="4"
+                                ry="4"
+                                width="225"
+                                height="15"
+                            />
+                            <rect
+                                x="9"
+                                y="65"
+                                rx="4"
+                                ry="4"
+                                width="90"
+                                height="18"
+                            />
+                            <rect
+                                x="115"
+                                y="65"
+                                rx="4"
+                                ry="4"
+                                width="120"
+                                height="18"
+                            />
+                            <rect
+                                x="15"
+                                y="105"
+                                rx="4"
+                                ry="4"
+                                width="63"
+                                height="19"
+                            />
+                            <rect
+                                x="90"
+                                y="105"
+                                rx="4"
+                                ry="4"
+                                width="63"
+                                height="19"
+                            />
+                            <rect
+                                x="165"
+                                y="105"
+                                rx="4"
+                                ry="4"
+                                width="63"
+                                height="19"
+                            />
+                        </content-loader>
+                    </div>
+                    <!-- TODO animate projects array -->
+                    <div
                         class="col-12 col-sm-6 col-md-3 col-xl-4 mb-3 project-card"
                         v-for="project in projects"
                         :key="project.id + project.title"
@@ -213,6 +276,8 @@
                     </div>
                 </div>
             </section>
+
+            
         </div>
 
         <!-- Project Modal -->
@@ -313,6 +378,8 @@ import AnimateText from '~/components/animate-text.vue'
 import ProgressSkill from '~/components/progress.vue'
 import ProjectInterface from '~/interfaces/project-interface'
 import Card from '~/components/card.vue'
+// @ts-ignore
+import { ContentLoader } from 'vue-content-loader'
 
 const defaultProject: ProjectInterface = {
     id: 0,
@@ -327,7 +394,13 @@ const defaultProject: ProjectInterface = {
 }
 
 @Component({
-    components: { AnimatedDots, AnimateText, ProgressSkill, Card },
+    components: {
+        AnimatedDots,
+        AnimateText,
+        ProgressSkill,
+        Card,
+        ContentLoader,
+    },
 })
 export default class Home extends Vue {
     @Ref('slide') readonly slides!: HTMLDivElement[]
@@ -388,6 +461,7 @@ export default class Home extends Vue {
     ]
     public projects: ProjectInterface[] = []
     public allProjects: ProjectInterface[] = []
+    public projectsLoad: number[] = Array(5).fill(3)
     public mp: ProjectInterface = defaultProject
     public carousel = {
         current: 1,
@@ -425,13 +499,14 @@ export default class Home extends Vue {
         const res = await this.$axios.get('projects')
 
         if (!res || !res.data) {
+            this.projectsLoad.splice(0)
             this.$nf.error()
             return
         }
 
         this.allProjects = res.data
         this.projects = [...res.data]
-        console.log(res.data)
+        this.projectsLoad.splice(0)
     }
 
     /**
@@ -495,14 +570,21 @@ export default class Home extends Vue {
      * 3 => mobile
      */
     public filterProjects(type: string = '') {
+        if (!this.allProjects.length) return
+
+        this.projects.splice(0)
+        this.projectsLoad = Array(5).fill(3)
+
         this.activeType = type
         if (type === 'all') {
             this.projects = [...this.allProjects]
+            this.projectsLoad.splice(0)
             return
         }
 
         const filterd = this.allProjects.filter((x) => x.type === type)
         this.projects = [...filterd]
+        this.projectsLoad.splice(0)
     }
 
     public removeClass(id: string, cls: string = 'd-none') {
