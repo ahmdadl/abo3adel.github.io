@@ -1,5 +1,5 @@
 <template>
-    <canvas id="canvas" :width="width" :height="height"></canvas>
+    <canvas id="canvas" class="w-100 h-100" :width="width" :height="height"></canvas>
 </template>
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
