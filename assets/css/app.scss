@@ -13,6 +13,10 @@
         sans-serif, Arial;
 }
 
+body, .navbar a {
+    color: #fff;
+}
+
 $breakpoints: (
     'sm': 576px,
     'md': 768px,

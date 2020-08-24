@@ -41,11 +41,11 @@
         </header>
 
         <!-- container -->
-        <div class="container-fluid">
+        <div class="container-fluid p-0 m-0">
             <!-- about section -->
             <section
                 id="about"
-                class="about bg-light text-dark text-center pt-3 col-12"
+                class="about bg-dark text-light text-center pt-3 col-12"
             >
                 <span v-html="h2($t('home.about'))"></span>
                 <div class="row">
@@ -75,7 +75,7 @@
         <!-- skills -->
         <section
             id="skills"
-            class="skills bg-light text-dark text-center pt-2 col-12"
+            class="skills bg-transparent text-light text-center pt-2 col-12"
         >
             <span v-html="h2($t('home.skills'))"></span>
             <div class="row text-center">

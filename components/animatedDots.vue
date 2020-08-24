@@ -1,5 +1,10 @@
 <template>
-    <canvas id="canvas" class="w-100 h-100" :width="width" :height="height"></canvas>
+    <canvas
+        id="canvas"
+        class="w-100 h-100"
+        :width="width"
+        :height="height"
+    ></canvas>
 </template>
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
@@ -221,11 +226,12 @@ export default class AnimatedDots extends Vue {
         }, 3000)
 
         // set header height to the same as canvas
-        const header = document.querySelector(`#canvasHeader`) as HTMLDivElement
-        header.style.height = window.innerHeight + 'px'
         const nav = document.querySelector('#navbar-top') as HTMLDivElement
         this.el.style.marginTop = `-${nav.offsetHeight}px`
         nav.classList.add('bg-transparent')
+
+        const header = document.querySelector(`#canvasHeader`) as HTMLDivElement
+        header.style.height = `${window.innerHeight}px`
     }
 }
 </script>
