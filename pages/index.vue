@@ -201,7 +201,7 @@
                     </div>
                     <!-- TODO animate projects array -->
                     <div
-                        class="col-12 col-sm-6 col-md-3 col-xl-4 mb-3 project-card"
+                        class="col-12 col-sm-6 col-md-4 mb-3 project-card"
                         v-for="project in projects"
                         :key="project.id + project.title"
                     >
@@ -278,12 +278,100 @@
             </section>
 
             <!-- blog posts -->
-            <section
-                id="blog"
-                class="skills text-center col-12 pt-4"
-            >
+            <section id="blog" class="skills text-center col-12 pt-4">
                 <span v-html="h2($t('home.title.blog'))"></span>
-                <all-posts :title="$t('home.title.index')" path="post" :limit="6"></all-posts>
+                <all-posts
+                    :title="$t('home.title.index')"
+                    path="post"
+                    :limit="6"
+                ></all-posts>
+            </section>
+
+            <!-- contact -->
+            <section id="contact" class="skills col-12 pt-4 bg-dark">
+                <span
+                    class="text-center"
+                    v-html="h2($t('home.title.contact'))"
+                ></span>
+                <div class="row mt-3">
+                    <div class="col-sm-12 col-md-3">
+                        <div
+                            class="card card-body bg-transparent border-secondary m-2"
+                        >
+                            <p class="pb-2 border-bottom border-light mx-auto">
+                                <i class="fas fa-certificate"></i>
+                                {{ $t('home.contact.edu') }}
+                            </p>
+                            <ul class="nav nav-pills nav-fill">
+                                <li class="nav-item text-info">
+                                    Bachelor Degree
+                                </li>
+                                <li class="nav-item text-info">
+                                    Very Good
+                                </li>
+                                <li class="nav-item text-info">
+                                    2016 – 2020
+                                </li>
+                            </ul>
+                            <strong class="text-left">
+                                Dairy Science and Technology, Faculty of
+                                Agriculture,<br />Al-Azhar University
+                            </strong>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-3">
+                        <div
+                            class="card card-body bg-transparent border-secondary m-2"
+                        >
+                            <p class="pb-2 border-bottom border-light mx-auto">
+                                <i class="fas fa-person"></i>
+                                {{ $t('home.contact.personal') }}
+                            </p>
+                            <ul class="list-group list-group-flush">
+                                <li
+                                    class="list-group-item bg-transparent border-bottom border-secondary"
+                                >
+                                    <a
+                                        href="tel:201143647417"
+                                        class="text-light"
+                                    >
+                                        <i class="fas fa-phone-alt"></i>
+                                        +201143647417
+                                    </a>
+                                </li>
+                                <li
+                                    class="list-group-item bg-transparent border-bottom border-secondary"
+                                >
+                                    <a
+                                        href="mailto:abo3adel35@gmail.com"
+                                        class="text-light"
+                                    >
+                                        <i class="fas fa-envelope"></i>
+                                        abo3adel35@gmail.com
+                                    </a>
+                                </li>
+                                <li
+                                    class="list-group-item bg-transparent border-bottom border-secondary"
+                                >
+                                    <a
+                                        href="http://ninjacoder.rf.gd/"
+                                        class="text-light"
+                                    >
+                                        <i class="fas fa-link"></i>
+                                        ninjacoder.rf.gd/
+                                    </a>
+                                </li>
+                                <li
+                                    class="list-group-item bg-transparent border-bottom border-secondary"
+                                >
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    Abu Hammad,<br />
+                                    Sharkia, Egypt
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </section>
         </div>
 
@@ -296,7 +384,7 @@
             aria-labelledby="modalProjectLabel"
             aria-hidden="true"
         >
-            <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content bg-dark">
                     <div class="modal-header bg-primary">
                         <h5 class="modal-title" id="modalProjectLabel">
@@ -387,7 +475,7 @@ import ProjectInterface from '~/interfaces/project-interface'
 import Card from '~/components/card.vue'
 // @ts-ignore
 import { ContentLoader } from 'vue-content-loader'
-import AllPosts from '~/components/all-posts'
+import AllPosts from '~/components/all-posts.vue'
 
 const defaultProject: ProjectInterface = {
     id: 0,
@@ -500,8 +588,8 @@ export default class Home extends Vue {
         },
     ]
 
-    public h2(str: any): string {
-        return `<h2>${str}<hr class='mx-auto bg-secondary pt-1 rounded w-25 px-5' /></h2>`
+    public h2(str: any, tag: string = 'h2'): string {
+        return `<${tag}>${str}<hr class='mx-auto bg-secondary pt-1 rounded w-25 px-5' /></${tag}>`
     }
 
     public async loadProjects() {

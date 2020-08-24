@@ -82,5 +82,6 @@ export default class ProgressSkill extends Vue {
 .progress {
     border-radius: 0 6px 6px 0;
     height: 4vh;
+    background-color: #dc3545;
 }
 </style>
