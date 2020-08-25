@@ -7,6 +7,7 @@ use App\Http\Requests\ProjectStoreRequest;
 use App\Project;
 use App\Tag;
 use Illuminate\Http\Request;
+use Storage;
 use Str;
 
 class ProjectController extends Controller
@@ -111,8 +112,24 @@ class ProjectController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Project $project)
     {
-        //
+        if (sizeof($project->img)) {
+            // delete all images
+            foreach ($project->img as $img) {
+                Storage::delete(
+                    'public' . $img
+                );
+            }
+        }
+
+        if (sizeof($project->tags)) {
+            // remove all pivot tags
+            $project->tags()->detach($project->tags->pluck('id'));
+        }
+
+        $project->delete();
+
+        return response()->noContent();
     }
 }

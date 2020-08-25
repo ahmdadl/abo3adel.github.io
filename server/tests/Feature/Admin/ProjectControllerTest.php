@@ -5,6 +5,7 @@ namespace Tests\Feature\Admin;
 use App\Http\Controllers\Admin\ProjectController;
 use App\Project;
 use App\Tag;
+use DB;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\UploadedFile;
@@ -28,7 +29,7 @@ class ProjectControllerTest extends TestCase
     {
         $projects = factory(Project::class, 5)->create();
 
-        $this->getJson($this->url)
+        $this->getJson('api/projects')
             ->assertOk()
             ->assertJsonCount(5)
             ->assertJson($projects->toArray());
@@ -68,17 +69,17 @@ class ProjectControllerTest extends TestCase
         $this->assertArrayHasKey('tags', (array) $res);
         $this->assertCount(3, $res['tags']);
 
-        Storage::disk('local')->assertExists(ProjectController::UploadPath . '/' . $img1->hashName());
-        Storage::disk('local')->assertExists(ProjectController::UploadPath . '/' . $img2->hashName());
+        Storage::assertExists(ProjectController::UploadPath . '/' . $img1->hashName());
+        Storage::assertExists(ProjectController::UploadPath . '/' . $img2->hashName());
     }
 
     public function testUserCanUpdateProject()
     {
         $this->withoutExceptionHandling();
-        
+
         $oldImage = UploadedFile::fake()->image('ws.jpg');
         $oldImg = $oldImage->store(ProjectController::UploadPath);
-        
+
         $proj = factory(Project::class)->create([
             'img' => ([
                 Str::replaceFirst(
@@ -115,17 +116,63 @@ class ProjectControllerTest extends TestCase
             'link' => $proj->link
         ]);
 
-        Storage::disk('local')->assertExists(
+        Storage::assertExists(
             ProjectController::UploadPath . '/' . $img1->hashName()
         );
 
-        Storage::disk('local')->assertMissing(
+        Storage::assertMissing(
             $oldImg
         );
 
         $this->assertSame(
             $tags->first()->title,
             Project::find($proj->id)->tags->first()->title
+        );
+    }
+
+    public function testUserCanDeleteProject()
+    {
+        $this->withoutExceptionHandling();
+        factory(Project::class, 5)->create();
+
+        $oldImage = UploadedFile::fake()->image('ws.jpg');
+        $oldImg = $oldImage->store(ProjectController::UploadPath);
+
+        $project = factory(Project::class)->create([
+            'img' => ([
+                Str::replaceFirst(
+                    'public',
+                    '',
+                    $oldImg
+                )
+            ]),
+        ]);
+        $tags = factory(Tag::class, 3)->create();
+        $project->tags()->sync($tags);
+
+        $this->assertSame(6, Project::count('id'));
+
+        $this->deleteJson($this->url . $project->id)
+            ->assertNoContent();
+
+        $this->assertSame(5, Project::count('id'));
+
+        $this->assertDatabaseMissing($this->tbName, [
+            'id' => $project->id,
+            'title' => $project->title
+        ]);
+
+        $this->assertDatabaseMissing('taggables', [
+            'taggable_type' => Project::class,
+            'taggable_id' => $project->id,
+            'tag_id' => $tags->first()->id
+        ]);
+
+        $this->assertSame(0, DB::table('taggables')->count('id'));
+
+        $img = $project->img[0];
+        Storage::assertMissing(
+            ProjectController::UploadPath . '/' . $oldImage->hashName()
         );
     }
 }
