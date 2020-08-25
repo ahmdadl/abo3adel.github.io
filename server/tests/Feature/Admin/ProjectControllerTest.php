@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Admin;
 
 use App\Project;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -9,8 +9,10 @@ use Tests\TestCase;
 
 class ProjectControllerTest extends TestCase
 {
-    public function testAnyoneCanGetProjectList()
+    public function testUserCanLoadAllProjects()
     {
+        $this->signIn();
+
         $projects = factory(Project::class, 5)->create();
 
         $this->getJson('api/projects')
