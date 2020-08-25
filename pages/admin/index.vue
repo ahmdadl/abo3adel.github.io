@@ -64,7 +64,7 @@ export default class Dashboard extends Vue {
     }
 
     public async loadData() {
-        const res = await this.$axios.$get('dashboard')
+        const res = await this.$axios.$get('root/dashboard')
 
         if (!res) {
             this.$nf.error()

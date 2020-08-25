@@ -67,4 +67,6 @@ Route::get('categories/{category}/posts', 'CategoryController@listPosts');
 Route::get('projects', 'ProjectController@index');
 
 // admin routes
-Route::get('dashboard', 'Admin\Dashboard');
+Route::group(['prefix' => 'root'], function () {
+    Route::get('dashboard', 'Admin\Dashboard');
+});

@@ -16,7 +16,7 @@ class DashboardTest extends TestCase
 
         $posts = PostBuilder::wCom(4)->tag(3)->amount(6)->create();
 
-        $this->getJson('api/dashboard')
+        $this->getJson('api/root/dashboard')
             ->assertOk()
             ->assertJsonPath('comments', 4)
             ->assertJsonPath('posts', 6)
