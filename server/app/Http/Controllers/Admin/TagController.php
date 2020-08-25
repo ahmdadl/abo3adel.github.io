@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class TagController extends Controller
 {
@@ -31,18 +32,13 @@ class TagController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        $attr = request()->validate([
+            'title' => 'required|string|min:5|max:255'
+        ]);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        $tag = Tag::create($attr);
+
+        return response()->json($tag, 201);
     }
 
     /**

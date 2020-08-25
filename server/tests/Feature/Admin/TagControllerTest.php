@@ -34,4 +34,24 @@ class TagControllerTest extends TestCase
             ->assertJsonPath('0.posts_count', '0')
             ->json();
     }
+
+    public function testUserCannotAddNewTagWithInvalidData()
+    {
+        $this->postJson($this->url)
+            ->assertStatus(422);
+    }
+
+    public function testUserCanAddNewTag()
+    {
+        $tag = factory(Tag::class)->raw();
+
+        $this->postJson($this->url, ['title' => $tag['title']])
+            ->assertCreated()
+            ->assertJson($tag);
+
+        $this->assertDatabaseHas('tags', [
+            'id' => 1,
+            'title' => $tag['title'],
+        ]);
+    }
 }
