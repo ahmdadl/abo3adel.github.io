@@ -8,17 +8,10 @@ use App\Tag;
 use Facades\Tests\Setup\PostBuilder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
-use Tests\TestCase;
 
 class TagControllerTest extends TestCase
 {
-    private string $url = 'api/root/tags';
-
-    public function setUp(): void
-    {
-        parent::setUp();
-        $this->signIn();
-    }
+    protected string $url = 'tags';
 
     public function testUserCanGetTagsList()
     {

@@ -11,19 +11,11 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Str;
-use Tests\TestCase;
 
 class ProjectControllerTest extends TestCase
 {
-    private string $url = '/api/root/projects/';
-    private string $tbName = 'projects';
-
-    public function setUp(): void
-    {
-        parent::setUp();
-
-        $this->signIn();
-    }
+    protected string $url = 'projects/';
+    protected string $tbName = 'projects';
 
     public function testUserCanLoadAllProjects()
     {

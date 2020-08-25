@@ -33,7 +33,7 @@ class TagController extends Controller
     public function store(Request $request)
     {
         $attr = request()->validate([
-            'title' => 'required|string|min:5|max:255'
+            'title' => 'required|string|min:3|max:255'
         ]);
 
         $tag = Tag::create($attr);
