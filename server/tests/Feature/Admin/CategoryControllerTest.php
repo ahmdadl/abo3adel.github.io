@@ -14,7 +14,8 @@ class CategoryControllerTest extends TestCase
     public function testUserCanotAddCategoryWithInvalidData()
     {
         $this->postJson($this->url)
-            ->assertStatus(422);
+            ->assertStatus(422)
+            ->assertJsonValidationErrors('title');
     }
 
     public function testUserCanCreateCategory()
@@ -28,6 +29,30 @@ class CategoryControllerTest extends TestCase
         $this->assertDatabaseHas($this->tbName, [
             'title' => $c['title'],
             'id' => 1
+        ]);
+    }
+
+    public function testUserCannotUpdateCategoryWithInvalidData()
+    {
+        $c = factory(Category::class)->create();
+
+        $this->patchJson($this->url . $c->slug)
+            ->assertStatus(422)
+            ->assertJsonValidationErrors('title');
+    }
+
+    public function testUserCanAddCategory()
+    {
+        $c = factory(Category::class)->create();
+        $title = $this->faker->sentence;
+
+        $this->patchJson($this->url . $c->slug, compact('title'))
+            ->assertOk()
+            ->assertJsonPath('title', $title);
+
+        $this->assertDatabaseHas($this->tbName, [
+            'title' => $title,
+            'id' => $c->id
         ]);
     }
 }

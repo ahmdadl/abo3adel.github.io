@@ -91,7 +91,5 @@ Route::group(['prefix' => 'root', 'namespace' => 'Admin'], function () {
     Route::delete('comments/{comment}', 'DestroyComment');
 
     // categories
-    Route::prefix('categories')->group(function() {
-        Route::post('', 'CategoryController@store');
-    });
+    Route::resource('categories', 'CategoryController');
 });
