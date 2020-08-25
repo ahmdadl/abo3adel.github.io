@@ -43,7 +43,6 @@
 </template>
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
-import Card from '~/components/card.vue'
 
 @Component({
     // auth: false,
@@ -52,7 +51,6 @@ import Card from '~/components/card.vue'
             title: (this as Dashboard).title || '',
         }
     },
-    components: { Card },
 })
 export default class Dashboard extends Vue {
     public count = {
