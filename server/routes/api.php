@@ -87,5 +87,6 @@ Route::group(['prefix' => 'root', 'namespace' => 'Admin'], function () {
     Route::resource('tags', 'TagController');
 
     // comments
+    Route::get('comments', 'GetCommentList');
     Route::delete('comments/{comment}', 'DestroyComment');
 });
