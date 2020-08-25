@@ -10,6 +10,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use Str;
 
 class PostControllerTest extends TestCase
 {
@@ -51,27 +52,48 @@ class PostControllerTest extends TestCase
 
     public function testUserCanUpdatePost()
     {
-        $this->withoutExceptionHandling();
-
-        $post = factory(Post::class)->create();
+        // $this->withoutExceptionHandling();
         $title = $this->faker->text(50);
-        $img = $this->faker->text;
 
-        $this->patchJson($this->url . $post->slug, [
-            'title' => $title,
-            'img' => $img,
-            'body' => $post->body
-        ])->assertNoContent();
+        $img = UploadedFile::fake()->image('b.png');
+        $post = PostBuilder::create([
+            'img' => Str::replaceFirst(
+                'public',
+                '',
+                $img->store(PostController::UploadDIr)
+            ),
+        ]);
+        $tags = factory(Tag::class, 3)->create();
+        $post->tags()->sync($tags);
+        $post->loadMissing('tags');
+        $tags = $tags->pluck('slug');
+
+        $newImg = UploadedFile::fake()->image('w.jpg');
+        $post->img = $newImg;
+        $post->title = $title;
+
+        unset($post->tags);
+
+        $this->patchJson(
+            $this->url . $post->slug,
+            $post->toArray() + compact('tags')
+        )->assertJsonMissingValidationErrors()
+            ->assertOk()
+            ->assertJsonPath('tags.0.slug', $tags[0])
+            ->assertJsonPath('img', '/posts/' . $newImg->hashName());
 
         $this->assertDatabaseHas('posts', [
-            'id' => 1,
             'title' => $title,
-            'img' => $img
+            'img' => '/posts/' . $newImg->hashName(),
+            'slug' => $post->slug,
         ]);
 
-        $this->assertDatabaseMissing('posts', [
-            'title' => $post->title
-        ]);
+        Storage::assertExists(
+            PostController::UploadDIr . '/' . $newImg->hashName()
+        );
+        Storage::assertMissing(
+            PostController::UploadDIr . '/' . $img->hashName()
+        );
     }
 
     public function testUserCanDeletePost()

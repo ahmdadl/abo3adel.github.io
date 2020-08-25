@@ -7,6 +7,7 @@ use App\Http\Requests\PostRequest;
 use App\Post;
 use App\Tag;
 use Illuminate\Http\Request;
+use Storage;
 use Str;
 
 class PostController extends Controller
@@ -55,9 +56,35 @@ class PostController extends Controller
      */
     public function update(PostRequest $request, Post $post)
     {
-        $updated = $post->update($request->validated());
+        $res = (object) $request->validated();
 
-        return $updated ? response()->noContent() : response();
+        // if user add new images
+        if ($res->img) {
+            // delete old image
+            Storage::delete('public' . $post->img);
+
+            // upload new image
+            $res->img = Str::replaceFirst(
+                'public',
+                '',
+                $res->img->store(self::UploadDIr)
+            );
+        }
+
+        // save tags for later
+        $tags = $res->tags;
+        unset($res->tags);
+
+        // update post
+        $post->update((array) $res);
+
+        // sync tags
+        $post->tags()->sync(
+            Tag::whereIn('slug', $tags)->get()
+        );
+
+        $post->loadMissing('tags');
+        return response()->json($post);
     }
 
     /**
