@@ -72,4 +72,5 @@ Route::group(['prefix' => 'root'], function () {
 
     // project
     Route::post('projects', 'Admin\ProjectController@store');
+    Route::patch('projects/{project}', 'Admin\ProjectController@update');
 });

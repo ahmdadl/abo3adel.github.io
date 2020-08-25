@@ -44,7 +44,7 @@ class ProjectController extends Controller
         $project->tags()->sync($tags);
 
         $project->loadMissing('tags');
-        return response()->json($project);
+        return response()->json($project, 201);
     }
 
     /**
@@ -65,9 +65,44 @@ class ProjectController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        //
+    public function update(
+        ProjectStoreRequest $request,
+        Project $project
+    ) {
+        $res = (object) $request->validated();
+
+        $img = [];
+        // check if user changed images
+        if (is_array($res->img)) {
+            // delete old images
+            foreach ($project->img as $g) {
+                unlink(storage_path('app/public' . $g));
+                // dump($g);
+            }
+
+            // upload new images
+            foreach ($res->img as $i) {
+                $img[] = Str::replaceFirst(
+                    'public',
+                    '',
+                    $i->store(self::UploadPath)
+                );
+            }
+            $res->img = $img;
+        }
+
+        $tags = $res->tags;
+        unset($res->tags);
+
+        $project->update((array) $res);
+
+        // sync tags
+        $tags = Tag::whereIn('slug', $tags)->get();
+        $project->tags()->sync($tags);
+
+        // $project = Project::with('tags')->find($project->id);
+        $project->loadMissing('tags');
+        return response()->json($project);
     }
 
     /**

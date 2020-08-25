@@ -9,6 +9,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use Str;
 use Tests\TestCase;
 
 class ProjectControllerTest extends TestCase
@@ -47,7 +48,7 @@ class ProjectControllerTest extends TestCase
         $proj['img'] = [$img1, $img2];
 
         $res = $this->postJson($this->url, $proj + ['tags' => $tags->pluck('slug')])
-            ->assertOk()
+            ->assertCreated()
             ->assertJsonPath('title', $proj['title'])
             ->assertJsonPath('client', $proj['client'])
             ->json();
@@ -69,5 +70,62 @@ class ProjectControllerTest extends TestCase
 
         Storage::disk('local')->assertExists(ProjectController::UploadPath . '/' . $img1->hashName());
         Storage::disk('local')->assertExists(ProjectController::UploadPath . '/' . $img2->hashName());
+    }
+
+    public function testUserCanUpdateProject()
+    {
+        $this->withoutExceptionHandling();
+        
+        $oldImage = UploadedFile::fake()->image('ws.jpg');
+        $oldImg = $oldImage->store(ProjectController::UploadPath);
+        
+        $proj = factory(Project::class)->create([
+            'img' => ([
+                Str::replaceFirst(
+                    'public',
+                    '',
+                    $oldImg
+                )
+            ]),
+        ]);
+        Storage::fake('local');
+        $tags = factory(Tag::class, 2)->create();
+        $proj->tags()->sync($tags);
+
+
+        $img1 = UploadedFile::fake()->image('a.png');
+        $img2 = UploadedFile::fake()->image('w.jpeg');
+
+        $title = $this->faker->sentence;
+
+        $proj->load('tags');
+        $arr = $proj->toArray();
+        $arr['img'] = [$img1, $img2];
+        $arr['title'] = $title;
+        $arr['tags'] = $proj->tags->pluck('slug');
+
+        $res = $this->patchJson($this->url . $proj->id, $arr)
+            ->assertOk()
+            ->assertJsonPath('title', $title)
+            ->assertJsonCount(2, 'tags')
+            ->json();
+
+        $this->assertDatabaseHas($this->tbName, [
+            'title' => $title,
+            'link' => $proj->link
+        ]);
+
+        Storage::disk('local')->assertExists(
+            ProjectController::UploadPath . '/' . $img1->hashName()
+        );
+
+        Storage::disk('local')->assertMissing(
+            $oldImg
+        );
+
+        $this->assertSame(
+            $tags->first()->title,
+            Project::find($proj->id)->tags->first()->title
+        );
     }
 }
