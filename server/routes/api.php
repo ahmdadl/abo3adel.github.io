@@ -65,3 +65,6 @@ Route::get('categories/{category}/posts', 'CategoryController@listPosts');
 
 // projects
 Route::get('projects', 'ProjectController@index');
+
+// admin routes
+Route::get('dashboard', 'Admin\Dashboard');
