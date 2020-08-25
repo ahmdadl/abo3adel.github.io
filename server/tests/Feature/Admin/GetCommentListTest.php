@@ -16,9 +16,9 @@ class GetCommentListTest extends TestCase
 
         $res = $this->getJson($this->url)
             ->assertOk()
-            ->assertJsonCount(7)
+            ->assertJsonCount(7, 'data')
             ->json();
 
-        $this->assertNotNull($res[0]['post']['id']);
+        $this->assertNotNull($res['data'][0]['post']['id']);
     } 
 }

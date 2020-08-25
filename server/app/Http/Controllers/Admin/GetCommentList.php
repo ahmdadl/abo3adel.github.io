@@ -17,7 +17,7 @@ class GetCommentList extends Controller
     public function __invoke(Request $request)
     {
         return response()->json(
-            Comment::with('post')->get()
+            Comment::with('post')->paginate()
         );
     }
 }
