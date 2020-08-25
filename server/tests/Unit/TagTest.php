@@ -21,4 +21,11 @@ class TagTest extends TestCase
             $tag->posts->first()->id
         );
     }
+
+    public function testItHasSlug()
+    {
+        $tag = factory(Tag::class)->create();
+
+        $this->assertNotNull($tag->slug);
+    }
 }

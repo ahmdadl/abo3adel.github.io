@@ -69,4 +69,7 @@ Route::get('projects', 'GetProjectList');
 // admin routes
 Route::group(['prefix' => 'root'], function () {
     Route::get('dashboard', 'Admin\Dashboard');
+
+    // project
+    Route::post('projects', 'Admin\ProjectController@store');
 });

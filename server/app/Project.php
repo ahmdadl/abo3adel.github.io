@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 class Project extends Model
 {
-    protected $guard = [];
+    protected $guarded = [];
 
     protected $casts = [
         'img' => 'array',
