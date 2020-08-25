@@ -85,4 +85,7 @@ Route::group(['prefix' => 'root', 'namespace' => 'Admin'], function () {
 
     // tags
     Route::resource('tags', 'TagController');
+
+    // comments
+    Route::delete('comments/{comment}', 'DestroyComment');
 });
