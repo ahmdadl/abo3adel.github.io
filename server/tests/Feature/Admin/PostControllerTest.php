@@ -63,6 +63,9 @@ class PostControllerTest extends TestCase
                 $img->store(PostController::UploadDIr)
             ),
         ]);
+
+        Storage::fake('locale');
+
         $tags = factory(Tag::class, 3)->create();
         $post->tags()->sync($tags);
         $post->loadMissing('tags');
@@ -73,6 +76,11 @@ class PostControllerTest extends TestCase
         $post->title = $title;
 
         unset($post->tags);
+
+        // check that old image is stored
+        Storage::assertExists(
+            PostController::UploadDIr . '/' . $img->hashName()
+        );
 
         $this->patchJson(
             $this->url . $post->slug,
@@ -98,13 +106,29 @@ class PostControllerTest extends TestCase
 
     public function testUserCanDeletePost()
     {
-        $this->withoutExceptionHandling();
+        // $this->withoutExceptionHandling();
+        $img = UploadedFile::fake()->image('b.png');
+        $post = PostBuilder::create([
+            'img' => Str::replaceFirst(
+                'public',
+                '',
+                $img->store(PostController::UploadDIr)
+            ),
+        ]);
 
-        $post = PostBuilder::amount(3)->create();
+        Storage::fake('locale');
+
+        Storage::assertExists(
+            PostController::UploadDIr . '/' . $img->hashName()
+        );
 
         $this->deleteJson($this->url . $post->slug)
             ->assertNoContent();
 
-        $this->assertDatabaseMissing('posts', $post->only('id'));
+        $this->assertDatabaseMissing('posts', $post->only('slug'));
+
+        Storage::assertMissing(
+            PostController::UploadDIr . '/' . $img->hashName()
+        );
     }
 }
