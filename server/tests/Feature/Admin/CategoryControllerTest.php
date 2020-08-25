@@ -55,4 +55,16 @@ class CategoryControllerTest extends TestCase
             'id' => $c->id
         ]);
     }
+
+    public function testUserCanDeleteCategory()
+    {
+        $c = factory(Category::class)->create();
+
+        $this->deleteJson($this->url . $c->slug)
+            ->assertNoContent();
+
+        $this->assertDatabaseMissing($this->tbName, [
+            'id' => $c->id
+        ]);
+    }
 }
