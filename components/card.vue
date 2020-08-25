@@ -1,5 +1,5 @@
 <template>
-    <div class="card bg-dark" :class="cls">
+    <div class="card bg-dark" :class="[cls, {'transparent': trans}]">
         <div v-if="title" :class="['card-header', headerCls]">
             {{ title }}
         </div>
@@ -19,9 +19,15 @@ export default {
 
     props: {
         title: { type: String, default: null },
-        headerCls: { type: String, default: 'bg-primary text-light text-center' },
+        headerCls: { type: String, default: 'bg-primary text-light text-center text-capitalize' },
         overlay: {type: Boolean, default: false},
-        cls: {type: String, default: null}
+        cls: {type: String, default: null},
+        trans: {type: Boolean, default: false}
     },
 }
 </script>
+<style lang="scss" scoped>
+.bg-dark.transparent {
+    background-color: rgba($color: #000000, $alpha: 0.4) !important;
+}
+</style>
