@@ -67,17 +67,22 @@ Route::get('categories/{category}/posts', 'CategoryController@listPosts');
 Route::get('projects', 'GetProjectList');
 
 // admin routes
-Route::group(['prefix' => 'root'], function () {
-    Route::get('dashboard', 'Admin\Dashboard');
+Route::group(['prefix' => 'root', 'namespace' => 'Admin'], function () {
+    Route::get('dashboard', 'Dashboard');
 
     // project
-    Route::post('projects', 'Admin\ProjectController@store');
-    Route::patch(
-        'projects/{project}',
-        'Admin\ProjectController@update'
-    );
-    Route::delete(
-        'projects/{project}',
-        'Admin\ProjectController@destroy'
-    );
+    Route::prefix('projects')->group(function () {
+        Route::post('', 'ProjectController@store');
+        Route::patch(
+            '/{project}',
+            'ProjectController@update'
+        );
+        Route::delete(
+            '/{project}',
+            'ProjectController@destroy'
+        );
+    });
+
+    // tags
+    Route::resource('tags', 'TagController');
 });
