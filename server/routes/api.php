@@ -89,4 +89,9 @@ Route::group(['prefix' => 'root', 'namespace' => 'Admin'], function () {
     // comments
     Route::get('comments', 'GetCommentList');
     Route::delete('comments/{comment}', 'DestroyComment');
+
+    // categories
+    Route::prefix('categories')->group(function() {
+        Route::post('', 'CategoryController@store');
+    });
 });
