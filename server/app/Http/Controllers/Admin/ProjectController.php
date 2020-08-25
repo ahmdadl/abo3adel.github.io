@@ -49,17 +49,6 @@ class ProjectController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -77,8 +66,11 @@ class ProjectController extends Controller
         if (is_array($res->img)) {
             // delete old images
             foreach ($project->img as $g) {
-                unlink(storage_path('app/public' . $g));
+                // unlink(storage_path('app/public' . $g));
                 // dump($g);
+                Storage::delete(
+                    'public' . $g
+                );
             }
 
             // upload new images
