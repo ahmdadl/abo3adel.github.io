@@ -29,10 +29,6 @@ Route::group([
 Route::group(['middleware' => 'auth:api'], function () {
     Route::patch('settings/profile', 'Settings\ProfileController@update');
     Route::patch('settings/password', 'Settings\PasswordController@update');
-
-    Route::resource('post', 'PostController', [
-        'except' => ['index', 'show']
-    ]);
 });
 
 Route::group(['middleware' => 'guest:api'], function () {
@@ -92,4 +88,8 @@ Route::group(['prefix' => 'root', 'namespace' => 'Admin'], function () {
 
     // categories
     Route::resource('categories', 'CategoryController');
+
+    Route::resource('posts', 'PostController', [
+        'except' => ['index', 'show']
+    ]);
 });

@@ -89,31 +89,4 @@ class PostController extends Controller
     {
         return response()->json($post);
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Post  $post
-     * @return \Illuminate\Http\Response
-     */
-    public function update(PostRequest $request, Post $post)
-    {
-        $updated = $post->update($request->validated());
-
-        return $updated ? response()->noContent() : response();
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Post  $post
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Post $post)
-    {
-        return $post->delete() ?
-            response()->noContent() :
-            response();
-    }
 }
