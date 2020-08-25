@@ -9,6 +9,10 @@ use Illuminate\Support\Facades\Http;
 
 class TagController extends Controller
 {
+    private const ValiadateArr = [
+        'title' => 'required|string|min:3|max:255'
+    ];
+
     /**
      * Display a listing of the resource.
      *
@@ -32,9 +36,7 @@ class TagController extends Controller
      */
     public function store(Request $request)
     {
-        $attr = request()->validate([
-            'title' => 'required|string|min:3|max:255'
-        ]);
+        $attr = request()->validate(self::ValiadateArr);
 
         $tag = Tag::create($attr);
 
@@ -48,9 +50,13 @@ class TagController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Tag $tag)
     {
-        //
+        $attr = request()->validate(self::ValiadateArr);
+
+        $tag->update($attr);
+
+        return response()->json($tag);
     }
 
     /**

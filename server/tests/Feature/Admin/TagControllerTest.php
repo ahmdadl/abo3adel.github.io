@@ -11,7 +11,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 
 class TagControllerTest extends TestCase
 {
-    protected string $url = 'tags';
+    protected string $url = 'tags/';
 
     public function testUserCanGetTagsList()
     {
@@ -46,5 +46,29 @@ class TagControllerTest extends TestCase
             'id' => 1,
             'title' => $tag['title'],
         ]);
+    }
+
+    public function testUserCanUpdateTag()
+    {
+        $tag = factory(Tag::class)->create();
+
+        $title = $this->faker->sentence;
+
+        $this->patchJson($this->url . $tag->id, compact('title'))
+            ->assertOk()
+            ->assertJsonPath('title', $title);
+
+        $this->assertDatabaseHas('tags', [
+            'id' => $tag->id,
+            'title' => $title
+        ]);
+    }
+
+    public function testUserCannotUpdateTagWithInvalidData()
+    {
+        $tag = factory(Tag::class)->create();
+
+        $this->patchJson($this->url . $tag->id, [])
+            ->assertStatus(422);
     }
 }
