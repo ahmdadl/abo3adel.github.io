@@ -71,4 +71,18 @@ class TagControllerTest extends TestCase
         $this->patchJson($this->url . $tag->id, [])
             ->assertStatus(422);
     }
+
+    public function testUserCanDeleteTag()
+    {
+        $tag = factory(Tag::class)->create();
+
+        $this->deleteJson($this->url . $tag->id)
+            ->assertNoContent();
+
+        $this->assertDatabaseMissing('tags', $tag->only('id'));
+
+        $this->assertDatabaseMissing('taggables', [
+            'tag_id' => $tag->id
+        ]);
+    }
 }
