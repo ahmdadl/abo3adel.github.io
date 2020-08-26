@@ -64,6 +64,7 @@ export default {
         '@nuxtjs/axios',
         'nuxt-i18n',
         '@nuxtjs/auth-next',
+        ['vue-scrollto/nuxt', { duration: 500 }],
     ],
 
     /**
@@ -81,7 +82,7 @@ export default {
     loading: {
         color: '#00ff7e',
         height: '5px',
-        continuous: true
+        continuous: true,
     },
 
     /*

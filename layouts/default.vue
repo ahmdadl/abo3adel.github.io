@@ -1,9 +1,15 @@
 <template>
-    <div>
+    <div :id="dir">
         <Nav :path="$route.path" />
-        <Nuxt :class="{'mt-4': $route.path !== '/'}" />
+        <Nuxt :class="{ 'mt-4': $route.path !== '/' }" />
         <Footer />
         <notifications group="foo" :position="notPlace" />
+        <button
+            class="btn btn-outline-danger position-fixed toTop"
+            v-scroll-to="'#body'"
+        >
+            <i class="fas fa-chevron-up"></i>
+        </button>
     </div>
 </template>
 <script lang="ts">
@@ -16,6 +22,7 @@ import Footer from '~/components/footer.vue'
 })
 export default class Default extends Vue {
     public notPlace: string = 'bottom right'
+    public dir: string = ''
 
     created() {
         let dir: string = 'ltr'
@@ -28,6 +35,7 @@ export default class Default extends Vue {
         }
         document.documentElement.dir = dir
         document.documentElement.lang = lang
+        this.dir = dir
     }
 
     mounted() {
@@ -50,7 +58,7 @@ export default class Default extends Vue {
 }
 </script>
 <style>
-html {
+/* html {
     font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
         'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     font-size: 16px;
@@ -96,5 +104,5 @@ html {
 .button--grey:hover {
     color: #fff;
     background-color: #35495e;
-}
+} */
 </style>

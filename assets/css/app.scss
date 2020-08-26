@@ -93,3 +93,18 @@ input[type='password']:focus {
 .modal {
     margin-top: 15vh;
 }
+
+.toTop {
+    bottom: 3rem;
+    z-index: 999;
+}
+#ltr {
+    .toTop {
+        right: 2rem;
+    }
+}
+#rtl {
+    .toTop {
+        left: 2rem;
+    }
+}
