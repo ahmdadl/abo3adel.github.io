@@ -1,7 +1,7 @@
 <template>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-sm-3">
+            <div class="col-sm-3 mb-3">
                 <div class="list-group list-group-flush">
                     <nuxt-link
                         v-for="link in nav"

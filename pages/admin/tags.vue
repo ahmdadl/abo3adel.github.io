@@ -9,11 +9,16 @@
                     <button class="btn btn-warning">
                         Create New Tag
                     </button>
-                    <hr class="bg-secondary pt-1 w-75 rounded " />
+                    <hr class="bg-secondary pt-1 w-75 rounded" />
                 </div>
             </div>
-            <div v-for="tag in tags" :key="tag.id" class="row mb-3">
-                <div class="clo-5">
+            <div class="row" v-if="!tags.length">
+                <div class="alert alert-danger col-10 mx-auto">
+                    <strong>No Tags, please add new tags</strong>
+                </div>
+            </div>
+            <div v-for="(tag, tinx) in tags" :key="tag.id" class="row mb-3">
+                <div class="col-5">
                     <span class="btn btn-primary">
                         {{ tag.title }}
                         <span class="badge badge-light">
@@ -28,8 +33,14 @@
                     <button class="btn btn-info">
                         <i class="fas fa-edit mx-1"></i>
                     </button>
-                    <button class="btn btn-danger">
-                        <i class="fas fa-trash-alt mx-1"></i>
+                    <button
+                        class="btn btn-danger"
+                        @click.prevent="remove(tag.id, tinx)"
+                    >
+                        <i
+                            :id="`del${tag.id}`"
+                            class="fas fa-trash-alt mx-1"
+                        ></i>
                     </button>
                 </div>
             </div>
@@ -63,6 +74,35 @@ export default class Tag extends Vue {
         }
 
         this.tags = res
+    }
+
+    public async remove(id: number, inx: number) {
+        this.showLoader(`#del${id}`)
+        const res = await this.$axios.$delete(`root/tags/${id}`)
+
+        this.hideLoader(`#del${id}`)
+
+        this.tags.splice(inx, 1)
+    }
+
+    public showLoader(id: string): HTMLSpanElement {
+        const loader = document.querySelector(id) as HTMLSpanElement
+        let cls = loader.classList
+        cls.remove('fa-trash-alt')
+        cls.add('fa-pulse')
+        cls.add('fa-spinner')
+
+        return loader
+    }
+
+    public hideLoader(id: string): HTMLSpanElement {
+        const loader = document.querySelector(id) as HTMLSpanElement
+        let cls = loader.classList
+        cls.add('fa-trash-alt')
+        cls.remove('fa-pulse')
+        cls.remove('fa-spinner')
+
+        return loader
     }
 
     get title(): string {
