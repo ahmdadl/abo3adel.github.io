@@ -6,7 +6,7 @@
         <div v-else>
             <div class="row">
                 <div class="col-12">
-                    <button class="btn btn-warning">
+                    <button class="btn btn-warning" @click.prevent="openModal">
                         Create New Tag
                     </button>
                     <hr class="bg-secondary pt-1 w-75 rounded" />
@@ -22,10 +22,10 @@
                     <span class="btn btn-primary">
                         {{ tag.title }}
                         <span class="badge badge-light">
-                            {{ tag.posts_count }}
+                            {{ tag.posts_count || 0 }}
                         </span>
                         <span class="badge badge-dark">
-                            {{ tag.projects_count }}
+                            {{ tag.projects_count || 0 }}
                         </span>
                     </span>
                 </div>
@@ -45,10 +45,93 @@
                 </div>
             </div>
         </div>
+        <!-- Modal -->
+        <div
+            class="modal fade"
+            id="TagModal"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="TagModalLabel"
+            aria-hidden="true"
+        >
+            <div class="modal-dialog" role="document">
+                <div class="modal-content bg-dark">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="TagModalLabel">
+                            {{ tag.title || 'Create new Tag' }}
+                        </h5>
+                        <button
+                            type="button"
+                            class="close"
+                            data-dismiss="modal"
+                            aria-label="Close"
+                        >
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form
+                            ref="form"
+                            class="form"
+                            method="post"
+                            @submit.stop.prevent="saveTag"
+                        >
+                            <div class="form-group">
+                                <input
+                                    type="text"
+                                    name="title"
+                                    id="title"
+                                    class="form-control"
+                                    :class="{
+                                        'is-invalid': model.errors.length,
+                                    }"
+                                    v-model="model.self"
+                                    placeholder="tag title"
+                                    aria-describedby="helpId"
+                                    minlength="5"
+                                    maxlength="255"
+                                />
+                                <small id="helpId" class="text-muted">
+                                    enter tag title
+                                </small>
+                                <div class="invalid-feedback">
+                                    {{ model.errors }}
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button
+                            type="button"
+                            class="btn btn-secondary"
+                            data-dismiss="modal"
+                        >
+                            Close
+                        </button>
+                        <button
+                            type="button"
+                            class="btn btn-primary"
+                            @click.prevent="saveTag"
+                            :disabled="model.saving"
+                        >
+                            <i
+                                class="mx-1 fas"
+                                :class="
+                                    model.saving
+                                        ? 'fa-pulse fa-spinner'
+                                        : 'fa-save'
+                                "
+                            ></i>
+                            Save changes
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
+import { Vue, Component, Ref } from 'vue-property-decorator'
 import TagInterface from '~/interfaces/tag-interface'
 
 @Component({
@@ -60,8 +143,22 @@ import TagInterface from '~/interfaces/tag-interface'
     },
 })
 export default class Tag extends Vue {
+    @Ref('form') readonly form!: HTMLFormElement
+    
+    public model = {
+        self: '',
+        errors: '',
+        saving: false,
+    }
     public loading: boolean = true
     public tags: TagInterface[] = []
+    public tag: TagInterface = {
+        id: 0,
+        title: '',
+        slug: '',
+        posts_count: 0,
+        projects_count: 0,
+    }
 
     public async loadTags() {
         const res = await this.$axios.$get('root/tags')
@@ -103,6 +200,43 @@ export default class Tag extends Vue {
         cls.remove('fa-spinner')
 
         return loader
+    }
+
+    public openModal(tag: TagInterface = this.tag): void {
+        this.tag = tag
+
+        // show modal
+        // @ts-ignore
+        new Modal(document.querySelector(`#TagModal`) as HTMLDivElement).show()
+    }
+
+    public closeModal(): void
+    {
+        // @ts-ignore
+        new Modal(document.querySelector(`#TagModal`) as HTMLDivElement).hide()
+    }
+
+    public async saveTag() {
+        if (!this.model.self.length) {
+            this.model.errors = 'a'
+            return
+        }
+        this.model.saving = true
+
+        const res = await this.$axios.$post('root/tags', {
+            title: this.model.self
+        })
+
+        this.model.saving = false
+
+        if (!res || !res.id) {
+            this.$nf.error()
+            return
+        }
+
+        this.model.errors = ''
+        this.tags.push(res)
+        this.closeModal()
     }
 
     get title(): string {
