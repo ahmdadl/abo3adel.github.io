@@ -6,7 +6,7 @@
         <div v-else>
             <div class="row">
                 <div class="col-12">
-                    <button class="btn btn-warning" @click.prevent="openModal">
+                    <button class="btn btn-warning" @click.prevent="openModal()">
                         Create New Tag
                     </button>
                     <hr class="bg-secondary pt-1 w-75 rounded" />
@@ -30,7 +30,10 @@
                     </span>
                 </div>
                 <div class="col-7 text-right">
-                    <button class="btn btn-info">
+                    <button
+                        class="btn btn-info"
+                        @click.prevent="openModal(tag.title, tag.id)"
+                    >
                         <i class="fas fa-edit mx-1"></i>
                     </button>
                     <button
@@ -58,7 +61,7 @@
                 <div class="modal-content bg-dark">
                     <div class="modal-header">
                         <h5 class="modal-title" id="TagModalLabel">
-                            {{ tag.title || 'Create new Tag' }}
+                            {{ model.self || 'Create new Tag' }}
                         </h5>
                         <button
                             type="button"
@@ -144,21 +147,15 @@ import TagInterface from '~/interfaces/tag-interface'
 })
 export default class Tag extends Vue {
     @Ref('form') readonly form!: HTMLFormElement
-    
+
     public model = {
         self: '',
         errors: '',
         saving: false,
+        id: 0,
     }
     public loading: boolean = true
     public tags: TagInterface[] = []
-    public tag: TagInterface = {
-        id: 0,
-        title: '',
-        slug: '',
-        posts_count: 0,
-        projects_count: 0,
-    }
 
     public async loadTags() {
         const res = await this.$axios.$get('root/tags')
@@ -202,16 +199,17 @@ export default class Tag extends Vue {
         return loader
     }
 
-    public openModal(tag: TagInterface = this.tag): void {
-        this.tag = tag
+    public openModal(title: string = '', id: number = 0): void {
+        this.model.self = title
+        this.model.id = id
+        this.model.errors = ''
 
         // show modal
         // @ts-ignore
         new Modal(document.querySelector(`#TagModal`) as HTMLDivElement).show()
     }
 
-    public closeModal(): void
-    {
+    public closeModal(): void {
         // @ts-ignore
         new Modal(document.querySelector(`#TagModal`) as HTMLDivElement).hide()
     }
@@ -222,9 +220,13 @@ export default class Tag extends Vue {
             return
         }
         this.model.saving = true
+        const patch = this.model.id > 0
 
-        const res = await this.$axios.$post('root/tags', {
-            title: this.model.self
+        const path = patch ? `root/tags/${this.model.id}` : 'root/tags'
+        const method = patch ? '$patch' : '$post'
+
+        const res = await this.$axios[method](path, {
+            title: this.model.self,
         })
 
         this.model.saving = false
@@ -235,7 +237,12 @@ export default class Tag extends Vue {
         }
 
         this.model.errors = ''
-        this.tags.push(res)
+        if (patch) {
+            const index = this.tags.findIndex((x) => x.id === this.model.id)
+            this.tags[index].title = res.title
+        } else {
+            this.tags.push(res)
+        }
         this.closeModal()
     }
 
