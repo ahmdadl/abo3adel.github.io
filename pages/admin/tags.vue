@@ -6,7 +6,10 @@
         <div v-else>
             <div class="row">
                 <div class="col-12">
-                    <button class="btn btn-warning" @click.prevent="openModal()">
+                    <button
+                        class="btn btn-warning"
+                        @click.prevent="openModal()"
+                    >
                         Create New Tag
                     </button>
                     <hr class="bg-secondary pt-1 w-75 rounded" />
@@ -158,9 +161,11 @@ export default class Tag extends Vue {
     public tags: TagInterface[] = []
 
     public async loadTags() {
+        this.$nuxt.$loading.start()
         const res = await this.$axios.$get('root/tags')
 
         this.loading = false
+        this.$nuxt.$loading.finish()
 
         if (!res) {
             this.$nf.error()
@@ -251,7 +256,9 @@ export default class Tag extends Vue {
     }
 
     mounted() {
-        this.loadTags()
+        this.$nextTick(() => {
+            this.loadTags()
+        })
     }
 }
 </script>
