@@ -51,6 +51,14 @@ export default class Admin extends Vue {
             text: 'comments',
             url: 'admin/comments',
         },
+        {
+            text: 'tags',
+            url: 'admin/tags',
+        },
+        {
+            text: 'categories',
+            url: 'admin/categories',
+        },
     ]
 }
 </script>
