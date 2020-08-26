@@ -12,7 +12,7 @@
         <!-- comment list -->
         <div
             class="media mt-2 border-top pt-2"
-            v-for="c in comments"
+            v-for="(c, cinx) in comments"
             :key="c.id + '-' + Math.random()"
         >
             <img
@@ -34,11 +34,26 @@
                 <span class="badge badge-primary p-1">
                     {{ c.updated }}
                 </span>
+                <button
+                    type="button"
+                    class="btn btn-danger btn-sm"
+                    @click.prevent="remove(c.id, cinx)"
+                >
+                    <i
+                        :id="`spinner${c.id}`"
+                        class="fas fa-trash-alt"
+                        role="status"
+                        aria-hidden="true"
+                    ></i>
+                    DELETE
+                </button>
                 <p>
                     {{ c.body }}
                 </p>
             </div>
         </div>
+
+        <!-- TODO show pagination -->
     </div>
 </template>
 <script lang="ts">
@@ -69,6 +84,23 @@ export default class CommentList extends Vue {
         }
 
         this.comments = res.data
+    }
+
+    public async remove(id: number, index: number): void {
+        const loader = document.querySelector(`#spinner${id}`) as HTMLDivElement
+        loader.className = 'spinner-border spinner-border-sm align-middle'
+
+        const res = await this.$axios.$delete(`root/comments/${id}`)
+
+        loader.className = 'fas fa-trash-alt'
+
+        if (res) {
+            this.$nf.error()
+            return
+        }
+
+        // remove from comments list
+        this.comments.splice(index, 1)
     }
 
     get title(): string {
