@@ -132,47 +132,13 @@
                 </div>
             </div>
         </template>
-        <div v-if="!limit && page.last > 1">
-            <nav aria-label="Page navigation example" class="my-3">
-                <ul class="pagination justify-content-center">
-                    <li class="page-item">
-                        <button
-                            class="page-link"
-                            aria-label="Previous"
-                            @click.prevent="loadPosts(page.first)"
-                            :class="{
-                                'text-muted': page.current === page.first,
-                            }"
-                            :disabled="page.current === page.first"
-                        >
-                            <span aria-hidden="true">&laquo;</span>
-                            <span class="sr-only">Previous</span>
-                        </button>
-                    </li>
-                    <li class="page-item" v-for="pa in pages" :key="pa">
-                        <button
-                            class="page-link"
-                            @click.prevent="loadPosts(pa)"
-                        >
-                            {{ pa }}
-                        </button>
-                    </li>
-                    <li class="page-item">
-                        <button
-                            class="page-link"
-                            aria-label="Next"
-                            :class="{
-                                'text-muted': page.current === page.last,
-                            }"
-                            @click.prevent="loadPosts(page.last)"
-                            :disabled="page.current === page.last"
-                        >
-                            <span aria-hidden="true">&raquo;</span>
-                            <span class="sr-only">Next</span>
-                        </button>
-                    </li>
-                </ul>
-            </nav>
+        <div v-if="!limit">
+            <Paginate
+                :title="title"
+                :path="pagePath"
+                :res="pageResponse"
+                @load="loadPosts($event)"
+            />
         </div>
     </div>
 </template>
@@ -183,17 +149,18 @@ import { ContentLoader } from 'vue-content-loader'
 import Card from '~/components/card.vue'
 import PostInterface from '~/interfaces/PostInterface'
 import CategoryInterface from '~/interfaces/category-interface'
+import Paginate from '~/components/paginate.vue'
 
 @Component({
     scrollToTop: true,
-    head() {
-        return {
-            title:
-                (this as AllPostsList).title +
-                    ` (${(this as AllPostsList).page.current})` || '',
-        }
-    },
-    components: { ContentLoader, Card },
+    // head() {
+    //     return {
+    //         title:
+    //             (this as AllPostsList).title +
+    //                 ` (${(this as AllPostsList).page.current})` || '',
+    //     }
+    // },
+    components: { ContentLoader, Card, Paginate },
 })
 export default class AllPostsList extends Vue {
     @Prop({ type: String, required: true }) readonly title!: string
@@ -203,21 +170,23 @@ export default class AllPostsList extends Vue {
     public loading: boolean = true
     public posts: PostInterface[] = []
     public loadingArr: number[] = Array(15).fill(Math.random())
-    public page = {
-        first: 1,
-        current: this.$route.query.page || 1,
-        last: 1,
-        path: this.path,
-    }
-    public pages: number[] = []
+    // public pagePath: string = this.pathParams()
+    public pageResponse = {}
+    // public page = {
+    //     first: 1,
+    //     current: parseInt(this.$route.query.page as string) || 1,
+    //     last: 1,
+    //     path: this.path,
+    // }
+    // public pages: number[] = []
 
     public loadPosts(
-        page: number | string = this.page.current as string,
-        path: string = this.page.path
+        path: string = this.pagePath
     ): void {
+        // alert(`page => ${page}`)
         this.loading = true
-        const addon = path.indexOf('?') > -1 ? '&' : '?'
-        this.$axios.get(`${path}${addon}page=${page}`).then((res) => {
+
+        this.$axios.get(path).then((res) => {
             if (!res || !res.data || !res.data.posts) {
                 this.loading = false
                 this.$nf.error()
@@ -236,36 +205,31 @@ export default class AllPostsList extends Vue {
 
             // set pagination object
             const d = res.data.posts
-            const q = this.$route.query.q ? 'q=' + this.$route.query.q : ''
-            this.page = {
-                first: d.from,
-                current: d.current_page,
-                last: d.last_page,
-                path: d.path + '?' + q,
-            }
-            this.pages = Array(this.page.last)
-                .fill(1)
-                .map((x, inx) => x + inx)
+            // const q = this.$route.query.q ? 'q=' + this.$route.query.q : ''
+            console.log(d)
+            this.pageResponse = d
+            // this.page = {
+            //     first: d.from,
+            //     current: d.current_page,
+            //     last: d.last_page,
+            //     path: d.path + '?' + q,
+            // }
+            // this.pages = Array(this.page.last)
+            //     .fill(1)
+            //     .map((x, inx) => x + inx)
+            // this.pagePath = d.path + '?' + q
 
-            let path = this.$route.path + '?page=' + this.page.current
-            if (this.$route.query.q) {
-                path += addon + q
-            }
-            history.pushState({}, '', path)
             window.scrollTo(0, 0)
         })
     }
 
-    @Watch('path')
-    onPathChanged(val: string) {
-        this.page = {
-            first: 1,
-            last: 1,
-            path: val,
-            // @ts-ignore
-            current: 1,
-        }
-        this.loadPosts()
+    get pagePath(): string {
+        const addon = this.path.indexOf('?') > -1 ? '&' : '?'
+        const page = parseInt(this.$route.query.page as string) || 1
+
+        return this.path.indexOf('page=') > -1
+            ? this.path
+            : `${this.path}${addon}page=${page}`
     }
 
     mounted() {
