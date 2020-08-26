@@ -15,11 +15,11 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return response()->json([
-            'cats' => Category::withCount('posts')
+        return response()->json(
+            Category::withCount('posts')
                 ->orderByDesc('posts_count')
                 ->get()
-        ]);
+        );
     }
 
     public function listPosts(Category $category)

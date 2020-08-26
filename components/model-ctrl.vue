@@ -20,31 +20,31 @@
                     <strong>No data, please add new Entry</strong>
                 </div>
             </div>
-            <div v-for="(tag, tinx) in data" :key="tag.id" class="row mb-3">
+            <div v-for="(entry, tinx) in data" :key="entry.id" class="row mb-3">
                 <div class="col-5">
                     <span class="btn btn-primary">
-                        {{ tag.title }}
+                        {{ entry.title }}
                         <span class="badge badge-light">
-                            {{ tag.posts_count || 0 }}
+                            {{ entry.posts_count || 0 }}
                         </span>
-                        <span class="badge badge-dark">
-                            {{ tag.projects_count || 0 }}
+                        <span class="badge badge-dark" v-if="path === 'tags'">
+                            {{ entry.projects_count || 0 }}
                         </span>
                     </span>
                 </div>
                 <div class="col-7 text-right">
                     <button
                         class="btn btn-info"
-                        @click.prevent="openModal(tag.title, tag.id)"
+                        @click.prevent="openModal(entry.title, entry[routeKey])"
                     >
                         <i class="fas fa-edit mx-1"></i>
                     </button>
                     <button
                         class="btn btn-danger"
-                        @click.prevent="remove(tag.id, tinx)"
+                        @click.prevent="remove(entry[routeKey], tinx)"
                     >
                         <i
-                            :id="`del${tag.id}`"
+                            :id="`del${entry[routeKey]}`"
                             class="fas fa-trash-alt mx-1"
                         ></i>
                     </button>
@@ -151,6 +151,7 @@ import CategoryInterface from '~/interfaces/category-interface'
 })
 export default class ModelCtrl extends Vue {
     @Prop({ type: String, required: true }) readonly path!: string
+    @Prop({type: String, default: 'id'}) readonly routeKey!: string
 
     @Ref('form') readonly form!: HTMLFormElement
 
@@ -165,7 +166,8 @@ export default class ModelCtrl extends Vue {
 
     public async loadData() {
         this.$nuxt.$loading.start()
-        const res = await this.$axios.$get(`root/${this.path}`)
+        const path = this.path === 'categories' ? this.path : `root/${this.path}`
+        const res = await this.$axios.$get(path)
 
         this.loading = false
         this.$nuxt.$loading.finish()
@@ -232,7 +234,8 @@ export default class ModelCtrl extends Vue {
             return
         }
         this.model.saving = true
-        const patch = this.model.id > 0
+        // @ts-ignore
+        const patch = this.model.id > 0 || this.model.id.length
 
         const path = patch
             ? `root/${this.path}/${this.model.id}`
@@ -252,7 +255,7 @@ export default class ModelCtrl extends Vue {
 
         this.model.errors = ''
         if (patch) {
-            const index = this.data.findIndex((x) => x.id === this.model.id)
+            const index = this.data.findIndex((x) => x[this.routeKey] === this.model.id)
             this.data[index].title = res.title
         } else {
             this.data.push(res)
