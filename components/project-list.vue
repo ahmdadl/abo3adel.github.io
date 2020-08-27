@@ -416,10 +416,18 @@ export default class ProjectList extends Vue {
     /**
      * carsousel controllers
      */
+    public resetInterval() {
+        // @ts-ignore
+        clearInterval(this.carousel.interval)
+        this.carousel.interval = setInterval(() => {
+            this.next()
+        }, 5000)
+    }
     /**
      * carousel move slide
      */
     public move(inx: number) {
+        console.log(inx)
         this.slides.forEach((x, index) => {
             x.classList.remove('active')
 
@@ -427,6 +435,9 @@ export default class ProjectList extends Vue {
                 x.classList.add('active')
             }
         })
+
+        //reset interval timer
+        this.resetInterval()
     }
 
     /**
@@ -436,7 +447,6 @@ export default class ProjectList extends Vue {
         if (this.carousel.current >= this.carousel.amount) {
             this.carousel.current = 0
         }
-
         this.move(this.carousel.current++)
     }
 
@@ -444,10 +454,10 @@ export default class ProjectList extends Vue {
      * show previous carousel slide
      */
     public prev() {
-        if (this.carousel.current <= 1) {
-            this.carousel.current = this.carousel.amount + 1
+        if (this.carousel.current < 1) {
+            this.carousel.current = this.carousel.amount
         }
-        this.move(this.carousel.current--)
+        this.move(--this.carousel.current)
     }
 
     mounted() {
