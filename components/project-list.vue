@@ -98,7 +98,7 @@
                                     {{ project.type }}
                                 </span>
                                 <img
-                                    :src="'/img/' + project.img[0]"
+                                    :src="'/img/projects/' + project.img[0]"
                                     class="card-img"
                                 />
                             </template>
@@ -220,7 +220,7 @@
                                     data-interval="5000"
                                 >
                                     <img
-                                        :src="'/img/' + i"
+                                        :src="'/img/projects/' + i"
                                         class="d-block w-100"
                                         :alt="mp.title"
                                     />
