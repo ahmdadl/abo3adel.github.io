@@ -140,6 +140,7 @@
 import { Vue, Component, Ref, Prop } from 'vue-property-decorator'
 import TagInterface from '~/interfaces/tag-interface'
 import CategoryInterface from '~/interfaces/category-interface'
+import {showLoader, hideLoader} from '~/common/btn-loader'
 
 @Component({
     // auth: false,
@@ -181,32 +182,12 @@ export default class ModelCtrl extends Vue {
     }
 
     public async remove(id: number, inx: number) {
-        this.showLoader(`#del${id}`)
+        this.showLoader(`#del${id}`, 'fa-trash-alt', this)
         const res = await this.$axios.$delete(`root/${this.path}/${id}`)
 
-        this.hideLoader(`#del${id}`)
+        this.hideLoader(`#del${id}`, 'fa-trash-alt', this)
 
         this.data.splice(inx, 1)
-    }
-
-    public showLoader(id: string): HTMLSpanElement {
-        const loader = document.querySelector(id) as HTMLSpanElement
-        let cls = loader.classList
-        cls.remove('fa-trash-alt')
-        cls.add('fa-pulse')
-        cls.add('fa-spinner')
-
-        return loader
-    }
-
-    public hideLoader(id: string): HTMLSpanElement {
-        const loader = document.querySelector(id) as HTMLSpanElement
-        let cls = loader.classList
-        cls.add('fa-trash-alt')
-        cls.remove('fa-pulse')
-        cls.remove('fa-spinner')
-
-        return loader
     }
 
     public openModal(title: string = '', id: number = 0): void {

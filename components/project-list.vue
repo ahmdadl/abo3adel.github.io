@@ -142,7 +142,25 @@
                                     {{ $t('home.project.more_info') }}
                                 </button>
                             </p>
-
+                            <p class="card-text" v-if="auth">
+                                <button
+                                    class="btn btn-warning mx-1 mb-2 text-uppercase"
+                                    @click.prevent="$emit(`edit`, project)"
+                                >
+                                    <i class="fas fa-edit"></i>
+                                    Edit
+                                </button>
+                                <button
+                                    class="btn btn-danger mx-1 mb-2 text-uppercase"
+                                    @click.prevent="$emit('delete', project.id)"
+                                >
+                                    <i
+                                        :id="`del${project.id}`"
+                                        class="fas fa-trash-alt"
+                                    ></i>
+                                    Delete
+                                </button>
+                            </p>
                             <template slot="footer">
                                 <div class="text-center">
                                     <span
@@ -271,12 +289,16 @@ export const defaultProject: ProjectInterface = {
 }
 
 @Component({
-    components: { Card, ContentLoader },
+    components: {
+        Card,
+        ContentLoader,
+    },
 })
 export default class ProjectList extends Vue {
     @Ref('slide') readonly slides!: HTMLDivElement[]
 
     @Prop({ type: Boolean, default: false }) readonly auth!: boolean
+    @Prop({ type: String, default: '' }) readonly injected!: string
 
     public projects: ProjectInterface[] = []
     public allProjects: ProjectInterface[] = []
@@ -348,6 +370,15 @@ export default class ProjectList extends Vue {
         const filterd = this.allProjects.filter((x) => x.type === type)
         this.projects = [...filterd]
         this.projectsLoad.splice(0)
+    }
+
+    /**
+     * remove an item from list
+     */
+    public removeItem(id: number): void {
+        this.allProjects = [...this.allProjects.filter((x) => x.id !== id)]
+
+        this.filterProjects(this.activeType)
     }
 
     /**
