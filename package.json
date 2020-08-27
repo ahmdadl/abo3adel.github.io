@@ -17,6 +17,7 @@
     "@nuxtjs/auth": "^4.9.1",
     "@nuxtjs/auth-next": "^5.0.0-1595976864.509d9d6",
     "@nuxtjs/axios": "^5.12.1",
+    "animate.css": "^4.1.0",
     "bootstrap": "^4.3.1",
     "laravel-vue-pagination": "^2.3.1",
     "nuxt": "^2.14.0",

@@ -17,142 +17,148 @@
                     </a>
                 </li>
             </ul>
-            <div class="row mt-3">
-                <div
-                    class="col-12 col-sm-6 col-md-4 col-xl-4 mb-3"
-                    v-for="inp in projectsLoad"
-                    :key="inp * Math.random()"
-                >
-                    <content-loader
-                        class="card card-body bg-transparent border-light p-0 m-0"
-                        :width="240"
-                        :height="130"
-                        primaryColor="#dbdbdb"
-                        secondaryColor="#6b6b6b"
+            <div class="mt-3">
+                <div class="row">
+                    <div
+                        class="col-12 col-sm-6 col-md-4 col-xl-4 mb-3"
+                        v-for="inp in projectsLoad"
+                        :key="inp * Math.random()"
                     >
-                        <rect
-                            x="9"
-                            y="25"
-                            rx="4"
-                            ry="4"
-                            width="225"
-                            height="15"
-                        />
-                        <rect
-                            x="9"
-                            y="65"
-                            rx="4"
-                            ry="4"
-                            width="90"
-                            height="18"
-                        />
-                        <rect
-                            x="115"
-                            y="65"
-                            rx="4"
-                            ry="4"
-                            width="120"
-                            height="18"
-                        />
-                        <rect
-                            x="15"
-                            y="105"
-                            rx="4"
-                            ry="4"
-                            width="63"
-                            height="19"
-                        />
-                        <rect
-                            x="90"
-                            y="105"
-                            rx="4"
-                            ry="4"
-                            width="63"
-                            height="19"
-                        />
-                        <rect
-                            x="165"
-                            y="105"
-                            rx="4"
-                            ry="4"
-                            width="63"
-                            height="19"
-                        />
-                    </content-loader>
+                        <content-loader
+                            class="card card-body bg-transparent border-light p-0 m-0"
+                            :width="240"
+                            :height="130"
+                            primaryColor="#dbdbdb"
+                            secondaryColor="#6b6b6b"
+                        >
+                            <rect
+                                x="9"
+                                y="25"
+                                rx="4"
+                                ry="4"
+                                width="225"
+                                height="15"
+                            />
+                            <rect
+                                x="9"
+                                y="65"
+                                rx="4"
+                                ry="4"
+                                width="90"
+                                height="18"
+                            />
+                            <rect
+                                x="115"
+                                y="65"
+                                rx="4"
+                                ry="4"
+                                width="120"
+                                height="18"
+                            />
+                            <rect
+                                x="15"
+                                y="105"
+                                rx="4"
+                                ry="4"
+                                width="63"
+                                height="19"
+                            />
+                            <rect
+                                x="90"
+                                y="105"
+                                rx="4"
+                                ry="4"
+                                width="63"
+                                height="19"
+                            />
+                            <rect
+                                x="165"
+                                y="105"
+                                rx="4"
+                                ry="4"
+                                width="63"
+                                height="19"
+                            />
+                        </content-loader>
+                    </div>
                 </div>
                 <!-- TODO animate projects array -->
-                <div
-                    class="col-12 col-sm-6 col-md-4 mb-3 project-card"
-                    v-for="project in projects"
-                    :key="project.id + project.title"
-                >
-                    <card :overlay="true" cls="text-left">
-                        <template slot="img">
-                            <span
-                                class="projectType badge badge-danger text-uppercase position-absolute"
-                                style="top: 0; left: 0;"
-                            >
-                                {{ project.type }}
-                            </span>
-                            <img
-                                :src="'/img/' + project.img[0]"
-                                class="card-img"
-                            />
-                        </template>
-                        <h5 class="card-title">
-                            <a
-                                :href="project.link"
-                                target="_blank"
-                                class="text-light"
-                            >
-                                {{ project.title }}
-                            </a>
-                        </h5>
-                        <p class="card-text">
-                            <strong class="text-capitalize"
-                                >{{ $t('home.project.client') }}:</strong
-                            >
-                            <span class="text-capitalize">
-                                {{ project.client }}
-                            </span>
-                        </p>
-                        <p class="card-text text-center">
-                            <a
-                                :href="project.link"
-                                class="btn btn-primary btn-sm mb-2"
-                                target="_blank"
-                            >
-                                <i class="fas fa-link"></i>
-                                {{ $t('home.project.visit') }}
-                            </a>
-                            <button
-                                class="btn btn-info btn-sm mb-2"
-                                @click.prevent="openModal(project.id)"
-                            >
+                <transition-group name="projects" tag="div" class="row">
+                    <div
+                        class="col-12 col-sm-6 col-md-4 mb-3 project-card"
+                        v-for="project in projects"
+                        :key="project.id + project.title"
+                    >
+                        <card :overlay="true" cls="text-left">
+                            <template slot="img">
                                 <span
-                                    :id="'spinnerView' + project.id"
-                                    class="spinner-border spinner-border-sm d-none"
-                                    role="status"
-                                    aria-hidden="true"
-                                ></span>
-                                <i class="fas fa-info"></i>
-                                {{ $t('home.project.more_info') }}
-                            </button>
-                        </p>
-
-                        <template slot="footer">
-                            <div class="text-center">
-                                <span
-                                    class="badge badge-primary p-1 mx-1"
-                                    v-for="t in project.tags"
-                                    :key="t.id + project.title + Math.random()"
+                                    class="projectType badge badge-danger text-uppercase position-absolute"
+                                    style="top: 0; left: 0;"
                                 >
-                                    {{ t.title }}
+                                    {{ project.type }}
                                 </span>
-                            </div>
-                        </template>
-                    </card>
-                </div>
+                                <img
+                                    :src="'/img/' + project.img[0]"
+                                    class="card-img"
+                                />
+                            </template>
+                            <h5 class="card-title">
+                                <a
+                                    :href="project.link"
+                                    target="_blank"
+                                    class="text-light"
+                                >
+                                    {{ project.title }}
+                                </a>
+                            </h5>
+                            <p class="card-text">
+                                <strong class="text-capitalize"
+                                    >{{ $t('home.project.client') }}:</strong
+                                >
+                                <span class="text-capitalize">
+                                    {{ project.client }}
+                                </span>
+                            </p>
+                            <p class="card-text text-center">
+                                <a
+                                    :href="project.link"
+                                    class="btn btn-primary btn-sm mb-2"
+                                    target="_blank"
+                                >
+                                    <i class="fas fa-link"></i>
+                                    {{ $t('home.project.visit') }}
+                                </a>
+                                <button
+                                    class="btn btn-info btn-sm mb-2"
+                                    @click.prevent="openModal(project.id)"
+                                >
+                                    <span
+                                        :id="'spinnerView' + project.id"
+                                        class="spinner-border spinner-border-sm d-none"
+                                        role="status"
+                                        aria-hidden="true"
+                                    ></span>
+                                    <i class="fas fa-info"></i>
+                                    {{ $t('home.project.more_info') }}
+                                </button>
+                            </p>
+
+                            <template slot="footer">
+                                <div class="text-center">
+                                    <span
+                                        class="badge badge-primary p-1 mx-1"
+                                        v-for="t in project.tags"
+                                        :key="
+                                            t.id + project.title + Math.random()
+                                        "
+                                    >
+                                        {{ t.title }}
+                                    </span>
+                                </div>
+                            </template>
+                        </card>
+                    </div>
+                </transition-group>
             </div>
         </div>
         <!-- Project Modal -->
@@ -418,5 +424,17 @@ export default class ProjectList extends Vue {
     }
 }
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.project-card {
+    transition: all 1s;
+}
+.projects-enter,
+.projects-leave-to {
+    opacity: 0;
+    transform: translateY(30px);
+}
+.projects-leave-active {
+    position: absolute;
+}
+</style>
 <style lang="scss"></style>
