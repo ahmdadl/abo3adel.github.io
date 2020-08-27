@@ -30,12 +30,11 @@ class ProjectController extends Controller
         $img = [];
         foreach ($res->img as $i) {
             $img[] = Str::replaceFirst(
-                'public',
+                self::UploadPath,
                 '',
                 $i->store(self::UploadPath)
             );
         }
-
 
         unset($res->tags);
         $res->img = $img;
@@ -69,14 +68,14 @@ class ProjectController extends Controller
                 // unlink(storage_path('app/public' . $g));
                 // dump($g);
                 Storage::delete(
-                    'public' . $g
+                    self::UploadPath . $g
                 );
             }
 
             // upload new images
             foreach ($res->img as $i) {
                 $img[] = Str::replaceFirst(
-                    'public',
+                    self::UploadPath,
                     '',
                     $i->store(self::UploadPath)
                 );
@@ -110,7 +109,7 @@ class ProjectController extends Controller
             // delete all images
             foreach ($project->img as $img) {
                 Storage::delete(
-                    'public' . $img
+                    self::UploadPath . $img
                 );
             }
         }

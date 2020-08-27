@@ -75,7 +75,7 @@ class ProjectControllerTest extends TestCase
         $proj = factory(Project::class)->create([
             'img' => ([
                 Str::replaceFirst(
-                    'public',
+                    ProjectController::UploadPath,
                     '',
                     $oldImg
                 )
@@ -133,7 +133,7 @@ class ProjectControllerTest extends TestCase
         $project = factory(Project::class)->create([
             'img' => ([
                 Str::replaceFirst(
-                    'public',
+                    ProjectController::UploadPath,
                     '',
                     $oldImg
                 )

@@ -18,8 +18,8 @@ class CreateProjectsTable extends Migration
             $table->string('title');
             $table->string('link');
             $table->string('client');
-            $table->string('img');
-            $table->string('info');
+            $table->text('img');
+            $table->text('info');
             // $table->text('tags');
             $table->enum('type', ['laravel', 'spa', 'mobile'])
                 ->default('laravel');
