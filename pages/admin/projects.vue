@@ -37,10 +37,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form
-                            class="form needs-validation"
-                            :class="{ 'was-validated': form.errors.any() }"
-                        >
+                        <form class="form needs-validation">
                             <div
                                 class="form-group"
                                 v-for="inp in inputs"
@@ -51,17 +48,19 @@
                                     :name="inp"
                                     :id="inp"
                                     class="form-control"
+                                    @keypress.enter="saveProject"
                                     :placeholder="`enter ${inp}`"
                                     :aria-describedby="inp + 'Help'"
                                     v-model="form[inp]"
                                     :class="{
                                         'is-invalid': form.errors.has(inp),
                                     }"
+                                    required
                                 />
                                 <div
                                     class="invalid-feedback"
                                     v-if="form.errors.has(inp)"
-                                    v-text="form.errros.first(inp)"
+                                    v-text="form.errors.first(inp)"
                                 ></div>
                             </div>
                             <div class="form-group">
@@ -75,11 +74,12 @@
                                     :class="{
                                         'is-invalid': form.errors.has('info'),
                                     }"
+                                    required
                                 ></textarea>
                                 <div
                                     class="invalid-feedback"
                                     v-if="form.errors.has('info')"
-                                    v-text="form.errros.first('info')"
+                                    v-text="form.errors.first('info')"
                                 ></div>
                             </div>
                             <div class="form-group">
@@ -87,9 +87,14 @@
                                     path="root/tags"
                                     @tags="(newTags) => (tags = newTags)"
                                 />
+                                <div
+                                    class="invalid-feedback"
+                                    v-if="form.errors.has('tags')"
+                                    v-text="form.errors.first('tags')"
+                                ></div>
                             </div>
                             <div class="form-group">
-                                <label class="custom-file">
+                                <label class="custom-file text-light bg-dark">
                                     <input
                                         type="file"
                                         name="img"
@@ -102,11 +107,18 @@
                                         multiple
                                         required
                                     />
-                                    <span class="custom-file-control"></span>
+                                    <span class="custom-file-control">
+                                        Choose Project Images
+                                    </span>
                                 </label>
                                 <small id="projimg" class="form-text text-muted"
                                     >jpeg,, jpg, png and under 512KB</small
                                 >
+                                <div
+                                    class="invalid-feedback"
+                                    v-if="form.errors.has('img')"
+                                    v-text="form.errors.first('img')"
+                                ></div>
                             </div>
                             <div
                                 class="mx-auto row"
@@ -126,10 +138,27 @@
                             type="button"
                             class="btn btn-secondary"
                             data-dismiss="modal"
+                            @click="
+                                form.reset()
+                                prevImages = []
+                            "
                         >
                             Close
                         </button>
-                        <button type="button" class="btn btn-primary">
+                        <button
+                            type="button"
+                            class="btn btn-primary"
+                            @click.prevent="saveProject"
+                            :disabled="form.processing"
+                        >
+                            <i
+                                class="fas"
+                                :class="
+                                    form.processing
+                                        ? 'fa-pulse fa-spinner'
+                                        : 'fa-save'
+                                "
+                            ></i>
                             Save changes
                         </button>
                     </div>
@@ -161,7 +190,7 @@ export default class Project extends Vue {
 
     public mp: ProjectInterface = defaultProject
     private inputs: string[] = ['title', 'link', 'client', 'type']
-    public form = new Form(['img', 'info', ...this.inputs])
+    public form = new Form(['img', 'info', 'tags', ...this.inputs])
     public tags: { text: string; slug: string }[] = []
     public prevImages: string[] = []
 
@@ -187,6 +216,14 @@ export default class Project extends Vue {
         new Modal(document.querySelector(`#modalCreate`)).show()
     }
 
+    public closeModal() {
+        Object.assign(this.mp, defaultProject)
+        this.form.reset()
+        this.prevImages.splice(0)
+        // @ts-ignore
+        new Modal(document.querySelector(`#modalCreate`)).hide()
+    }
+
     public previewImg(ev: Event) {
         const inp = ev.target as HTMLInputElement
         this.prevImages = []
@@ -194,7 +231,9 @@ export default class Project extends Vue {
             this.prevImages = []
             return
         }
-        this.form.img = inp
+        this.form.populate({
+            img: inp.files,
+        })
 
         for (const f in inp.files) {
             if (typeof inp.files[f] === 'object') {
@@ -207,6 +246,24 @@ export default class Project extends Vue {
                 reader.readAsDataURL(inp.files[f])
             }
         }
+    }
+
+    public async saveProject() {
+        this.form.populate({
+            tags: this.tags.map((x) => x.slug),
+        })
+
+        const res = await this.form.post(
+            `${this.$axios.defaults.baseURL}root/projects`
+        )
+
+        if (!res) {
+            this.$nf.error()
+            return
+        }
+
+        this.plist.addItem(res)
+        this.closeModal()
     }
 
     get title(): string {

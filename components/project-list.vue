@@ -298,7 +298,6 @@ export default class ProjectList extends Vue {
     @Ref('slide') readonly slides!: HTMLDivElement[]
 
     @Prop({ type: Boolean, default: false }) readonly auth!: boolean
-    @Prop({ type: String, default: '' }) readonly injected!: string
 
     public projects: ProjectInterface[] = []
     public allProjects: ProjectInterface[] = []
@@ -377,6 +376,21 @@ export default class ProjectList extends Vue {
      */
     public removeItem(id: number): void {
         this.allProjects = [...this.allProjects.filter((x) => x.id !== id)]
+
+        this.filterProjects(this.activeType)
+    }
+
+    public addItem(item: ProjectInterface, exists: boolean = false): void {
+        if (exists) {
+            this.allProjects = this.allProjects.map((x) => {
+                if (x.id === item.id) {
+                    x = item
+                }
+                return x
+            })
+        } else {
+            this.allProjects.unshift(item)
+        }
 
         this.filterProjects(this.activeType)
     }
