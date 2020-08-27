@@ -54,11 +54,20 @@
         </div>
 
         <!-- TODO show pagination -->
+        <Pagination
+            :data="pageResponse"
+            @pagination-change-page="loadComments"
+            :limit="2"
+            align="center"
+        />
     </div>
 </template>
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
+import { Vue, Component, Watch } from 'vue-property-decorator'
 import CommentInterface from '~/interfaces/comments-interface'
+// @ts-ignore
+import Pagination from 'laravel-vue-pagination'
+import { getPath, pushPageToHistroy } from '~/common/pagination'
 
 @Component({
     // auth: false,
@@ -67,14 +76,19 @@ import CommentInterface from '~/interfaces/comments-interface'
             title: (this as CommentList).title || '',
         }
     },
+    components: { Pagination },
 })
 export default class CommentList extends Vue {
     public loading: boolean = true
     public comments: CommentInterface[] = []
+    public pageResponse = {}
 
-    public async loadComments(page: number = 1) {
+    public async loadComments(
+        page: number = parseInt(this.$route.query.page as string) || 1
+    ) {
         this.loading = true
-        const res = await this.$axios.$get(`root/comments?page=${page}`)
+        let path = getPath(page, `root/comments`)
+        const res = await this.$axios.$get(path)
 
         this.loading = false
 
@@ -84,9 +98,13 @@ export default class CommentList extends Vue {
         }
 
         this.comments = res.data
+        this.pageResponse = res
+
+        path = path.replace(/root/, '/admin')
+        pushPageToHistroy(this, page, path, false)
     }
 
-    public async remove(id: number, index: number): void {
+    public async remove(id: number, index: number) {
         const loader = document.querySelector(`#spinner${id}`) as HTMLDivElement
         loader.className = 'spinner-border spinner-border-sm align-middle'
 
@@ -101,6 +119,11 @@ export default class CommentList extends Vue {
 
         // remove from comments list
         this.comments.splice(index, 1)
+    }
+
+    @Watch('$route.query.page')
+    onRouteQueryChanged(val: number) {
+        this.loadComments(val)
     }
 
     get title(): string {

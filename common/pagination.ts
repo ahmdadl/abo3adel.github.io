@@ -5,12 +5,15 @@ export function getPath(pageNum: number, path: string) {
     return path.indexOf('page=') > -1 ? path : `${path}${addon}page=${pageNum}`
 }
 
-export function pushPageToHistroy(self: Vue, page: number, path: string) {
+export function pushPageToHistroy(
+    self: Vue,
+    page: number,
+    path: string,
+    addBlog: boolean = true
+) {
     // @ts-ignore
     self.$route.query.page = `${page}`
     path = path.replace(/post?/g, '')
-    // alert(path)
-    path = '/blog' + path
-    // alert(path)
+    if (addBlog) path = '/blog' + path
     history.pushState({}, '', path)
 }
