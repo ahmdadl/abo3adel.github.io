@@ -133,11 +133,17 @@
             </div>
         </template>
         <div v-if="!limit">
-            <Paginate
+            <!-- <Paginate
                 :title="title"
                 :path="pagePath"
                 :res="pageResponse"
                 @load="loadPosts($event)"
+            /> -->
+            <Pagination
+                :data="pageResponse"
+                @pagination-change-page="loadPosts"
+                :limit="2"
+                align="center"
             />
         </div>
     </div>
@@ -150,17 +156,20 @@ import Card from '~/components/card.vue'
 import PostInterface from '~/interfaces/PostInterface'
 import CategoryInterface from '~/interfaces/category-interface'
 import Paginate from '~/components/paginate.vue'
+// @ts-ignore
+import Pagination from 'laravel-vue-pagination'
+import { getPath, pushPageToHistroy } from '~/common/pagination'
 
 @Component({
     scrollToTop: true,
-    // head() {
-    //     return {
-    //         title:
-    //             (this as AllPostsList).title +
-    //                 ` (${(this as AllPostsList).page.current})` || '',
-    //     }
-    // },
-    components: { ContentLoader, Card, Paginate },
+    head() {
+        return {
+            title:
+                (this as AllPostsList).title +
+                    ` (${this.$route.query.page || 1})` || '',
+        }
+    },
+    components: { ContentLoader, Card, Paginate, Pagination },
 })
 export default class AllPostsList extends Vue {
     @Prop({ type: String, required: true }) readonly title!: string
@@ -170,20 +179,14 @@ export default class AllPostsList extends Vue {
     public loading: boolean = true
     public posts: PostInterface[] = []
     public loadingArr: number[] = Array(15).fill(Math.random())
-    // public pagePath: string = this.pathParams()
     public pageResponse = {}
-    // public page = {
-    //     first: 1,
-    //     current: parseInt(this.$route.query.page as string) || 1,
-    //     last: 1,
-    //     path: this.path,
-    // }
-    // public pages: number[] = []
+    public pagePath: string = this.path
 
     public loadPosts(
-        path: string = this.pagePath
+        page: number = parseInt(this.$route.query.page as string) || 1
     ): void {
         // alert(`page => ${page}`)
+        let path = getPath(page, this.pagePath)
         this.loading = true
 
         this.$axios.get(path).then((res) => {
@@ -203,33 +206,22 @@ export default class AllPostsList extends Vue {
 
             if (this.limit) return
 
-            // set pagination object
-            const d = res.data.posts
-            // const q = this.$route.query.q ? 'q=' + this.$route.query.q : ''
-            console.log(d)
-            this.pageResponse = d
-            // this.page = {
-            //     first: d.from,
-            //     current: d.current_page,
-            //     last: d.last_page,
-            //     path: d.path + '?' + q,
-            // }
-            // this.pages = Array(this.page.last)
-            //     .fill(1)
-            //     .map((x, inx) => x + inx)
-            // this.pagePath = d.path + '?' + q
+            this.pageResponse = res.data.posts
 
+            pushPageToHistroy(this, page, path)
             window.scrollTo(0, 0)
         })
     }
 
-    get pagePath(): string {
-        const addon = this.path.indexOf('?') > -1 ? '&' : '?'
-        const page = parseInt(this.$route.query.page as string) || 1
+    @Watch('$route.query.page')
+    onRouteQueryChanged(val: number) {
+        this.loadPosts(val)
+    }
 
-        return this.path.indexOf('page=') > -1
-            ? this.path
-            : `${this.path}${addon}page=${page}`
+    @Watch('$route.query.q')
+    onRouteSearchChanged(val: string) {
+        this.pagePath = this.pagePath.replace(/q=[a-zA-Z0-9]+/gi, `q=${val}`)
+        this.loadPosts(1)
     }
 
     mounted() {

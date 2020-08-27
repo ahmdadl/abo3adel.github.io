@@ -26,6 +26,7 @@
                                 path: '/blog/find',
                                 query: {
                                     q: this.searchKey,
+                                    page: 1
                                 },
                             })
                         "

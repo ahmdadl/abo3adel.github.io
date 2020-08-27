@@ -18,6 +18,7 @@
     "@nuxtjs/auth-next": "^5.0.0-1595976864.509d9d6",
     "@nuxtjs/axios": "^5.12.1",
     "bootstrap": "^4.3.1",
+    "laravel-vue-pagination": "^2.3.1",
     "nuxt": "^2.14.0",
     "nuxt-i18n": "^6.13.9",
     "sass": "^1.26.10",
