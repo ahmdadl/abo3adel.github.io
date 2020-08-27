@@ -17,6 +17,7 @@ class ProjectControllerTest extends TestCase
     protected string $url = 'projects/';
     protected string $tbName = 'projects';
 
+
     public function testUserCanLoadAllProjects()
     {
         $projects = factory(Project::class, 5)->create();
@@ -30,7 +31,7 @@ class ProjectControllerTest extends TestCase
     public function testUserCanAddNewProject()
     {
         $this->withoutExceptionHandling();
-        Storage::fake('local');
+        Storage::fake('custom');
 
         $proj = factory(Project::class)->raw();
         $tags = factory(Tag::class, 3)->create();
@@ -61,8 +62,8 @@ class ProjectControllerTest extends TestCase
         $this->assertArrayHasKey('tags', (array) $res);
         $this->assertCount(3, $res['tags']);
 
-        Storage::assertExists(ProjectController::UploadPath . '/' . $img1->hashName());
-        Storage::assertExists(ProjectController::UploadPath . '/' . $img2->hashName());
+        Storage::disk('custom')->assertExists(ProjectController::UploadPath . $img1->hashName());
+        Storage::disk('custom')->assertExists(ProjectController::UploadPath . $img2->hashName());
     }
 
     public function testUserCanUpdateProject()
@@ -70,7 +71,7 @@ class ProjectControllerTest extends TestCase
         $this->withoutExceptionHandling();
 
         $oldImage = UploadedFile::fake()->image('ws.jpg');
-        $oldImg = $oldImage->store(ProjectController::UploadPath);
+        $oldImg = Storage::disk('custom')->put(ProjectController::UploadPath, $oldImage);
 
         $proj = factory(Project::class)->create([
             'img' => ([
@@ -81,7 +82,7 @@ class ProjectControllerTest extends TestCase
                 )
             ]),
         ]);
-        Storage::fake('local');
+        Storage::fake('custom');
         $tags = factory(Tag::class, 2)->create();
         $proj->tags()->sync($tags);
 
@@ -108,11 +109,11 @@ class ProjectControllerTest extends TestCase
             'link' => $proj->link
         ]);
 
-        Storage::assertExists(
-            ProjectController::UploadPath . '/' . $img1->hashName()
+        Storage::disk('custom')->assertExists(
+            ProjectController::UploadPath . $img1->hashName()
         );
 
-        Storage::assertMissing(
+        Storage::disk('custom')->assertMissing(
             $oldImg
         );
 
@@ -128,7 +129,7 @@ class ProjectControllerTest extends TestCase
         factory(Project::class, 5)->create();
 
         $oldImage = UploadedFile::fake()->image('ws.jpg');
-        $oldImg = $oldImage->store(ProjectController::UploadPath);
+        $oldImg = Storage::disk('custom')->put(ProjectController::UploadPath, $oldImage);
 
         $project = factory(Project::class)->create([
             'img' => ([
@@ -163,8 +164,8 @@ class ProjectControllerTest extends TestCase
         $this->assertSame(0, DB::table('taggables')->count('id'));
 
         $img = $project->img[0];
-        Storage::assertMissing(
-            ProjectController::UploadPath . '/' . $oldImage->hashName()
+        Storage::disk('custom')->assertMissing(
+            ProjectController::UploadPath . $oldImage->hashName()
         );
     }
 }

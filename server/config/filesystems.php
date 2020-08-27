@@ -48,6 +48,11 @@ return [
             'root' => storage_path('app'),
         ],
 
+        'custom' => [
+            'driver' => 'local',
+            'root' => 'D:\laragon\www\nx',
+        ],
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),

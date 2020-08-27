@@ -12,7 +12,7 @@ use Str;
 
 class ProjectController extends Controller
 {
-    public const UploadPath = 'public/projects';
+    public const UploadPath = 'static/img/projects/';
 
     /**
      * Store a newly created resource in storage.
@@ -32,7 +32,7 @@ class ProjectController extends Controller
             $img[] = Str::replaceFirst(
                 self::UploadPath,
                 '',
-                $i->store(self::UploadPath)
+                Storage::disk('custom')->put(self::UploadPath, $i)
             );
         }
 
@@ -67,7 +67,7 @@ class ProjectController extends Controller
             foreach ($project->img as $g) {
                 // unlink(storage_path('app/public' . $g));
                 // dump($g);
-                Storage::delete(
+                Storage::disk('custom')->delete(
                     self::UploadPath . $g
                 );
             }
@@ -77,7 +77,7 @@ class ProjectController extends Controller
                 $img[] = Str::replaceFirst(
                     self::UploadPath,
                     '',
-                    $i->store(self::UploadPath)
+                    Storage::disk('custom')->put(self::UploadPath, $i)
                 );
             }
             $res->img = $img;
@@ -108,7 +108,7 @@ class ProjectController extends Controller
         if (sizeof($project->img)) {
             // delete all images
             foreach ($project->img as $img) {
-                Storage::delete(
+                Storage::disk('custom')->delete(
                     self::UploadPath . $img
                 );
             }
