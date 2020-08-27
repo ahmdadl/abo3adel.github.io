@@ -108,3 +108,7 @@ input[type='password']:focus {
         left: 2rem;
     }
 }
+
+.modal-backdrop {
+    z-index: -1;
+}
