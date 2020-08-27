@@ -253,9 +253,13 @@ export default class Project extends Vue {
             tags: this.tags.map((x) => x.slug),
         })
 
-        const res = await this.form.post(
-            `${this.$axios.defaults.baseURL}root/projects`
-        )
+        const method = this.mp.id > 0 ? 'patch' : 'post'
+        let path = `${this.$axios.defaults.baseURL}root/projects`
+        if (this.mp.id > 0) {
+            path += `/${this.mp.id}`
+        }
+
+        const res = await this.form[method](path)
 
         if (!res) {
             this.$nf.error()
