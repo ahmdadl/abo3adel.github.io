@@ -37,6 +37,12 @@
                     </nuxt-link>
                 </li>
                 <li class="nav-item">
+                    <nuxt-link class="nav-link" :to="localePath('/admin')">
+                        <i class="fas fa-user-alt"></i>
+                        {{ $t('nav.admin') }}
+                    </nuxt-link>
+                </li>
+                <li class="nav-item">
                     <nuxt-link class="nav-link" :to="localePath('/blog')">
                         {{ $t('nav.blog') }}
                     </nuxt-link>

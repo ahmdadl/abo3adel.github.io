@@ -265,19 +265,12 @@ export const defaultProject: ProjectInterface = {
 }
 
 @Component({
-    // auth: false,
-    // head() {
-    //     return {
-    //         title: (this as ProjectList).title || '',
-    //     }
-    // },
     components: { Card, ContentLoader },
 })
 export default class ProjectList extends Vue {
     @Ref('slide') readonly slides!: HTMLDivElement[]
 
     @Prop({ type: Boolean, default: false }) readonly auth!: boolean
-    // @Prop({ type: String, required: true }) readonly title!: string
 
     public projects: ProjectInterface[] = []
     public allProjects: ProjectInterface[] = []
