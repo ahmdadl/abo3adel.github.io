@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.14.0",
+    "@imritesh/form": "^2.0.0",
     "@johmun/vue-tags-input": "^2.1.0",
     "@nuxt/typescript-runtime": "^1.0.0",
     "@nuxtjs/auth": "^4.9.1",

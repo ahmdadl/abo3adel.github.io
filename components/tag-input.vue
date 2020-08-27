@@ -4,6 +4,7 @@
         :autocomplete-items="filteredItems"
         @tags-changed="$emit('tags', $event)"
         :add-only-from-autocomplete="true"
+        required
     />
 </template>
 <script lang="ts">

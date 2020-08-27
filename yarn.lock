@@ -897,6 +897,11 @@
   resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-free/-/fontawesome-free-5.14.0.tgz#a371e91029ebf265015e64f81bfbf7d228c9681f"
   integrity sha512-OfdMsF+ZQgdKHP9jUbmDcRrP0eX90XXrsXIdyjLbkmSBzmMXPABB8eobUJtivaupucYaByz6WNe1PI1JuYm3qA==
 
+"@imritesh/form@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@imritesh/form/-/form-2.0.0.tgz#68d4540031bdce975c037ca0ebecde4cbd563fff"
+  integrity sha512-/7LErR4VUiXoNPG7xAOdj5lM7c71BA/hq3YWmzFBRVEtvR05IYpE+PpyR0S9WoJWKj3vW4haW0VtDX55oBlLiQ==
+
 "@intlify/vue-i18n-extensions@^1.0.1":
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/@intlify/vue-i18n-extensions/-/vue-i18n-extensions-1.0.2.tgz#ab7f8507f7d423c368e44fa21d6dece700261fca"
