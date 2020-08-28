@@ -122,14 +122,14 @@
                             </p>
                             <p class="pt-4 text-uppercase" v-if="auth">
                                 <button
-                                    class="btn btn-info m-1"
+                                    class="btn btn-info m-1 text-uppercase"
                                     @click.prevent="$emit('edit', p)"
                                 >
                                     <i class="fas fa-edit"></i>
                                     edit
                                 </button>
                                 <button
-                                    class="btn btn-danger m-1"
+                                    class="btn btn-danger m-1 text-uppercase"
                                     @click.prevent="$emit('delete', p.slug)"
                                 >
                                     <i
@@ -138,6 +138,13 @@
                                     ></i>
                                     delete
                                 </button>
+                                <nuxt-link
+                                    :to="`/admin/${p.slug}`"
+                                    class="btn btn-primary m-1 text-uppercase"
+                                >
+                                    <i class="fas fa-upload"></i>
+                                    update
+                                </nuxt-link>
                             </p>
                             <template v-slot:footer>
                                 <div class="text-center">
