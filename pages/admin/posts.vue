@@ -303,7 +303,6 @@ export default class Post extends Vue {
             delete this.form.img
         }
 
-        console.log(this.form)
 
         const method = this.mp.id > 0 ? 'patch' : 'post'
         let path = `${this.$axios.defaults.baseURL}root/posts`
@@ -311,7 +310,7 @@ export default class Post extends Vue {
             path += `/${this.mp.slug}`
         }
 
-        const res = await this.form[method](path)
+        const res = await this.form[method](path).catch(() => null)
 
         if (!res) {
             this.$nf.error()

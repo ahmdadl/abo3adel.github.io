@@ -234,7 +234,7 @@ export default class Project extends Vue {
             path += `/${this.mp.id}`
         }
 
-        const res = await this.form[method](path)
+        const res = await this.form[method](path).catch(() => null)
 
         if (!res) {
             this.$nf.error()
