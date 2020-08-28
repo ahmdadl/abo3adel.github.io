@@ -36,7 +36,7 @@ class PostController extends Controller
         unset($res->tags);
 
         // save post
-        $post = Post::create((array) $res + ['user_id' => auth()->id()]);
+        $post = Post::create((array) $res + ['user_id' => auth()->id() ?? 2]);
 
         // sync tags
         $post->tags()->sync(
@@ -59,7 +59,7 @@ class PostController extends Controller
         $res = (object) $request->validated();
 
         // if user add new images
-        if ($res->img) {
+        if (isset($res->img)) {
             // delete old image
             Storage::delete('public' . $post->img);
 
@@ -72,16 +72,20 @@ class PostController extends Controller
         }
 
         // save tags for later
-        $tags = $res->tags;
-        unset($res->tags);
+        if (isset($res->tags)) {
+            $tags = $res->tags;
+            unset($res->tags);
+        }
 
         // update post
         $post->update((array) $res);
 
         // sync tags
-        $post->tags()->sync(
-            Tag::whereIn('slug', $tags)->get()
-        );
+        if (isset($res->tags)) {
+            $post->tags()->sync(
+                Tag::whereIn('slug', $tags)->get()
+            );
+        }
 
         $post->loadMissing('tags');
         return response()->json($post);

@@ -28,8 +28,8 @@ class PostRequest extends FormRequest
             'body' => 'required|string|min:20',
             'img' => 'sometimes|image|mimes:png,jpeg,jpg|max:512',
             'category_id' => 'required|exists:categories,id',
-            'tags' => 'required|array',
-            'tags.*' => 'required|string|exists:tags,slug',
+            'tags' => 'sometimes|array',
+            'tags.*' => 'sometimes|string|exists:tags,slug',
         ];
     }
 }

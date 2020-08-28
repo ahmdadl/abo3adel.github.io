@@ -114,23 +114,23 @@
                                     class="float-right badge badge-info p-1 text-light"
                                     data-toggle="tooltip"
                                     data-placement="top"
-                                    :title="$t('post_list.comment_count')"
+                                    :title="$t('post_list.comments_count')"
                                 >
                                     <i class="fas fa-comment-alt"></i>
-                                    {{ p.comments_count }}
+                                    {{ p.comments_count || 0 }}
                                 </nuxt-link>
                             </p>
                             <p class="pt-4 text-uppercase" v-if="auth">
-                                <button class="btn btn-info m-1">
+                                <button class="btn btn-info m-1" @click.prevent="$emit('edit', p)">
                                     <i class="fas fa-edit"></i>
                                     edit
                                 </button>
                                 <button
                                     class="btn btn-danger m-1"
-                                    @click.prevent="$emit('delete', p.id)"
+                                    @click.prevent="$emit('delete', p.slug)"
                                 >
                                     <i
-                                        :id="`del${p.id}`"
+                                        :id="`del${p.slug}`"
                                         class="fas fa-trash-alt"
                                     ></i>
                                     delete
@@ -231,8 +231,21 @@ export default class AllPostsList extends Vue {
     /**
      * remove an item from list
      */
-    public removeItem(id: number): void {
-        this.posts = [...this.posts.filter((x) => x.id !== id)]
+    public removeItem(id: string): void {
+        this.posts = [...this.posts.filter((x) => x.slug !== id)]
+    }
+
+     public addItem(item: PostInterface, exists: boolean = false): void {
+        if (exists) {
+            this.posts = this.posts.map((x) => {
+                if (x.id === item.id) {
+                    x = item
+                }
+                return x
+            })
+        } else {
+            this.posts.unshift(item)
+        }
     }
 
     @Watch('$route.query.page')

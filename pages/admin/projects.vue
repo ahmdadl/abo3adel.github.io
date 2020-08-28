@@ -250,11 +250,3 @@ export default class Project extends Vue {
     }
 }
 </script>
-<style lang="scss" scopped>
-.img {
-    background-size: cover;
-    background-position: center;
-    width: 5.5rem;
-    height: 5.5rem;
-}
-</style>

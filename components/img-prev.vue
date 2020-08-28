@@ -30,7 +30,7 @@
             style="display: inline-block;"
         >
             <div
-                class="rounded-circle img"
+                class="rounded-circle img-prev"
                 :style="`background-image: url(${p})`"
             ></div>
         </div>
@@ -40,7 +40,7 @@
 import { Vue, Component, Prop } from 'vue-property-decorator'
 @Component
 export default class ImgPrev extends Vue {
-    @Prop({ type: Boolean, required: true }) readonly multi!: boolean
+    @Prop({ type: Boolean, default: false }) readonly multi!: boolean
 
     public prevImages: string[] = []
 
@@ -71,4 +71,11 @@ export default class ImgPrev extends Vue {
     }
 }
 </script>
-<style lang="scss"></style>
+<style lang="scss" scopped>
+.img-prev {
+    background-size: cover;
+    background-position: center;
+    width: 5.5rem;
+    height: 5.5rem;
+}
+</style>

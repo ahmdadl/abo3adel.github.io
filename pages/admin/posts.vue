@@ -17,6 +17,7 @@
             path="post"
             :auth="true"
             @delete="remove"
+            @edit="openModal"
         />
 
         <!-- Modal -->
@@ -60,6 +61,7 @@
                                             'category_id'
                                         ),
                                     }"
+                                    :disabled="!!mp.id"
                                     required
                                 >
                                     <option selected>Select one</option>
@@ -88,6 +90,7 @@
                                     :class="{
                                         'is-invalid': form.errors.has('title'),
                                     }"
+                                    @keypress.enter="savePost(mp)"
                                     required
                                 />
                                 <div
@@ -115,7 +118,7 @@
                                     v-text="form.errors.first('body')"
                                 ></div>
                             </div>
-                             <div class="form-group">
+                            <div class="form-group">
                                 <TagInput
                                     path="root/tags"
                                     @tags="(newTags) => (tags = newTags)"
@@ -126,6 +129,21 @@
                                     v-text="form.errors.first('tags')"
                                 ></div>
                             </div>
+                            <ImgPrev
+                                ref="imgPrev"
+                                @img-arr="
+                                    (files) =>
+                                        this.form.populate({
+                                            img: files[0],
+                                        })
+                                "
+                            >
+                                <div
+                                    class="invalid-feedback"
+                                    v-if="form.errors.has('img')"
+                                    v-text="form.errors.first('img')"
+                                ></div>
+                            </ImgPrev>
                         </form>
                     </div>
                     <div class="modal-footer">
@@ -133,10 +151,27 @@
                             type="button"
                             class="btn btn-secondary"
                             data-dismiss="modal"
+                            @click="
+                                form.reset()
+                                imgPrev.reset()
+                            "
                         >
                             Close
                         </button>
-                        <button type="button" class="btn btn-primary">
+                        <button
+                            type="button"
+                            class="btn btn-primary"
+                            @click.prevent="savePost"
+                            :disabled="form.processing"
+                        >
+                            <i
+                                class="fas"
+                                :class="
+                                    form.processing
+                                        ? 'fa-pulse fa-spinner'
+                                        : 'fa-save'
+                                "
+                            ></i>
                             Save changes
                         </button>
                     </div>
@@ -154,16 +189,20 @@ import PostInterface from '~/interfaces/PostInterface'
 import Form from '../../node_modules/@imritesh/form/src'
 import TagInput from '~/components/tag-input.vue'
 import CategoryInterface from '~/interfaces/category-interface'
+import ImgPrev from '~/components/img-prev.vue'
+import TagInterface from '~/interfaces/tag-interface'
 
 export const DefaultPost: PostInterface = {
     id: 0,
     user_id: 0,
+    category_id: 0,
     title: '',
     slug: '',
     body: '',
     img: '',
     created_at: '',
     updated_at: '',
+    tags: [],
 }
 
 @Component({
@@ -172,37 +211,44 @@ export const DefaultPost: PostInterface = {
 })
 export default class Post extends Vue {
     @Ref() readonly list!: AllPosts
+    @Ref() readonly imgPrev!: ImgPrev
 
+    public tags: { text: string; slug: string }[] = []
     public cats: CategoryInterface[] = []
     public mp: PostInterface = DefaultPost
     public form = new Form(['category_id', 'img', 'body', 'tags', 'title'])
 
-    public async remove(id: number) {
-        showLoader(`#del${id}`, 'fa-trash-alt', this)
+    public async remove(slug: string) {
+        showLoader(`#del${slug}`, 'fa-trash-alt', this)
 
-        const res = this.$axios.$delete(`root/posts/${id}`)
+        const res = this.$axios.$delete(`root/posts/${slug}`)
 
-        hideLoader(`#del${id}`, 'fa-trash-alt', this)
+        hideLoader(`#del${slug}`, 'fa-trash-alt', this)
 
         if (!res) {
             this.$nf.error()
             return
         }
 
-        this.list.removeItem(id)
+        this.$nf.success()
+        this.list.removeItem(slug)
     }
 
     public openModal(post: PostInterface = DefaultPost) {
         Object.assign(this.mp, post)
 
         if (post.id > 0) {
-            this.form.populate({
+            // @ts-ignore
+            this.tags = post.tags
+            this.form = new Form({
+                category_id: post.category_id,
                 title: post.title,
-                info: post.body,
+                body: post.body,
                 tags: post.tags,
-                // img: project.img,
+                // img: post.img,
             })
-            delete this.form.tags
+            // delete this.form.tags
+            // delete this.form.img
         }
 
         // @ts-ignore
@@ -224,9 +270,65 @@ export default class Post extends Vue {
         this.cats = res
     }
 
+    public closeModal() {
+        Object.assign(this.mp, DefaultPost)
+        this.form.reset()
+        this.imgPrev.reset()
+        // @ts-ignore
+        new Modal(document.querySelector(`#postModal`)).hide()
+    }
+
+    public async savePost() {
+        this.form.populate({
+            tags: this.tags.map((x) => x.slug),
+        })
+
+        // do not upload tags if it was not changed
+        if (
+            this.form.tags.length === this.mp.tags.length &&
+            this.form.tags
+                .sort()
+                .every(
+                    (value: string, index: number) =>
+                        value === this.mp.tags.sort()[index].slug
+                )
+        ) {
+            delete this.form.tags
+        }
+
+        // do not update image if it was not changed
+        if (!this.imgPrev.prevImages.length) {
+            delete this.form.img
+        }
+
+        console.log(this.form)
+
+        const method = this.mp.id > 0 ? 'patch' : 'post'
+        let path = `${this.$axios.defaults.baseURL}root/posts`
+        if (this.mp.id > 0) {
+            path += `/${this.mp.slug}`
+        }
+
+        const res = await this.form[method](path)
+
+        if (!res) {
+            this.$nf.error()
+            return
+        }
+
+        this.$nf.success()
+        this.list.addItem(res, !!this.mp.id)
+        this.closeModal()
+    }
+
     mounted() {
         this.$nextTick(() => this.loadCategories())
     }
 }
 </script>
+<style lang="scss" scoped>
+.bg-dark {
+    background: rgba($color: #000000, $alpha: 0.8) !important;
+}
+</style>
 <style lang="scss"></style>
