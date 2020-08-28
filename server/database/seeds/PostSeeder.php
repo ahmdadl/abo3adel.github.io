@@ -17,7 +17,9 @@ class PostSeeder extends Seeder
         $cats = Category::all();
 
         $cats->each(fn (Category $c) => $c->posts()->saveMany(
-            factory(Post::class, random_int(5, 10))->make()
+            factory(Post::class, random_int(5, 10))->make([
+                'category_id' => $c->id
+            ])
         ));
 
         DB::commit();

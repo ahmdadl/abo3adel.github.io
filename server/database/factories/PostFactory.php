@@ -15,6 +15,6 @@ $factory->define(App\Post::class, function (Faker $faker) {
         'title' => $title,
         'slug' => Str::slug($title),
         'body' => $faker->randomHtml(),
-        'img' => $faker->url,
+        'img' => Arr::random(['1.png', '2.jpg', '3.jpg', '4.jpg', '5.png', '6.jpg']),
     ];
 });

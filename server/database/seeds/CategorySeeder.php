@@ -12,6 +12,6 @@ class CategorySeeder extends Seeder
      */
     public function run()
     {
-        factory(Category::class, random_int(1, 5))->create();
+        factory(Category::class, random_int(3, 6))->create();
     }
 }
