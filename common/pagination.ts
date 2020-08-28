@@ -13,10 +13,14 @@ export function pushPageToHistroy(
 ) {
     // @ts-ignore
     self.$route.query.page = `${page}`
-    path = path.replace(/post?/g, '')
+    path = path.replace(/post(?:s)\/?/g, '')
+
+    
 
     if (self.$route.path.indexOf('admin') > -1) {
         path = self.$route.path + path
+    } else if (path.indexOf('categ') > -1) {
+        path = '/blog/' + path
     } else {
         if (addBlog) path = '/blog' + path
     }
