@@ -248,15 +248,14 @@ export default class Sidebar extends Vue {
     }
 
     public loadCategoriesList() {
-        this.$axios.get('categories').then((res) => {
-            if (!res || !res.data) {
-                this.loadCats = false
+        this.$axios.$get('categories').then((res) => {
+            this.loadCats = false
+            if (!res) {
                 this.$nf.error()
                 return
             }
 
-            this.cats = res.data.cats
-            this.loadCats = false
+            this.cats = res
         })
     }
 
