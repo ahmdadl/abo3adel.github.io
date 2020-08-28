@@ -17,6 +17,8 @@ class OAuthTest extends TestCase
     {
         parent::setUp();
 
+        $this->markTestIncomplete();
+
         TestResponse::macro('assertText', function ($text) {
             PHPUnit::assertTrue(Str::contains($this->getContent(), $text), "Expected text [{$text}] not found.");
 

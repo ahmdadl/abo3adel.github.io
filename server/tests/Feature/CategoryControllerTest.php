@@ -16,17 +16,17 @@ class CategoryControllerTest extends TestCase
 
         $res = $this->getJson('api/categories')
             ->assertOk()
-            ->assertJsonCount(4, 'cats')
+            ->assertJsonCount(4)
             ->json();
 
         $this->assertSame(
             $cats->first()->title,
-            $res['cats'][0]['title']
+            $res[0]['title']
         );
 
         $this->assertSame(
             $cats->last()->posts->count(),
-            (int) $res['cats'][0]['posts_count']
+            (int) $res[0]['posts_count']
         );
     }
 

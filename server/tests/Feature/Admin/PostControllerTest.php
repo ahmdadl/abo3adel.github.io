@@ -19,7 +19,7 @@ class PostControllerTest extends TestCase
     public function testUserCanCreatePost()
     {
         $this->withoutExceptionHandling();
-        Storage::fake('local');
+        Storage::fake('custom');
 
         $img = UploadedFile::fake()->image('a.jpeg');
         $post = PostBuilder::raw([
@@ -35,10 +35,10 @@ class PostControllerTest extends TestCase
 
         $this->assertDatabaseHas('posts', [
             'title' => $post['title'],
-            'img' => '/posts/' . $img->hashName(),
+            'img' => $img->hashName(),
         ]);
 
-        Storage::assertExists(PostController::UploadDIr . '/' . $img->hashName());
+        Storage::disk('custom')->assertExists(PostController::UploadDIr . $img->hashName());
     }
 
     public function testUserCannotUpdateWithInvalidData()
@@ -53,18 +53,20 @@ class PostControllerTest extends TestCase
     public function testUserCanUpdatePost()
     {
         // $this->withoutExceptionHandling();
+        Storage::fake('custom');
+
         $title = $this->faker->text(50);
 
         $img = UploadedFile::fake()->image('b.png');
         $post = PostBuilder::create([
             'img' => Str::replaceFirst(
-                'public',
+                PostController::UploadDIr . '/',
                 '',
-                $img->store(PostController::UploadDIr)
-            ),
+                Storage::disk('custom')->put(PostController::UploadDIr, $img)
+            )
         ]);
 
-        Storage::fake('locale');
+
 
         $tags = factory(Tag::class, 3)->create();
         $post->tags()->sync($tags);
@@ -78,8 +80,8 @@ class PostControllerTest extends TestCase
         unset($post->tags);
 
         // check that old image is stored
-        Storage::assertExists(
-            PostController::UploadDIr . '/' . $img->hashName()
+        Storage::disk('custom')->assertExists(
+            PostController::UploadDIr . $img->hashName()
         );
 
         $this->patchJson(
@@ -88,38 +90,39 @@ class PostControllerTest extends TestCase
         )->assertJsonMissingValidationErrors()
             ->assertOk()
             ->assertJsonPath('tags.0.slug', $tags[0])
-            ->assertJsonPath('img', '/posts/' . $newImg->hashName());
+            ->assertJsonPath('img', $newImg->hashName());
 
         $this->assertDatabaseHas('posts', [
             'title' => $title,
-            'img' => '/posts/' . $newImg->hashName(),
+            'img' => $newImg->hashName(),
             'slug' => $post->slug,
         ]);
 
-        Storage::assertExists(
-            PostController::UploadDIr . '/' . $newImg->hashName()
+        Storage::disk('custom')->assertExists(
+            PostController::UploadDIr . $newImg->hashName()
         );
-        Storage::assertMissing(
-            PostController::UploadDIr . '/' . $img->hashName()
+        Storage::disk('custom')->assertMissing(
+            PostController::UploadDIr . $img->hashName()
         );
     }
 
     public function testUserCanDeletePost()
     {
+        Storage::fake('custom');
         // $this->withoutExceptionHandling();
         $img = UploadedFile::fake()->image('b.png');
         $post = PostBuilder::create([
             'img' => Str::replaceFirst(
-                'public',
+                PostController::UploadDIr . '/',
                 '',
-                $img->store(PostController::UploadDIr)
-            ),
+                Storage::disk('custom')->put(PostController::UploadDIr, $img)
+            )
         ]);
 
-        Storage::fake('locale');
 
-        Storage::assertExists(
-            PostController::UploadDIr . '/' . $img->hashName()
+
+        Storage::disk('custom')->assertExists(
+            PostController::UploadDIr . $img->hashName()
         );
 
         $this->deleteJson($this->url . $post->slug)
@@ -127,8 +130,8 @@ class PostControllerTest extends TestCase
 
         $this->assertDatabaseMissing('posts', $post->only('slug'));
 
-        Storage::assertMissing(
-            PostController::UploadDIr . '/' . $img->hashName()
+        Storage::disk('custom')->assertMissing(
+            PostController::UploadDIr . $img->hashName()
         );
     }
 }

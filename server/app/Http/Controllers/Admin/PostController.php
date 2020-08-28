@@ -12,7 +12,7 @@ use Str;
 
 class PostController extends Controller
 {
-    public const UploadDIr = 'public/posts';
+    public const UploadDIr = 'static/img/posts/';
 
     /**
      * Store a newly created resource in storage.
@@ -26,9 +26,9 @@ class PostController extends Controller
 
         // upload image
         $res->img = Str::replaceFirst(
-            'public',
+            self::UploadDIr . '/',
             '',
-            $res->img->store(self::UploadDIr)
+            Storage::disk('custom')->put(self::UploadDIr, $res->img)
         );
 
         // unset tags from array
@@ -61,13 +61,13 @@ class PostController extends Controller
         // if user add new images
         if (isset($res->img)) {
             // delete old image
-            Storage::delete('public' . $post->img);
+            Storage::disk('custom')->delete(self::UploadDIr . $post->img);
 
             // upload new image
             $res->img = Str::replaceFirst(
-                'public',
+                self::UploadDIr . '/',
                 '',
-                $res->img->store(self::UploadDIr)
+                Storage::disk('custom')->put(self::UploadDIr, $res->img)
             );
         }
 
@@ -100,7 +100,7 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         // delete image
-        Storage::delete('public' . $post->img);
+        Storage::disk('custom')->delete(self::UploadDIr . $post->img);
 
         $post->delete();
         return response()->noContent();
