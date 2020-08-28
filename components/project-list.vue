@@ -427,7 +427,6 @@ export default class ProjectList extends Vue {
      * carousel move slide
      */
     public move(inx: number) {
-        console.log(inx)
         this.slides.forEach((x, index) => {
             x.classList.remove('active')
 

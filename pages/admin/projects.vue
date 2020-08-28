@@ -99,44 +99,22 @@
                                     v-text="form.errors.first('tags')"
                                 ></div>
                             </div>
-                            <div class="form-group">
-                                <label class="custom-file text-light bg-dark">
-                                    <input
-                                        type="file"
-                                        name="img"
-                                        id="img"
-                                        placeholder="images"
-                                        class="custom-file-input"
-                                        aria-describedby="projimg"
-                                        @change="previewImg"
-                                        accept="image/jpg, image/jpeg, image/png"
-                                        multiple
-                                        required
-                                    />
-                                    <span class="custom-file-control">
-                                        Choose Project Images
-                                    </span>
-                                </label>
-                                <small id="projimg" class="form-text text-muted"
-                                    >jpeg,, jpg, png and under 512KB</small
-                                >
+                            <ImgPrev
+                                ref="imgPrev"
+                                :multi="true"
+                                @img-arr="
+                                    (files) =>
+                                        this.form.populate({
+                                            img: files,
+                                        })
+                                "
+                            >
                                 <div
                                     class="invalid-feedback"
                                     v-if="form.errors.has('img')"
                                     v-text="form.errors.first('img')"
                                 ></div>
-                            </div>
-                            <div
-                                class="mx-auto row"
-                                v-for="p in prevImages"
-                                :key="p + Math.random()"
-                                style="display: inline-block;"
-                            >
-                                <div
-                                    class="rounded-circle img"
-                                    :style="`background-image: url(${p})`"
-                                ></div>
-                            </div>
+                            </ImgPrev>
                         </form>
                     </div>
                     <div class="modal-footer">
@@ -146,7 +124,7 @@
                             data-dismiss="modal"
                             @click="
                                 form.reset()
-                                prevImages = []
+                                imgPrev.reset()
                             "
                         >
                             Close
@@ -181,6 +159,7 @@ import ProjectInterface from '~/interfaces/project-interface'
 // @ts-ignore
 import Form from '../../node_modules/@imritesh/form/src'
 import TagInput from '~/components/tag-input.vue'
+import ImgPrev from '~/components/img-prev.vue'
 
 @Component({
     // auth: false,
@@ -189,16 +168,16 @@ import TagInput from '~/components/tag-input.vue'
             title: (this as Project).title || '',
         }
     },
-    components: { ProjectList, TagInput },
+    components: { ProjectList, TagInput, ImgPrev },
 })
 export default class Project extends Vue {
     @Ref('plist') readonly plist!: ProjectList
+    @Ref() readonly imgPrev!: ImgPrev
 
     public mp: ProjectInterface = defaultProject
     private inputs: string[] = ['title', 'link', 'client', 'type']
     public form = new Form(['img', 'info', 'tags', ...this.inputs])
     public tags: { text: string; slug: string }[] = []
-    public prevImages: string[] = []
 
     public async remove(id: number) {
         showLoader(`#del${id}`, 'fa-trash-alt', this)
@@ -239,33 +218,9 @@ export default class Project extends Vue {
     public closeModal() {
         Object.assign(this.mp, defaultProject)
         this.form.reset()
-        this.prevImages.splice(0)
+        this.imgPrev.reset()
         // @ts-ignore
         new Modal(document.querySelector(`#modalCreate`)).hide()
-    }
-
-    public previewImg(ev: Event) {
-        const inp = ev.target as HTMLInputElement
-        this.prevImages = []
-        if (!inp.files) {
-            this.prevImages = []
-            return
-        }
-        this.form.populate({
-            img: inp.files,
-        })
-
-        for (const f in inp.files) {
-            if (typeof inp.files[f] === 'object') {
-                // console.log(typeof f, typeof inp.files[f]);
-                const reader = new FileReader()
-
-                reader.onload = (e) => {
-                    this.prevImages.push((e.target as any).result)
-                }
-                reader.readAsDataURL(inp.files[f])
-            }
-        }
     }
 
     public async saveProject() {

@@ -1,3 +1,5 @@
+import TagInterface from './tag-interface'
+
 export default interface PostInterface {
     id: number;
     user_id: number;
@@ -7,4 +9,5 @@ export default interface PostInterface {
     img: string;
     created_at: string;
     updated_at: string;
+    tags: TagInterface[];
 }
