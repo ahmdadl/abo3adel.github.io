@@ -31,8 +31,8 @@ class ProjectStoreRequest extends FormRequest
             'img.*' => 'sometimes|image|mimes:png,jpg,jpeg|max:512',
             'info' => 'required|string',
             'type' => 'required|in:laravel,spa,mobile',
-            'tags' => 'required|array',
-            'tags.*' => 'required|string|exists:tags,slug'
+            'tags' => 'sometimes|array',
+            'tags.*' => 'sometimes|string|exists:tags,slug'
         ];
     }
 }

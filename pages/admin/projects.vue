@@ -11,7 +11,13 @@
                 </button>
             </div>
         </div>
-        <ProjectList ref="plist" :auth="true" @delete="remove" />
+        <ProjectList
+            ref="plist"
+            :auth="true"
+            @edit="openModal"
+            @delete="remove"
+        />
+
         <!-- Modal -->
         <div
             class="modal fade"
@@ -212,6 +218,20 @@ export default class Project extends Vue {
     public openModal(project: ProjectInterface = defaultProject): void {
         Object.assign(this.mp, project)
 
+        if (project.id > 0) {
+            this.form.populate({
+                title: project.title,
+                link: project.link,
+                client: project.client,
+                type: project.type,
+                info: project.info,
+                tags: project.tags,
+                // img: project.img,
+            })
+            delete this.form.img
+            delete this.form.tags
+        }
+
         // @ts-ignore
         new Modal(document.querySelector(`#modalCreate`)).show()
     }
@@ -266,7 +286,7 @@ export default class Project extends Vue {
             return
         }
 
-        this.plist.addItem(res)
+        this.plist.addItem(res, !!this.mp.id)
         this.closeModal()
     }
 

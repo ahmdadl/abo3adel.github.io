@@ -62,7 +62,7 @@ class ProjectController extends Controller
 
         $img = [];
         // check if user changed images
-        if (is_array($res->img)) {
+        if (isset($res->img) && is_array($res->img)) {
             // delete old images
             foreach ($project->img as $g) {
                 // unlink(storage_path('app/public' . $g));
@@ -83,14 +83,20 @@ class ProjectController extends Controller
             $res->img = $img;
         }
 
-        $tags = $res->tags;
-        unset($res->tags);
+        if (isset($res->tags)) {
+            $tags = $res->tags;
+            unset($res->tags);
+        }
+
 
         $project->update((array) $res);
 
-        // sync tags
-        $tags = Tag::whereIn('slug', $tags)->get();
-        $project->tags()->sync($tags);
+        if (isset($tags)) {
+            // sync tags
+            $tags = Tag::whereIn('slug', $tags)->get();
+            $project->tags()->sync($tags);
+        }
+
 
         // $project = Project::with('tags')->find($project->id);
         $project->loadMissing('tags');
