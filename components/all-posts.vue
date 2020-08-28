@@ -77,68 +77,82 @@
             <div class="alert alert-danger" v-if="!posts.length">
                 {{ $t('post_list.no_posts') }}
             </div>
-            <div class="row">
-                <div
-                    class="col-sm-6 col-md-4 mb-3"
-                    v-for="p in posts"
-                    :key="p.id"
-                >
-                    <card class="p-0">
-                        <template v-slot:img>
-                            <img
-                                class="card-img-top"
-                                src="~assets/1.jpg"
-                                :alt="p.title"
-                            />
-                        </template>
-                        <nuxt-link :to="localePath('/blog/' + p.slug)">
-                            {{ p.title }}
-                        </nuxt-link>
-                        <p class="mt-1">
-                            <span
-                                class="badge badge-info p-1 float-left"
-                                data-toggle="tooltip"
-                                data-placement="top"
-                                :title="$t('post_list.last_update')"
-                            >
-                                <i class="fas fa-clock"></i>
-                                {{ p.updated }}
-                            </span>
-                            <nuxt-link
-                                :to="
-                                    localePath('/blog/' + p.slug + '/#comments')
-                                "
-                                class="float-right badge badge-info p-1 text-light"
-                                data-toggle="tooltip"
-                                data-placement="top"
-                                :title="$t('post_list.comment_count')"
-                            >
-                                <i class="fas fa-comment-alt"></i>
-                                {{ p.comments_count }}
+            <div>
+                <transition-group name="posts" tag="div" class="row">
+                    <div
+                        class="col-sm-6 col-md-4 mb-3 post-card"
+                        v-for="p in posts"
+                        :key="p.id"
+                    >
+                        <card class="p-0">
+                            <template v-slot:img>
+                                <img
+                                    class="card-img-top"
+                                    src="~assets/1.jpg"
+                                    :alt="p.title"
+                                />
+                            </template>
+                            <nuxt-link :to="localePath('/blog/' + p.slug)">
+                                {{ p.title }}
                             </nuxt-link>
-                        </p>
-                        <template v-slot:footer>
-                            <div class="text-center">
+                            <p class="mt-1">
                                 <span
-                                    class="badge badge-primary mx-1 p-1"
-                                    v-for="tag in p.tags"
-                                    :key="tag.id * p.id + Math.random()"
+                                    class="badge badge-info p-1 float-left"
+                                    data-toggle="tooltip"
+                                    data-placement="top"
+                                    :title="$t('post_list.last_update')"
                                 >
-                                    {{ tag.title }}
+                                    <i class="fas fa-clock"></i>
+                                    {{ p.updated }}
                                 </span>
-                            </div>
-                        </template>
-                    </card>
-                </div>
+                                <nuxt-link
+                                    :to="
+                                        localePath(
+                                            '/blog/' + p.slug + '/#comments'
+                                        )
+                                    "
+                                    class="float-right badge badge-info p-1 text-light"
+                                    data-toggle="tooltip"
+                                    data-placement="top"
+                                    :title="$t('post_list.comment_count')"
+                                >
+                                    <i class="fas fa-comment-alt"></i>
+                                    {{ p.comments_count }}
+                                </nuxt-link>
+                            </p>
+                            <p class="pt-4 text-uppercase" v-if="auth">
+                                <button class="btn btn-info m-1">
+                                    <i class="fas fa-edit"></i>
+                                    edit
+                                </button>
+                                <button
+                                    class="btn btn-danger m-1"
+                                    @click.prevent="$emit('delete', p.id)"
+                                >
+                                    <i
+                                        :id="`del${p.id}`"
+                                        class="fas fa-trash-alt"
+                                    ></i>
+                                    delete
+                                </button>
+                            </p>
+                            <template v-slot:footer>
+                                <div class="text-center">
+                                    <span
+                                        class="badge badge-primary mx-1 p-1"
+                                        v-for="tag in p.tags"
+                                        :key="tag.id * p.id + Math.random()"
+                                    >
+                                        {{ tag.title }}
+                                    </span>
+                                </div>
+                            </template>
+                        </card>
+                    </div>
+                </transition-group>
             </div>
         </template>
         <div v-if="!limit">
-            <!-- <Paginate
-                :title="title"
-                :path="pagePath"
-                :res="pageResponse"
-                @load="loadPosts($event)"
-            /> -->
             <Pagination
                 :data="pageResponse"
                 @pagination-change-page="loadPosts"
@@ -175,6 +189,7 @@ export default class AllPostsList extends Vue {
     @Prop({ type: String, required: true }) readonly title!: string
     @Prop({ type: String, required: true }) readonly path!: string
     @Prop({ type: Number, required: false }) readonly limit!: number
+    @Prop({ type: Boolean, default: false }) readonly auth!: boolean
 
     public loading: boolean = true
     public posts: PostInterface[] = []
@@ -213,6 +228,13 @@ export default class AllPostsList extends Vue {
         })
     }
 
+    /**
+     * remove an item from list
+     */
+    public removeItem(id: number): void {
+        this.posts = [...this.posts.filter((x) => x.id !== id)]
+    }
+
     @Watch('$route.query.page')
     onRouteQueryChanged(val: number) {
         this.loadPosts(val)
@@ -229,4 +251,17 @@ export default class AllPostsList extends Vue {
     }
 }
 </script>
+<style lang="scss" scoped>
+.post-card {
+    transition: all 1s;
+}
+.posts-enter,
+.posts-leave-to {
+    opacity: 0;
+    transform: translateY(30px);
+}
+.posts-leave-active {
+    position: absolute;
+}
+</style>
 <style lang="scss"></style>

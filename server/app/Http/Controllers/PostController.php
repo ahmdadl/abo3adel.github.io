@@ -19,7 +19,7 @@ class PostController extends Controller
             'posts' => Post::withCount('comments')
                 ->with('tags')
                 ->latest()
-                ->paginate(),
+                ->paginate(3),
         ]);
     }
 

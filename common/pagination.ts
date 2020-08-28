@@ -14,6 +14,12 @@ export function pushPageToHistroy(
     // @ts-ignore
     self.$route.query.page = `${page}`
     path = path.replace(/post?/g, '')
-    if (addBlog) path = '/blog' + path
+
+    if (self.$route.path.indexOf('admin') > -1) {
+        path = self.$route.path + path
+    } else {
+        if (addBlog) path = '/blog' + path
+    }
+
     history.pushState({}, '', path)
 }
