@@ -96,7 +96,7 @@
                     :key="p.id + Math.random()"
                 >
                     <img
-                        src="~/assets/1.jpg"
+                        :src="`/img/posts/${p.img}`"
                         class="mr-3 rounded"
                         :alt="p.id"
                         width="70"

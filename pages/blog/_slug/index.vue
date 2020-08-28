@@ -30,7 +30,10 @@
                     </li>
                 </ol>
             </div>
-            <img src="~assets/1.jpg" class="img img-responsive w-100" />
+            <img
+                :src="`/img/posts/${post.img}`"
+                class="img img-responsive w-100"
+            />
         </div>
 
         <!-- post meta -->

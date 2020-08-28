@@ -61,7 +61,7 @@
                                             'category_id'
                                         ),
                                     }"
-                                    :disabled="!!mp.id"
+                                    :disabled="mp.id"
                                     required
                                 >
                                     <option selected>Select one</option>
@@ -235,12 +235,13 @@ export default class Post extends Vue {
     }
 
     public openModal(post: PostInterface = DefaultPost) {
-        Object.assign(this.mp, post)
+        this.mp = post
+        this.form.reset()
 
-        if (post.id > 0) {
+        if (!!post.id) {
             // @ts-ignore
             this.tags = post.tags
-            this.form = new Form({
+            this.form.populate({
                 category_id: post.category_id,
                 title: post.title,
                 body: post.body,
@@ -285,6 +286,7 @@ export default class Post extends Vue {
 
         // do not upload tags if it was not changed
         if (
+            this.mp.id &&
             this.form.tags.length === this.mp.tags.length &&
             this.form.tags
                 .sort()

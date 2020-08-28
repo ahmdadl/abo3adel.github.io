@@ -88,7 +88,7 @@
                             <template v-slot:img>
                                 <img
                                     class="card-img-top"
-                                    src="~assets/1.jpg"
+                                    :src="'/img/posts/' + p.img"
                                     :alt="p.title"
                                 />
                             </template>
@@ -121,7 +121,10 @@
                                 </nuxt-link>
                             </p>
                             <p class="pt-4 text-uppercase" v-if="auth">
-                                <button class="btn btn-info m-1" @click.prevent="$emit('edit', p)">
+                                <button
+                                    class="btn btn-info m-1"
+                                    @click.prevent="$emit('edit', p)"
+                                >
                                     <i class="fas fa-edit"></i>
                                     edit
                                 </button>
@@ -235,7 +238,7 @@ export default class AllPostsList extends Vue {
         this.posts = [...this.posts.filter((x) => x.slug !== id)]
     }
 
-     public addItem(item: PostInterface, exists: boolean = false): void {
+    public addItem(item: PostInterface, exists: boolean = false): void {
         if (exists) {
             this.posts = this.posts.map((x) => {
                 if (x.id === item.id) {
