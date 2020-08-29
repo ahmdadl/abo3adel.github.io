@@ -27,6 +27,7 @@ class CategoryController extends Controller
         return response()->json([
             'posts' => Post::whereCategoryId($category->id)
                 ->withCount('comments')
+                ->with('tags')
                 ->latest()
                 ->paginate()
         ]);
