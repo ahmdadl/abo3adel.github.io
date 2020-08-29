@@ -84,13 +84,36 @@
             <!-- right nav -->
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item text-light">
-                    <img
-                        class="img d-inline rounded-circle pr-1"
-                        src="/myImg.jpeg"
-                        width="35"
-                        height="35"
-                    />
-                    Ahmed Adel
+                    <a
+                        class="nav-link"
+                        :class="{ 'dropdown-toggle': $auth.loggedIn }"
+                        href="#"
+                        id="userDropdown"
+                        role="button"
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                    >
+                        <img
+                            class="img d-inline rounded-circle pr-1"
+                            src="/myImg.jpeg"
+                            width="35"
+                            height="35"
+                        />
+                        Ahmed Adel
+                    </a>
+                    <div
+                        class="dropdown-menu bg-dark text-light"
+                        aria-labelledby="userDropdown"
+                        v-if="$auth.loggedIn"
+                    >
+                        <button
+                            class="btn btn-clear w-100"
+                            @click="$auth.logout('laravelJWT')"
+                        >
+                            LogOut
+                        </button>
+                    </div>
                 </li>
             </ul>
         </div>
