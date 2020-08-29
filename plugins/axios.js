@@ -2,9 +2,7 @@ import { Notify } from './notify.ts'
 
 export default function (context, inject) {
     context.app.$axios.onRequest((config) => {
-        config.headers = {
-            'X-Laravel-Locale': context.app.i18n.locale,
-        }
+        config.headers['X-Laravel-Locale'] = context.app.i18n.locale
     })
 
     context.app.$axios.onError((error) => {
