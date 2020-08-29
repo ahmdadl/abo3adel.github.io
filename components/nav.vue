@@ -1,7 +1,7 @@
 <template>
     <nav
         id="navbar-top"
-        class="navbar navbar-expand-sm navbar-dark trans"
+        class="navbar navbar-expand-sm navbar-dark trans px-2 py-1"
         :class="[cls, $route.path === '/' ? 'fixed-top' : 'sticky-top']"
     >
         <nuxt-link :to="localePath('/')" class="navbar-brand">

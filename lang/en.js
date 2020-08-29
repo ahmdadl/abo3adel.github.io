@@ -18,8 +18,8 @@ export default {
         Up_To_DateTxt: 'I always use the latest versions of my tools.',
         Multi_Language: 'Multi Language',
         Multi_LanguageTxt: 'try this feature on this website.',
-        hello: 'Hello',
-        name: 'I`m Ahmed Adel',
+        hello: 'Hello I`m',
+        name: ' Ahmed Adel',
         and: 'And I`m',
         title: {
             about: 'About',

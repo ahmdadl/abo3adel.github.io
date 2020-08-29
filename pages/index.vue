@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div :class="dir">
         <header
             id="canvasHeader"
             class="masthead bg-dark text-light bg-transparent"
@@ -232,7 +232,9 @@
                                         class="text-light"
                                         target="_blank"
                                     >
-                                        <i class="fab fa-github-alt text-warning"></i>
+                                        <i
+                                            class="fab fa-github-alt text-warning"
+                                        ></i>
                                         GitHub
                                     </a>
                                 </li>
@@ -264,9 +266,7 @@
                                         LinkedIn
                                     </a>
                                 </li>
-                                <li
-                                    class="list-group-item bg-transparent"
-                                >
+                                <li class="list-group-item bg-transparent">
                                     <a
                                         href="https://fb.com/a7md200"
                                         class="text-light"
@@ -283,6 +283,27 @@
                     </div>
                 </div>
             </section>
+        </div>
+
+        <!-- centered menu -->
+        <div class="menu position-fixed bg-dark">
+            <ul class="list-group list-group-flush">
+                <li
+                    class="list-group-item"
+                    v-for="(id, inx) in menuArr"
+                    :key="id + inx"
+                    v-scroll-to="{
+                        el: `#${id}`,
+                        offset: -50,
+                        onDone,
+                    }"
+                    :class="{ active: id === activeId }"
+                >
+                    <span class="">
+                        &#9679;
+                    </span>
+                </li>
+            </ul>
         </div>
     </div>
 </template>
@@ -307,7 +328,7 @@ import ProjectList from '~/components/project-list.vue'
         Card,
         ContentLoader,
         AllPosts,
-        ProjectList
+        ProjectList,
     },
 })
 export default class Home extends Vue {
@@ -365,6 +386,16 @@ export default class Home extends Vue {
         { title: 'vue', value: 85 },
         { title: 'angular', value: 70 },
     ]
+    public menuArr: string[] = [
+        'canvasHeader',
+        'about',
+        'skills',
+        'projects',
+        'blog',
+        'contact',
+    ]
+    public dir: string = document.documentElement.dir
+    public activeId: string = 'top'
 
     public h2(str: any, tag: string = 'h2'): string {
         return `<${tag}>${str}<hr class='mx-auto bg-secondary pt-1 rounded w-25 px-5' /></${tag}>`
@@ -373,6 +404,10 @@ export default class Home extends Vue {
     public removeClass(id: string, cls: string = 'd-none') {
         const el = document.querySelector(`#${id}`) as HTMLDivElement
         el?.classList.remove(cls)
+    }
+
+    public onDone(el: HTMLDivElement) {
+        this.activeId = el.id
     }
 }
 </script>
@@ -384,7 +419,7 @@ export default class Home extends Vue {
     word-break: break-all;
 }
 .bg-dark {
-    background: rgba($color: var(--dark), $alpha: .6) !important;
+    background: rgba($color: var(--dark), $alpha: 0.6) !important;
 }
 // .container-fluid section{
 //     z-index: 2;
@@ -398,5 +433,46 @@ export default class Home extends Vue {
 }
 .card > .list-group {
     border: none;
+}
+.menu {
+    top: 50%;
+    // left: ;
+    transform: translate(-50%, -50%);
+    border-radius: 1.25rem;
+}
+.ltr {
+    .menu {
+        left: 1.25rem;
+    }
+}
+.rtl {
+    .menu {
+        right: 1.25rem;
+    }
+}
+.list-group {
+    line-height: 0.25rem;
+}
+.list-group-item {
+    padding: 0.7rem 0.5rem;
+    transition: all ease 0.5s;
+    font-size: 1.25rem;
+    &:first-of-type {
+        border-radius: 0.5rem 0.5rem 0 0;
+    }
+    &:last-of-type {
+        border-radius: 0 0 0.5rem 0.5rem;
+        padding-bottom: 0.75rem;
+    }
+    &:hover {
+        color: var(--primary);
+        cursor: pointer;
+    }
+    &.active {
+        background-color: var(--primary);
+        &:hover {
+            color: var(--light);
+        }
+    }
 }
 </style>
