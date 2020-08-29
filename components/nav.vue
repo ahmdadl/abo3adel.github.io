@@ -32,6 +32,7 @@
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
                     <nuxt-link class="nav-link" :to="localePath('/')">
+                        <i class="fas fa-home"></i>
                         {{ $t('nav.portfolio') }}
                         <span class="sr-only">(current)</span>
                     </nuxt-link>
@@ -44,6 +45,7 @@
                 </li>
                 <li class="nav-item">
                     <nuxt-link class="nav-link" :to="localePath('/blog')">
+                        <i class="fas fa-blog"></i>
                         {{ $t('nav.blog') }}
                     </nuxt-link>
                 </li>
