@@ -130,7 +130,7 @@ export default {
         defaultLocale: 'en',
         vueI18n: {
             fallbackLocale: 'en',
-            silentTranslationWarn: true,
+            // silentTranslationWarn: true,
         },
     },
 

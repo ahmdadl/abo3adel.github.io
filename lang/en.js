@@ -1,8 +1,98 @@
 export default {
-  hi: 'HIII',
-  home: {
-    title: {
-      project: 'Projects'
-    }
-  }
+    hi: 'Hi',
+    nav: {
+        portfolio: 'Portfolio',
+        blog: 'Blog',
+        lang: 'Language',
+    },
+    home: {
+        Responsive: 'Responsive',
+        ResponsiveTxt: 'My layouts will work on any device, big or small.',
+        Dynamic: 'Dynamic',
+        DynamicTxt: 'I love making web pages come to life.',
+        Tested: 'Tested',
+        TestedTxt: 'All website features is well tested before deployment',
+        Organized: 'Organized',
+        OrganizedTxt: 'To help other developers to work after me.',
+        Up_To_Date: 'Up To Date',
+        Up_To_DateTxt: 'I always use the latest versions of my tools.',
+        Multi_Language: 'Multi Language',
+        Multi_LanguageTxt: 'try this feature on this website.',
+        hello: 'Hello',
+        name: 'I`m Ahmed Adel',
+        and: 'And I`m',
+        title: {
+            about: 'About',
+            skills: 'Skills',
+            project: 'Projects',
+            blog: 'Blog',
+            index: 'Portfolio',
+            contact: 'Contact',
+            edu: 'Education',
+            personal: 'Personal',
+            social: 'Social',
+        },
+        skill_info:
+            "I'm a full-stack developer specialised in  backend development for complex scalable web apps. I write about web development on my blog.\nWant to know how I may help your project? Check out",
+        pills: {
+            all: 'All',
+            laravel: 'Laravel',
+            spa: 'SPA',
+            mobile: 'Mobile',
+        },
+        modal: {
+            close: 'Close',
+        },
+        project: {
+            client: 'Client',
+            visit: 'Visit',
+            more_info: 'More Info',
+        },
+        contact: {
+            edu: 'Education',
+            personal: 'Personal',
+            social: 'Social',
+        },
+    },
+    footer: {
+        theme: 'Theme',
+    },
+    sidebar: {
+        search_title: 'Search',
+        search_placeholder: 'post title',
+        search_btn: 'Search',
+        pop_title: 'Popular Posts',
+        share: 'Share This',
+        fb: 'Facebook',
+        twitter: 'Twitter',
+        linked: 'Linked',
+        mail_to: 'Email',
+        cat_title: 'Categories',
+    },
+    post_list: {
+        last_update: 'Last Update',
+        comments_count: 'Comments Count',
+        comment_count: 'Comments Count',
+        title: 'Blog Posts',
+        postKey: '',
+        comments: 'Comments',
+        user_name: 'User Name',
+        home: 'Home',
+        categories: 'Categories',
+        search: 'Search for',
+    },
+    comment: {
+        email: 'Email',
+        message: 'Message',
+        send: 'Comment',
+        user_name: 'User Name',
+    },
+    err: {
+        invalid_name: 'name is not valid',
+        invalid_email: 'email is not valid',
+        invalid_message: 'message is not valid',
+    },
+    post_show: {
+        comments: 'Comments',
+    },
 }

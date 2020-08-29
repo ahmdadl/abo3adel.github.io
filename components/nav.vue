@@ -30,20 +30,27 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
+                <li class="nav-item" :class="{ active: $route.path === '/' }">
                     <nuxt-link class="nav-link" :to="localePath('/')">
                         <i class="fas fa-home"></i>
                         {{ $t('nav.portfolio') }}
                         <span class="sr-only">(current)</span>
                     </nuxt-link>
                 </li>
-                <li class="nav-item" v-if="$auth.loggedIn">
+                <li
+                    class="nav-item"
+                    :class="{ active: $route.path.indexOf('/admin') > -1 }"
+                    v-if="$auth.loggedIn"
+                >
                     <nuxt-link class="nav-link" :to="localePath('/admin')">
                         <i class="fas fa-user-alt"></i>
                         {{ $t('nav.admin') }}
                     </nuxt-link>
                 </li>
-                <li class="nav-item">
+                <li
+                    class="nav-item"
+                    :class="{ active: $route.path.indexOf('/blog') > -1 }"
+                >
                     <nuxt-link class="nav-link" :to="localePath('/blog')">
                         <i class="fas fa-blog"></i>
                         {{ $t('nav.blog') }}

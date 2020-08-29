@@ -123,8 +123,6 @@ export default class Page extends Vue {
 
     get title(): string {
         return (
-            (this.$i18n.t('post_list.postKey') as string) +
-            ' - ' +
             this.post.title
         )
     }
