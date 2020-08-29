@@ -29,7 +29,7 @@ import { Vue, Component } from 'vue-property-decorator'
 import Card from '~/components/card.vue'
 
 @Component({
-    // auth: false,
+    middleware: 'auth',
     scrollToTop: true,
     components: { Card },
 })

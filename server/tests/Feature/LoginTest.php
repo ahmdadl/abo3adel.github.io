@@ -34,10 +34,24 @@ class LoginTest extends TestCase
     /** @test */
     public function fetch_the_current_user()
     {
-        $this->actingAs($this->user)
-            ->getJson('/api/auth/me')
+        $res = $this->postJson('/api/auth/login', [
+            'email' => $this->user->email,
+            'password' => 'password',
+        ])
+            ->assertSuccessful()
+            ->assertJsonStructure(['token', 'expires_in'])
+            ->assertJson(['token_type' => 'bearer'])
+            ->json();
+        
+        $token = $res['token'];
+
+        $res = $this->getJson('/api/auth/user', [
+            'Authorization' => 'Bearer ' . $token
+        ])
             ->assertSuccessful()
             ->assertJsonStructure(['id', 'name', 'email']);
+
+        // dd($res);
     }
 
     /** @test */

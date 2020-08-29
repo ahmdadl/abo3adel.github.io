@@ -81,8 +81,7 @@ import Card from '~/components/card.vue'
 import { Form, HasError, AlertError } from 'vform'
 
 @Component({
-    // @ts-ignore
-    auth: 'guest',
+    middleware: 'guest',
     head() {
         return {
             title: (this as LetMeIn).title || '',
@@ -109,10 +108,10 @@ export default class LetMeIn extends Vue {
                     password: this.form.password,
                 },
             })
-            console.log(res)
+            // console.log(res)
             let user = await this.$auth.setUserToken(res.data.token)
             user = await this.$auth.fetchUser()
-            console.log(this.$auth.user)
+            // console.log(this.$auth.user)
             // this.$router.push({path: '/blog'})
         } catch (err) {
             console.log('err')

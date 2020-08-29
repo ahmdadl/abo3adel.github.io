@@ -13,7 +13,7 @@
         </div>
         <ProjectList
             ref="plist"
-            :auth="true"
+            :auth="$auth.loggedIn"
             @edit="openModal"
             @delete="remove"
         />

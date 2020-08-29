@@ -23,7 +23,7 @@ Route::group([
     Route::post('login', 'Auth\LoginController@login')->withoutMiddleware(['auth:api']);
     Route::post('logout', 'Auth\LoginController@logout');
     Route::post('refresh', 'Auth\LoginController@refresh')->withoutMiddleware(['auth:api']);
-    Route::get('me', 'Auth\UserController@current');
+    Route::get('user', 'Auth\UserController@current');
 });
 
 Route::group(['middleware' => 'auth:api'], function () {

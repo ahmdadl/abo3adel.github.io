@@ -15,7 +15,7 @@
             ref="list"
             :title="$t('admin.title.posts')"
             path="post"
-            :auth="true"
+            :auth="$auth.loggedIn"
             @delete="remove"
             @edit="openModal"
         />

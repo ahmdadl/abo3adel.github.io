@@ -14,7 +14,6 @@ export default class PostList extends Vue {
     }
 
     mounted() {
-        // @ts-ignore
         console.log(this.$auth.user)
     }
 }
