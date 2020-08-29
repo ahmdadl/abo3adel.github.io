@@ -182,10 +182,10 @@ export default class ModelCtrl extends Vue {
     }
 
     public async remove(id: number, inx: number) {
-        this.showLoader(`#del${id}`, 'fa-trash-alt', this)
+        showLoader(`#del${id}`, 'fa-trash-alt', this)
         const res = await this.$axios.$delete(`root/${this.path}/${id}`)
 
-        this.hideLoader(`#del${id}`, 'fa-trash-alt', this)
+        hideLoader(`#del${id}`, 'fa-trash-alt', this)
 
         this.data.splice(inx, 1)
     }

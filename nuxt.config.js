@@ -150,5 +150,6 @@ export default {
                 },
             },
         },
+        localStorage: false
     },
 }

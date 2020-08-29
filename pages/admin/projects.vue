@@ -160,6 +160,7 @@ import ProjectInterface from '~/interfaces/project-interface'
 import Form from '../../node_modules/@imritesh/form/src'
 import TagInput from '~/components/tag-input.vue'
 import ImgPrev from '~/components/img-prev.vue'
+import * as Cookies from 'es-cookie'
 
 @Component({
     // auth: false,
@@ -176,7 +177,9 @@ export default class Project extends Vue {
 
     public mp: ProjectInterface = defaultProject
     private inputs: string[] = ['title', 'link', 'client', 'type']
-    public form = new Form(['img', 'info', 'tags', ...this.inputs])
+    public form = new Form(['img', 'info', 'tags', ...this.inputs], {
+        http: this.$axios,
+    })
     public tags: { text: string; slug: string }[] = []
 
     public async remove(id: number) {

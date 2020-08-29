@@ -216,7 +216,9 @@ export default class Post extends Vue {
     public tags: { text: string; slug: string }[] = []
     public cats: CategoryInterface[] = []
     public mp: PostInterface = DefaultPost
-    public form = new Form(['category_id', 'img', 'body', 'tags', 'title'])
+    public form = new Form(['category_id', 'img', 'body', 'tags', 'title'], {
+        http: this.$axios,
+    })
 
     public async remove(slug: string) {
         showLoader(`#del${slug}`, 'fa-trash-alt', this)
@@ -302,7 +304,6 @@ export default class Post extends Vue {
         if (!this.imgPrev.prevImages.length) {
             delete this.form.img
         }
-
 
         const method = this.mp.id > 0 ? 'patch' : 'post'
         let path = `${this.$axios.defaults.baseURL}root/posts`
