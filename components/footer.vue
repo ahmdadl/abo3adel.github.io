@@ -44,22 +44,9 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-12 col-sm-6 mb-2 text-center">
+                <div class="col-12 text-center">
                     made with <span class="text-danger">&hearts;</span> by
                     ninjaCoder 2019 - {{ new Date().getFullYear() }}
-                </div>
-                <div class="col-12 col-sm-6 text-center">
-                    <span class="text-muted"> {{ $t('footer.theme') }}: </span>
-                    <!-- <color-changer
-                        type="primary"
-                        target="danger"
-                    ></color-changer>
-                    <color-changer
-                        type="danger"
-                        target="primary"
-                    ></color-changer> -->
-                    <!-- <color-changer type="light" target="dark"></color-changer>
-                    <color-changer type="dark" target="light"></color-changer> -->
                 </div>
             </div>
         </div>
@@ -75,6 +62,6 @@ footer {
     div {
         z-index: 9;
     }
-    background: rgba($color: #000000, $alpha: 0.1);
+    background: rgba($color: var(--dark), $alpha: 0.1);
 }
 </style>
