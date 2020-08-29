@@ -36,7 +36,7 @@
                         <span class="sr-only">(current)</span>
                     </nuxt-link>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" v-if="$auth.loggedIn">
                     <nuxt-link class="nav-link" :to="localePath('/admin')">
                         <i class="fas fa-user-alt"></i>
                         {{ $t('nav.admin') }}
