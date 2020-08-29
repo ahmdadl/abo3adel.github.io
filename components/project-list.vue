@@ -87,7 +87,7 @@
                     <div
                         class="col-12 col-sm-6 col-md-4 mb-3 project-card"
                         v-for="project in projects"
-                        :key="project.id + project.title + Math.random()"
+                        :key="project.id + project.title"
                     >
                         <card :overlay="true" cls="text-left">
                             <template slot="img">
