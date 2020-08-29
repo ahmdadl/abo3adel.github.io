@@ -384,16 +384,16 @@ export default class Home extends Vue {
     word-break: break-all;
 }
 .bg-dark {
-    background: rgba($color: #343a40, $alpha: .6) !important;
+    background: rgba($color: var(--dark), $alpha: .6) !important;
 }
-.container-fluid section{
-    z-index: 9;
-}
+// .container-fluid section{
+//     z-index: 2;
+// }
 </style>
 <style lang="scss">
 .project-card {
     .card-img-overlay {
-        background: rgba($color: #000000, $alpha: 0.6);
+        background: rgba($color: var(--dark), $alpha: 0.6);
     }
 }
 .card > .list-group {

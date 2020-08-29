@@ -330,7 +330,7 @@ export default class Post extends Vue {
 </script>
 <style lang="scss" scoped>
 .bg-dark {
-    background: rgba($color: #000000, $alpha: 0.8) !important;
+    background: rgba($color: var(--dark), $alpha: 0.8) !important;
 }
 </style>
 <style lang="scss"></style>
