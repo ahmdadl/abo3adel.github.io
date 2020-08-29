@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="comments-section">
         <card
             :title="$t('post_show.comments')"
             header-cls="bg-primary text-light"
@@ -114,7 +114,13 @@
                     v-for="c in comments"
                     :key="c.id + '-' + Math.random()"
                 >
-                    <img :src="c.gravatar" class="mr-3 img-thumbnail" :alt="c.user_name" width="100" height="100" />
+                    <img
+                        :src="c.gravatar"
+                        class="mr-3 img-thumbnail"
+                        :alt="c.user_name"
+                        width="100"
+                        height="100"
+                    />
                     <div class="media-body">
                         <h5 class="mt-0">
                             {{ c.user_name }}
@@ -229,10 +235,10 @@ export default class Comments extends Vue {
     onPostSlugChanged(val: string) {
         this.loadComments()
     }
-
-    mounted() {
-        
-    }
 }
 </script>
-<style lang="scss"></style>
+<style lang="scss">
+.comments-section .card-footer {
+    display: none;
+}
+</style>

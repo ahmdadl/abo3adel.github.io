@@ -1,10 +1,10 @@
 <template>
-    <div class="col-md-4">
+    <div class="col-md-4 sidebar-id">
         <!-- search bar -->
         <card
             :title="$t('sidebar.search_title')"
             header-cls="bg-primary text-light text-capitalize"
-            class="card"
+            class="card mb-3"
         >
             <div class="form">
                 <div class="form-group">
@@ -41,6 +41,7 @@
         <card
             :title="$t('sidebar.pop_title')"
             header-cls="bg-primary text-light text-capitalize"
+            cls="mb-3"
         >
             <div class="row">
                 <div
@@ -140,6 +141,7 @@
         <card
             :title="$t('sidebar.share')"
             header-cls="bg-primary text-light text-capitalize"
+            cls="mb-3"
         >
             <a
                 :href="'http://www.facebook.com/sharer.php?u=' + url.self"
@@ -186,6 +188,7 @@
         <card
             :title="$t('sidebar.cat_title')"
             header-cls="bg-primary text-light text-capitalize text-center"
+            cls="mb-3"
         >
             <div class="text-center" v-if="loadCats">
                 <span>
@@ -264,4 +267,8 @@ export default class Sidebar extends Vue {
     }
 }
 </script>
-<style lang="scss"></style>
+<style lang="scss" scopped>
+.sidebar-id .card-footer {
+    display: none;
+}
+</style>
