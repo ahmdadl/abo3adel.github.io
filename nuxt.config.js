@@ -24,9 +24,21 @@ export default {
                     'width=device-width, initial-scale=1, shrink-to-fit=no',
             },
             {
-                hid: 'description',
+                hid: 'ninjacode',
                 name: 'description',
-                content: process.env.npm_package_description || '',
+                content: 'ab3adel portfolio and blog',
+            },
+            {
+                name: 'keywords',
+                content: 'abo3adel, laravel, php, php7, typescript',
+            },
+            {
+                name: 'title',
+                content: 'ab3adel portfolio and blog',
+            },
+            {
+                name: 'author',
+                content: 'ahmed adel, abo3adel@gmail.com',
             },
         ],
         link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
@@ -34,7 +46,14 @@ export default {
             {
                 rel: 'stylesheet',
                 type: 'text/css',
-                href: '/css/fontawesome.min.css',
+                href: '/css/bootstrap.min.css',
+            },
+        ],
+        link: [
+            {
+                rel: 'stylesheet',
+                type: 'text/css',
+                href: '/css/bootstrap-rtl.min.css',
             },
         ],
     },
@@ -73,7 +92,7 @@ export default {
     loadingIndicator: {
         name: 'cube-grid',
         color: '#3B8070',
-        background: '#040221',
+        background: '#0c1423',
     },
 
     /**
@@ -120,10 +139,10 @@ export default {
      * See https://i18n.nuxtjs.org/options-reference.html
      */
     i18n: {
-        vueI18nLoader: false,
+        vueI18nLoader: true,
         locales: [
-            { code: 'en', iso: 'en-US', file: 'en.js', name: 'English' },
             { code: 'ar', iso: 'ar-EG', file: 'ar.js', name: 'العربية' },
+            { code: 'en', iso: 'en-US', file: 'en.js', name: 'English' },
         ],
         lazy: true,
         langDir: 'lang/',
@@ -131,7 +150,7 @@ export default {
         vueI18n: {
             fallbackLocale: 'en',
             // silentTranslationWarn: true,
-        },
+        }
     },
 
     /**
@@ -150,6 +169,6 @@ export default {
                 },
             },
         },
-        localStorage: false
+        localStorage: false,
     },
 }

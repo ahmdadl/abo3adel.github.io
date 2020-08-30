@@ -149,7 +149,7 @@
                             <template v-slot:footer>
                                 <div class="text-center">
                                     <span
-                                        class="badge badge-primary mx-1 p-1"
+                                        class="badge badge-primary m-1 p-1"
                                         v-for="tag in p.tags"
                                         :key="tag.id * p.id + Math.random()"
                                     >

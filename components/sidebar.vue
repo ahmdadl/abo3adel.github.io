@@ -26,7 +26,7 @@
                                 path: '/blog/find',
                                 query: {
                                     q: this.searchKey,
-                                    page: 1
+                                    page: 1,
                                 },
                             })
                         "
@@ -111,7 +111,7 @@
                         </h5>
                         <p class="mt-1">
                             <span
-                                class="badge badge-info p-1 float-left"
+                                class="badge badge-info p-1"
                                 data-toggle="tooltip"
                                 data-placement="top"
                                 :title="$t('post_list.last_update')"
@@ -123,7 +123,7 @@
                                 :to="
                                     localePath('/blog/' + p.slug + '/#comments')
                                 "
-                                class="float-right badge badge-info p-1 text-light"
+                                class="badge badge-info p-1 text-light"
                                 data-toggle="tooltip"
                                 data-placement="top"
                                 :title="$t('post_list.comment_count')"
@@ -176,7 +176,9 @@
                 {{ $t('sidebar.linked') }}
             </a>
             <a
-                :href="'mailto:?Subject=' + url.self + '&amp;'"
+                :href="
+                    'mailto:webmaster@example.com?subject=' + url.self
+                "
                 class="btn btn-outline-secondary m-2"
             >
                 <i class="fas fa-mail-bulk pr-3"></i>

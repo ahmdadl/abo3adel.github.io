@@ -37,7 +37,7 @@
                         required
                     />
                     <div
-                        class="col-sm-10 offset-sm-2 invalid-feedback mt-md-n3"
+                        class="col-sm-10 offset-sm-2 invalid-feedback"
                     >
                         {{ this.errors.name || $t('err.invalid_name') }}
                     </div>
@@ -62,7 +62,7 @@
                         required
                     />
                     <div
-                        class="col-sm-10 offset-sm-2 invalid-feedback mt-md-n3"
+                        class="col-sm-10 offset-sm-2 invalid-feedback"
                     >
                         {{ this.errors.email || $t('err.invalid_email') }}
                     </div>

@@ -13,7 +13,7 @@
     </div>
 </template>
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
+import { Vue, Component, Watch } from 'vue-property-decorator'
 import Nav from '~/components/nav.vue'
 import Footer from '~/components/footer.vue'
 
@@ -24,7 +24,38 @@ export default class Default extends Vue {
     public notPlace: string = 'bottom right'
     public dir: string = ''
 
+    createLinkTag(href: string) {
+        // this.$nuxt.$loading.start()
+        var headID = document.getElementsByTagName('head')[0]
+        var link = document.createElement('link')
+        link.type = 'text/css'
+        link.rel = 'stylesheet'
+
+        headID.appendChild(link)
+
+        link.href = href
+
+        link.onload = () => {
+            // this.$nuxt.$loading.finish()
+        }
+    }
+
     created() {
+        let dir: string = 'ltr'
+        let lang: string = 'en-US'
+
+        if (this.$i18n.locale === 'ar') {
+            this.notPlace = 'bottom left'
+            dir = 'rtl'
+            lang = 'ar-EG'
+        }
+        document.documentElement.dir = dir
+        document.documentElement.lang = lang
+        this.dir = dir
+    }
+
+    @Watch('$i18n.locale')
+    onLocaleChanged(val: string) {
         let dir: string = 'ltr'
         let lang: string = 'en-US'
 
@@ -54,55 +85,14 @@ export default class Default extends Vue {
                 }, 700)
             }
         } catch (e) {}
+
+        let href = '/css/bootstrap.min.css'
+        if (this.dir === 'rtl') {
+            href = '/css/bootstrap-rtl.min.css'
+        }
+        this.createLinkTag(href)
+        this.createLinkTag('/css/fontawesome.min.css')
     }
 }
 </script>
-<style>
-/* html {
-    font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
-        'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-    font-size: 16px;
-    word-spacing: 1px;
-    -ms-text-size-adjust: 100%;
-    -webkit-text-size-adjust: 100%;
-    -moz-osx-font-smoothing: grayscale;
-    -webkit-font-smoothing: antialiased;
-    box-sizing: border-box;
-}
-
-*,
-*::before,
-*::after {
-    box-sizing: border-box;
-    margin: 0;
-}
-
-.button--green {
-    display: inline-block;
-    border-radius: 4px;
-    border: 1px solid #3b8070;
-    color: #3b8070;
-    text-decoration: none;
-    padding: 10px 30px;
-}
-
-.button--green:hover {
-    color: #fff;
-    background-color: #3b8070;
-}
-
-.button--grey {
-    display: inline-block;
-    border-radius: 4px;
-    border: 1px solid #35495e;
-    color: #35495e;
-    text-decoration: none;
-    padding: 10px 30px;
-    margin-left: 15px;
-}
-
-.button--grey:hover {
-    color: #fff;
-    background-color: #35495e;
-} */
-</style>
+<style></style>

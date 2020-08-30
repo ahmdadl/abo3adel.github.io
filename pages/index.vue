@@ -87,21 +87,7 @@
                         />
                         <p class="text-secondary mt-2 text-capitalize">
                             {{ $t('home.skill_info') }}
-                            <!-- <a
-                            href="#projects"
-                            v-scroll-to="'#projects'"
-                            class="btn btn-outline-primary btn-sm"
-                        >
-                            {{ $t('home.my_projects') }}
-                        </a> -->
                         </p>
-                        <!-- <a
-                        href="#contact"
-                        v-scroll-to="{ el: '#contact', duration: 2500 }"
-                        class="btn btn-primary"
-                    >
-                        {{ $t('home.hire') }}
-                    </a> -->
                     </div>
                     <div class="col-12 col-md-6 mt-3">
                         <progress-skill
@@ -139,7 +125,7 @@
                     class="text-center"
                     v-html="h2($t('home.title.contact'))"
                 ></span>
-                <div class="row mt-3">
+                <div class="row mt-3" dir="ltr">
                     <div class="col-sm-12 col-md-4">
                         <div
                             class="card card-body bg-transparent border-secondary m-1"
@@ -173,7 +159,7 @@
                                 <i class="fas fa-user-tie"></i>
                                 {{ $t('home.contact.personal') }}
                             </p>
-                            <ul class="list-group list-group-flush">
+                            <ul class="list-group list-group-flush" dir="ltr">
                                 <li
                                     class="list-group-item bg-transparent border-bottom border-secondary"
                                 >
@@ -209,7 +195,7 @@
                                 </li>
                                 <li class="list-group-item bg-transparent">
                                     <i class="fas fa-map-marker-alt"></i>
-                                    Abu Hammad,<br />
+                                    Abu Hammad,
                                     Sharkia, Egypt
                                 </li>
                             </ul>
@@ -223,7 +209,7 @@
                                 <i class="fas fa-address-card"></i>
                                 {{ $t('home.contact.social') }}
                             </p>
-                            <ul class="list-group list-group-flush">
+                            <ul class="list-group list-group-flush" dir="ltr">
                                 <li
                                     class="list-group-item bg-transparent border-bottom border-secondary"
                                 >
@@ -419,7 +405,7 @@ export default class Home extends Vue {
     word-break: break-all;
 }
 .bg-dark {
-    background: rgba($color: var(--dark), $alpha: 0.6) !important;
+    background: rgba($color: #0c1423, $alpha: 0.6) !important;
 }
 // .container-fluid section{
 //     z-index: 2;
@@ -428,7 +414,7 @@ export default class Home extends Vue {
 <style lang="scss">
 .project-card {
     .card-img-overlay {
-        background: rgba($color: var(--dark), $alpha: 0.6);
+        background: rgba($color: #0c1423, $alpha: 0.6);
     }
 }
 .card > .list-group {
@@ -439,16 +425,6 @@ export default class Home extends Vue {
     // left: ;
     transform: translate(-50%, -50%);
     border-radius: 1.25rem;
-}
-.ltr {
-    .menu {
-        left: 1.25rem;
-    }
-}
-.rtl {
-    .menu {
-        right: 1.25rem;
-    }
 }
 .list-group {
     line-height: 0.25rem;
@@ -473,6 +449,17 @@ export default class Home extends Vue {
         &:hover {
             color: var(--light);
         }
+    }
+}
+.ltr {
+    .menu {
+        left: 1.25rem;
+    }
+}
+.rtl {
+    .menu {
+        // right: 1.25rem;
+        left: 100%;
     }
 }
 </style>

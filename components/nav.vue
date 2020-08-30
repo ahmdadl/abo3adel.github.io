@@ -83,6 +83,7 @@
                                     ? 'text-right'
                                     : 'text-left'
                             "
+                            @click="() => location.reload()"
                         >
                             {{ locale.name }}
                         </nuxt-link>
