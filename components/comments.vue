@@ -54,7 +54,7 @@
                         :placeholder="$t('comment.email')"
                         v-model.trim="model.email"
                         :class="{
-                            'is-invalid': !validateEmail(),
+                            'is-invalid': model.email.length &&!validateEmail(),
                             'is-valid': validateEmail(),
                         }"
                         minlength="5"
