@@ -1,5 +1,5 @@
 <template>
-    <div :class="dir">
+    <div :class="dir" class="home">
         <header
             id="canvasHeader"
             class="masthead bg-dark text-light bg-transparent"
@@ -195,8 +195,7 @@
                                 </li>
                                 <li class="list-group-item bg-transparent">
                                     <i class="fas fa-map-marker-alt"></i>
-                                    Abu Hammad,
-                                    Sharkia, Egypt
+                                    Abu Hammad, Sharkia, Egypt
                                 </li>
                             </ul>
                         </div>
@@ -426,28 +425,30 @@ export default class Home extends Vue {
     transform: translate(-50%, -50%);
     border-radius: 1.25rem;
 }
-.list-group {
-    line-height: 0.25rem;
-}
-.list-group-item {
-    padding: 0.7rem 0.5rem;
-    transition: all ease 0.5s;
-    font-size: 1.25rem;
-    &:first-of-type {
-        border-radius: 0.5rem 0.5rem 0 0;
+.home {
+    .list-group {
+        line-height: 0.25rem;
     }
-    &:last-of-type {
-        border-radius: 0 0 0.5rem 0.5rem;
-        padding-bottom: 0.75rem;
-    }
-    &:hover {
-        color: var(--primary);
-        cursor: pointer;
-    }
-    &.active {
-        background-color: var(--primary);
+    .list-group-item {
+        padding: 0.7rem 0.5rem;
+        transition: all ease 0.5s;
+        font-size: 1.25rem;
+        &:first-of-type {
+            border-radius: 0.5rem 0.5rem 0 0;
+        }
+        &:last-of-type {
+            border-radius: 0 0 0.5rem 0.5rem;
+            padding-bottom: 0.75rem;
+        }
         &:hover {
-            color: var(--light);
+            color: var(--primary);
+            cursor: pointer;
+        }
+        &.active {
+            background-color: var(--primary);
+            &:hover {
+                color: var(--light);
+            }
         }
     }
 }
