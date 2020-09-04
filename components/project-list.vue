@@ -164,7 +164,7 @@
                             <template slot="footer">
                                 <div class="text-center">
                                     <span
-                                        class="badge badge-primary p-1 mx-1"
+                                        class="badge badge-primary p-1 m-1"
                                         v-for="t in project.tags"
                                         :key="
                                             t.id + project.title + Math.random()
@@ -481,6 +481,10 @@ export default class ProjectList extends Vue {
 <style lang="scss" scoped>
 .project-card {
     transition: all 1s;
+    .card-img {
+        width: 100%;
+        height: 30vh;
+    }
 }
 .projects-enter,
 .projects-leave-to {
@@ -491,4 +495,18 @@ export default class ProjectList extends Vue {
     position: absolute;
 }
 </style>
-<style lang="scss"></style>
+<style lang="scss">
+@import '~assets/css/media';
+
+.project-card .card-img {
+    @include media('>sm') {
+        height: 25vh !important;
+    }
+    @include media('>md') {
+        height: 20vh !important;
+    }
+    @include media('>lg') {
+        height: 25vh;
+    }
+}
+</style>
