@@ -2,6 +2,7 @@
 
 use App\Category;
 use App\Post;
+use App\Tag;
 use Illuminate\Database\Seeder;
 
 class PostSeeder extends Seeder
@@ -15,15 +16,18 @@ class PostSeeder extends Seeder
     {
         DB::beginTransaction();
         $cats = Category::all();
+        $tags = Tag::all();
 
-        $cats->each(fn (Category $c) => $c->posts()->saveMany(
-            factory(Post::class, random_int(5, 10))->make([
+        $cats->each(function (Category $c) use ($tags) {
+            $posts = factory(Post::class, random_int(5, 10))->create([
                 'category_id' => $c->id
-            ])
-        ));
+            ]);
+
+            $posts->each(fn (Post $post) => $post->tags()->sync(
+                Arr::random((array) $tags->pluck('id')->toArray(), 3)
+            ));
+        });
 
         DB::commit();
-
-        // tags will be attached at TagSeeder class
     }
 }

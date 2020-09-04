@@ -12,6 +12,10 @@ class CategorySeeder extends Seeder
      */
     public function run()
     {
-        factory(Category::class, random_int(3, 6))->create();
+        $titles = ['Tutorial', 'News'];
+
+        foreach ($titles as $title) {
+            factory(Category::class)->create(compact('title'));
+        }
     }
 }

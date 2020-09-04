@@ -15,26 +15,11 @@ class TagSeeder extends Seeder
     public function run()
     {
         DB::beginTransaction();
-        $tags = (factory(Tag::class, 7)->create())
-            ->pluck('id')
-            ->all();
+        $titles = ['php', 'laravel', 'typeScript', 'vue.Js', 'Angular', 'ionic', 'react native', 'lumen', 'api', 'bootstrap', 'multi language', 'multi user access', 'bootstrap'];
 
-        Post::all()->each(function (Post $post) use ($tags) {
-            foreach (range(0, random_int(1, 2)) as $i) {
-                $post->tags()->attach(
-                    Arr::random($tags)
-                );
-            }
-        });
-
-        // add Tags to projects
-        Project::all()->each(function (Project $project) use ($tags) {
-            foreach (range(0, random_int(1, 2)) as $i) {
-                $project->tags()->attach(
-                    Arr::random($tags)
-                );
-            }
-        });
+        foreach ($titles as $title) {
+            factory(Tag::class)->create(compact('title'));
+        }
 
         DB::commit();
     }
