@@ -14,6 +14,7 @@
                         class="form-control"
                         :placeholder="$t('sidebar.search_placeholder')"
                         v-model.trim="searchKey"
+                        @keypress.enter="goToFind"
                     />
                 </div>
                 <div class="form-group">
@@ -176,9 +177,7 @@
                 {{ $t('sidebar.linked') }}
             </a>
             <a
-                :href="
-                    'mailto:webmaster@example.com?subject=' + url.self
-                "
+                :href="'mailto:webmaster@example.com?subject=' + url.self"
                 class="btn btn-outline-secondary m-2"
             >
                 <i class="fas fa-mail-bulk pr-3"></i>
@@ -264,8 +263,21 @@ export default class Sidebar extends Vue {
         })
     }
 
+    public goToFind() {
+        location.href = this.localePath({
+            path: '/blog/find',
+            query: {
+                q: this.searchKey,
+                // @ts-ignore
+                page: 1,
+            },
+        })
+    }
+
     mounted() {
         this.loadPopPosts()
+
+        this.searchKey = (this.$route.query.q as string) ?? ''
     }
 }
 </script>
