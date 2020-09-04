@@ -82,7 +82,7 @@
                 <div class="row text-center">
                     <div class="col-12 col-md-6 mt-3 mb-5">
                         <img
-                            src="~assets/img/meLarge.png"
+                            v-lazy="'/meLarge.png'"
                             class="img w-75 p-1 border border-secondary rounded"
                         />
                         <p class="text-secondary mt-2 text-capitalize">

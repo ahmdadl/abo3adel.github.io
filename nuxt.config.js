@@ -65,7 +65,11 @@ export default {
      ** Plugins to load before mounting the App
      ** https://nuxtjs.org/guide/plugins
      */
-    plugins: ['~/plugins/notify.ts', '~/plugins/axios.js'],
+    plugins: [
+        '~/plugins/notify.ts',
+        '~/plugins/axios.js',
+        '~/plugins/lazyload.ts',
+    ],
     /*
      ** Auto import components
      ** See https://nuxtjs.org/api/configuration-components
@@ -150,7 +154,7 @@ export default {
         vueI18n: {
             fallbackLocale: 'en',
             // silentTranslationWarn: true,
-        }
+        },
     },
 
     /**

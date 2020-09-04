@@ -98,7 +98,7 @@
                                     {{ project.type }}
                                 </span>
                                 <img
-                                    :src="'/img/projects/' + project.img[0]"
+                                    v-lazy="'/img/projects/' + project.img[0]"
                                     class="card-img"
                                 />
                             </template>

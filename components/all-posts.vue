@@ -88,7 +88,7 @@
                             <template v-slot:img>
                                 <img
                                     class="card-img-top"
-                                    :src="'/img/posts/' + p.img"
+                                    v-lazy="'/img/posts/' + p.img"
                                     :alt="p.title"
                                 />
                             </template>
@@ -277,6 +277,10 @@ export default class AllPostsList extends Vue {
 <style lang="scss" scoped>
 .post-card {
     transition: all 1s;
+    .card-img-top {
+        width: 100%;
+        height: 30vh;
+    }
 }
 .posts-enter,
 .posts-leave-to {
@@ -287,4 +291,18 @@ export default class AllPostsList extends Vue {
     position: absolute;
 }
 </style>
-<style lang="scss"></style>
+<style lang="scss">
+@import '~assets/css/media';
+
+.post-card .card-img-top {
+    @include media('>sm') {
+        height: 25vh !important;
+    }
+    @include media('>md') {
+        height: 20vh !important;
+    }
+    @include media('>lg') {
+        height: 25vh;
+    }
+}
+</style>

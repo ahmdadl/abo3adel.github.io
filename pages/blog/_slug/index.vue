@@ -31,8 +31,8 @@
                 </ol>
             </div>
             <img
-                :src="`/img/posts/${post.img}`"
-                class="img img-responsive w-100"
+                v-lazy="`/img/posts/${post.img}`"
+                class="img img-responsive w-100 post-img"
             />
         </div>
 
@@ -122,9 +122,7 @@ export default class Page extends Vue {
     }
 
     get title(): string {
-        return (
-            this.post.title
-        )
+        return this.post.title
     }
 
     @Watch('slug')
@@ -137,4 +135,20 @@ export default class Page extends Vue {
     }
 }
 </script>
-<style lang="scss"></style>
+<style lang="scss">
+@import '~assets/css/media';
+
+.post-img {
+    height: 50vh;
+    
+    @include media('>sm') {
+        height: 50vh !important;
+    }
+    @include media('>md') {
+        height: 40vh !important;
+    }
+    @include media('>lg') {
+        height: 45vh;
+    }
+}
+</style>
