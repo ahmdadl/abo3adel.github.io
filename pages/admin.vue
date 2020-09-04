@@ -6,7 +6,7 @@
                     <nuxt-link
                         v-for="link in nav"
                         :key="link.text"
-                        class="list-group-item list-group-item-action text-light border-bottom border-secondary"
+                        class="list-group-item list-group-item-action text-light text-uppercase border-bottom border-secondary"
                         :class="
                             $route.path === `/${link.url}`
                                 ? 'active bg-primary'
@@ -14,7 +14,7 @@
                         "
                         :to="`/${link.url}`"
                     >
-                        {{ $t('admin.title.' + link.text) }}
+                        {{ link.text }}
                     </nuxt-link>
                 </div>
             </div>
@@ -36,7 +36,7 @@ import Card from '~/components/card.vue'
 export default class Admin extends Vue {
     public nav = [
         {
-            text: 'dash',
+            text: 'Dashboard',
             url: 'admin',
         },
         {

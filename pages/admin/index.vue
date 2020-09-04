@@ -79,7 +79,7 @@ export default class Dashboard extends Vue {
     }
 
     get title(): string {
-        return this.$i18n.t('admin.title.dash') as string
+        return 'Dashboard'
     }
 
     beforeMount() {

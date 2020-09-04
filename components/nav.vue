@@ -44,7 +44,7 @@
                 >
                     <nuxt-link class="nav-link" :to="localePath('/admin')">
                         <i class="fas fa-user-alt"></i>
-                        {{ $t('nav.admin') }}
+                        Admin
                     </nuxt-link>
                 </li>
                 <li
