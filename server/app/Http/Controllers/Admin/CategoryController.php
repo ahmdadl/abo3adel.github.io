@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class CategoryController extends Controller
 {
     private const ValidateArr = [
-        'title' => 'required|string|min:5|max:255'
+        'title' => 'required|string|min:3|max:255'
     ];
 
     /**

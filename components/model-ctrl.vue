@@ -94,7 +94,7 @@
                                     v-model="model.self"
                                     placeholder="tag title"
                                     aria-describedby="helpId"
-                                    minlength="5"
+                                    minlength="3"
                                     maxlength="255"
                                 />
                                 <small id="helpId" class="text-muted">
