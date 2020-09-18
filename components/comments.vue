@@ -36,9 +36,7 @@
                         name="name"
                         required
                     />
-                    <div
-                        class="col-sm-10 offset-sm-2 invalid-feedback"
-                    >
+                    <div class="col-sm-10 offset-sm-2 invalid-feedback">
                         {{ this.errors.name || $t('err.invalid_name') }}
                     </div>
                 </div>
@@ -54,16 +52,15 @@
                         :placeholder="$t('comment.email')"
                         v-model.trim="model.email"
                         :class="{
-                            'is-invalid': model.email.length &&!validateEmail(),
+                            'is-invalid':
+                                model.email.length && !validateEmail(),
                             'is-valid': validateEmail(),
                         }"
                         minlength="5"
                         maxlength="255"
                         required
                     />
-                    <div
-                        class="col-sm-10 offset-sm-2 invalid-feedback"
-                    >
+                    <div class="col-sm-10 offset-sm-2 invalid-feedback">
                         {{ this.errors.email || $t('err.invalid_email') }}
                     </div>
                 </div>
@@ -142,6 +139,9 @@ import { Vue, Component, Prop, Ref, Watch } from 'vue-property-decorator'
 import Card from './card.vue'
 import CommentInterface from '~/interfaces/comments-interface'
 
+const getComments = (slug: string) =>
+    import(`~/data/posts/comments/${slug}.json`).then((m) => m.default || m)
+
 @Component({
     components: { Card },
 })
@@ -219,7 +219,8 @@ export default class Comments extends Vue {
     }
 
     public async loadComments() {
-        const res = await this.$axios.$get(`post/${this.postSlug}/comments`)
+        // const res = await this.$axios.$get(`post/${this.postSlug}/comments`)
+        const res = await getComments(this.postSlug)
 
         if (!res) {
             this.commentLoading = false
@@ -227,7 +228,7 @@ export default class Comments extends Vue {
             return
         }
 
-        this.comments = res
+        this.comments = res.comments
         this.commentLoading = false
     }
 

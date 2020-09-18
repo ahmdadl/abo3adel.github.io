@@ -220,6 +220,9 @@ import PostInterface from '~/interfaces/PostInterface'
 import CategoryInterface from '~/interfaces/category-interface'
 import Card from '~/components/card.vue'
 
+const getData = (path: string) =>
+    import(`~/data/${path}/1.json`).then((m) => m.default || m)
+
 @Component({
     components: { ContentLoader, Card },
 })
@@ -234,33 +237,32 @@ export default class Sidebar extends Vue {
     public loadCats: boolean = true
     public searchKey: string = ''
 
-    public loadPopPosts(): void {
-        this.$axios
-            .get('post/popular')
-            .then((res) => {
-                if (!res || !res.data) {
-                    this.$nf.error()
-                    return
-                }
+    public async loadPopPosts() {
+        const res = await getData('popular').finally(() =>
+            this.loadCategoriesList()
+        )
+        if (!res) {
+            this.$nf.error()
+            return
+        }
 
-                setTimeout((_) => {
-                    this.popPosts = res.data.posts
-                    this.loadingArr.splice(0)
-                }, 900)
-            })
-            .finally(() => this.loadCategoriesList())
+        setTimeout((_) => {
+            this.popPosts = res
+            this.loadingArr.splice(0)
+        }, 900)
     }
 
-    public loadCategoriesList() {
-        this.$axios.$get('categories').then((res) => {
-            this.loadCats = false
-            if (!res) {
-                this.$nf.error()
-                return
-            }
+    public async loadCategoriesList() {
+        // this.$axios.$get('categories').then((res) => {
+        const res = await getData('categories')
+        this.loadCats = false
+        if (!res) {
+            this.$nf.error()
+            return
+        }
 
-            this.cats = res
-        })
+        this.cats = res
+        // })
     }
 
     public goToFind() {

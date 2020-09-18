@@ -432,7 +432,7 @@ export default class Home extends Vue {
     .list-group-item {
         padding: 0.7rem 0.5rem;
         transition: all ease 0.5s;
-        font-size: 1.25rem;
+        // font-size: 1.25rem;
         &:first-of-type {
             border-radius: 0.5rem 0.5rem 0 0;
         }

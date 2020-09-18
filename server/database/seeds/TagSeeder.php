@@ -15,7 +15,7 @@ class TagSeeder extends Seeder
     public function run()
     {
         DB::beginTransaction();
-        $titles = ['php', 'laravel', 'typeScript', 'vue.Js', 'Angular', 'ionic', 'react native', 'lumen', 'api', 'bootstrap', 'multi language', 'multi user access', 'bootstrap'];
+        $titles = ['php', 'laravel', 'typeScript', 'vue.Js', 'Angular', 'ionic', 'react native', 'lumen', 'api', 'bootstrap', 'multi language', 'multi user access', 'unit testing'];
 
         foreach ($titles as $title) {
             factory(Tag::class)->create(compact('title'));

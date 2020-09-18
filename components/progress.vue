@@ -4,7 +4,7 @@
         style=""
     >
         <span
-            class="px-3 pt-1 align-middle text-light bg-dark text-uppercase"
+            class="px-3 pt-3 align-middle text-light bg-dark text-uppercase"
             >{{ txt }}</span
         >
         <div class="progress w-100">

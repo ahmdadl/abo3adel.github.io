@@ -276,6 +276,9 @@ import Card from '~/components/card.vue'
 // @ts-ignore
 import { ContentLoader } from 'vue-content-loader'
 
+const getProjects = () =>
+    import('~/data/projects/1.json').then((m) => m.default || m)
+
 export const defaultProject: ProjectInterface = {
     id: 0,
     title: '',
@@ -332,7 +335,7 @@ export default class ProjectList extends Vue {
     }
 
     public async loadProjects() {
-        const res = await this.$axios.$get('projects')
+        const res = await getProjects()
 
         this.projectsLoad.splice(0)
 

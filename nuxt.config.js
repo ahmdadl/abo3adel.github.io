@@ -88,7 +88,21 @@ export default {
         'nuxt-i18n',
         '@nuxtjs/auth-next',
         ['vue-scrollto/nuxt', { duration: 500 }],
+        // '@dewib/xhr-cache',
     ],
+
+    xhrCache: {
+        // name: 'posts',
+        // maxAge: 3600 * 1000, // TTL of resource
+        // init: true, // Fetch the resource at nuxt start
+        // request: {
+        //     method: 'posts',
+        //     url: 'http://nx.test/server/public/api/posts',
+        // },
+        // headers: {
+        //     'api-key': 'base64:Ltx7LO0pTz8L9YAa1kUC3XKHa3gZ8NjErEnFp209MT8=',
+        // },
+    },
 
     /**
      * loading until page is loaded
@@ -113,7 +127,7 @@ export default {
      ** See https://axios.nuxtjs.org/options
      */
     axios: {
-        baseURL: 'https://nx.test/server/public/api/',
+        // baseURL: 'https://nx.test/server/public/api/',
         // proxy: true,
     },
     proxy: {

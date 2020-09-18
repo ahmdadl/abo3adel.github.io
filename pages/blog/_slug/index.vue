@@ -60,8 +60,6 @@
             {{ post.title }}
         </h2>
 
-        <!-- TODO handle post delete/edit -->
-
         <!-- post body -->
         <p v-html="post.body"></p>
 
@@ -76,6 +74,9 @@ import { ContentLoader } from 'vue-content-loader'
 import Card from '~/components/card.vue'
 import PostInterface from '~/interfaces/PostInterface'
 import Comments from '~/components/comments.vue'
+
+const getPostData = (slug: string) =>
+    import(`~/data/posts/index/${slug}.json`).then((m) => m.default || m)
 
 const PostDefault: PostInterface = {
     id: 0,
@@ -109,15 +110,16 @@ export default class Page extends Vue {
     public loading: boolean = true
 
     public async loadPost(): Promise<any> {
-        const res = await this.$axios.get('post/' + this.slug)
+        // const res = await this.$axios.get('post/' + this.slug)
+        const res = await getPostData(this.slug)
 
-        if (!res || !res.data) {
+        if (!res) {
             this.$nf.error()
             this.loading = false
             return null
         }
 
-        this.post = res.data
+        this.post = res
         this.loading = false
     }
 
@@ -140,7 +142,7 @@ export default class Page extends Vue {
 
 .post-img {
     height: 50vh;
-    
+
     @include media('>sm') {
         height: 50vh !important;
     }

@@ -17,9 +17,9 @@ class PostSeeder extends Seeder
         DB::beginTransaction();
         $cats = Category::all();
         $tags = Tag::all();
-
+ 
         $cats->each(function (Category $c) use ($tags) {
-            $posts = factory(Post::class, random_int(5, 10))->create([
+            $posts = factory(Post::class, random_int(10, 20))->create([
                 'category_id' => $c->id
             ]);
 

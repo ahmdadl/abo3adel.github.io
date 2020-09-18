@@ -184,6 +184,12 @@ import Paginate from '~/components/paginate.vue'
 import Pagination from 'laravel-vue-pagination'
 import { getPath, pushPageToHistroy } from '~/common/pagination'
 
+const getPosts = (pageNum: number = 1) =>
+    import(`~/data/posts/${pageNum}.json`).then((m) => m.default || m)
+
+const getCategoryPosts = (slug: string) =>
+    import(`~/data/categories/posts/${slug}.json`).then((m) => m.default || m)
+
 @Component({
     scrollToTop: true,
     head() {
@@ -207,35 +213,58 @@ export default class AllPostsList extends Vue {
     public pageResponse = {}
     public pagePath: string = this.path
 
-    public loadPosts(
+    public async loadPosts(
         page: number = parseInt(this.$route.query.page as string) || 1
-    ): void {
-        // alert(`page => ${page}`)
+    ) {
+        const isCategory = this.pagePath.indexOf('categories') > -1
+
+        if (
+            page === parseInt(this.$route.query.page as string) &&
+            this.posts.length
+        ) {
+            return
+        }
+
         let path = getPath(page, this.pagePath)
         this.loading = true
 
-        this.$axios.get(path).then((res) => {
-            if (!res || !res.data || !res.data.posts) {
-                this.loading = false
-                this.$nf.error()
-                return
-            }
+        let res = {
+            data: [],
+        }
 
-            let data = res.data.posts.data
-            if (this.limit) {
-                data = data.splice(data.length - this.limit)
-            }
+        if (isCategory) {
+            res = await getCategoryPosts(this.$route.params.slug)
+        } else {
+            res = await getPosts(page)
+        }
 
-            this.posts = data
+        // console.log(res)
+
+        if (!res) {
             this.loading = false
+            this.$nf.error()
+            return
+        }
 
-            if (this.limit) return
+        let data = res.posts
 
-            this.pageResponse = res.data.posts
+        if (!isCategory) {
+            data = res.data
+        }
 
-            pushPageToHistroy(this, page, path)
-            window.scrollTo(0, 0)
-        })
+        if (this.limit) {
+            data = data.splice(data.length - this.limit)
+        }
+
+        this.posts = data
+        // console.log(data)
+        this.loading = false
+
+        if (this.limit) return
+
+        this.pageResponse = res
+        pushPageToHistroy(this, page, path)
+        window.scrollTo(0, 0)
     }
 
     /**
