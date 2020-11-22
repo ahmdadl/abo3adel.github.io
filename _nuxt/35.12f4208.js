@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[35],{329:function(e){e.exports=JSON.parse('{"id":2,"title":"News","slug":"news","created_at":"2020-10-02T11:57:45.000000Z","updated_at":"2020-10-02T11:57:45.000000Z","posts":[]}')}}]);
