@@ -1,3 +1,4 @@
+import i18n from './i18n.js';
 import App from './App.svelte';
 
 const app = new App({

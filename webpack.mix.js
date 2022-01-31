@@ -10,11 +10,11 @@ const postcssPlugins = [
     require('autoprefixer'),
 ];
 
-mix.setPublicPath('dist')
-    .ts('resources/js/app.ts', 'dist/js')
+mix.setPublicPath('')
+    .ts('resources/js/app.ts', 'js')
     .postCss(
         'resources/css/app.css',
-        'dist/css',
+        'css',
         postcssPlugins.concat([require('tailwindcss')('./tailwind.config.js')])
     )
 
