@@ -11,12 +11,7 @@
         console.log('doubled is' + doubled);
     }
 
-    // document element scripts
-    locale.subscribe((locale) => {
-        if ($isLoading) return;
-        // console.log(locale);
-        document.documentElement.dir = locale === 'ar' ? 'rtl' : 'ltr';
-    });
+    
 
 </script>
 
