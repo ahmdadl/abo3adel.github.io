@@ -521,6 +521,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .justify-between {
   justify-content: space-between;
 }
+.overflow-hidden {
+  overflow: hidden;
+}
 .whitespace-pre {
   white-space: pre;
 }
@@ -3945,6 +3948,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
   .md\:-mt-1 {
     margin-top: -0.25rem;
+  }
+
+  .md\:inline-block {
+    display: inline-block;
   }
 
   .md\:inline {
