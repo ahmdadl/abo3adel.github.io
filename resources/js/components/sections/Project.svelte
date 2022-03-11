@@ -2,10 +2,21 @@
     import { slide } from 'svelte/transition';
     import { t } from 'svelte-i18n';
     import type ProjectInterface from '../../interfaces/ProjectInterface';
+    import Modal from '../Modal.svelte';
+    import Slider from '../Slider.svelte';
 
     let activeTab = 'all';
-    let modalOpen = false;
-    let currentProject = {};
+    let modalOpend = false;
+    let currentProject: ProjectInterface = {
+        slug: '',
+        title: '',
+        link: '',
+        category: [],
+        img: [],
+        type: '',
+        download_url: '',
+        tags: [],
+    };
 
     const tabs = [
         { title: $t('home.project.tabs.all'), value: 'all' },
@@ -100,7 +111,7 @@
 
     function openModal(proj: ProjectInterface) {
         currentProject = Object.assign({}, proj);
-        modalOpen = true;
+        modalOpend = true;
     }
 </script>
 
@@ -144,7 +155,9 @@
                     <a
                         href={'#'}
                         class="block transition duration-300 ease-out transform hover:scale-110"
-                        on:click|preventDefault={openModal(proj)}
+                        on:click|preventDefault={() => {
+                            openModal(proj);
+                        }}
                     >
                         <img
                             class="object-cover w-full h-full shadow-sm"
@@ -187,7 +200,9 @@
                             <button
                                 class="inline-block mx-1 text-green-800 border-green-600 btn hover:bg-green-700 dark:text-green-400 dark:border-green-400"
                                 type="button"
-                                on:click|preventDefault={openModal(proj)}
+                                on:click|preventDefault={() => {
+                                    openModal(proj);
+                                }}
                             >
                                 <i class="fas fa-at" />
                                 <span>{$t('home.project.modal.moreInfo')}</span>
@@ -210,142 +225,15 @@
             {/if}
         {/each}
     </div>
-
-    <!-- project modal -->
-    <!-- <div
-                            class="fixed inset-0 z-20 w-full h-full overflow-y-auto duration-300 bg-black bg-opacity-50"
-                            x-show="modal"
-                            x-transition:enter="transition duration-300"
-                            x-transition:enter-start="opacity-0"
-                            x-transition:enter-end="opacity-100"
-                            x-transition:leave="transition duration-300"
-                            x-transition:leave-start="opacity-100"
-                            x-transition:leave-end="opacity-0"
-                        >
-                            <div
-                                class="relative mx-2 my-10 mt-20 opacity-100 sm:w-3/4 md:w-1/2 sm:mx-auto"
-                            >
-                                <div
-                                    class="relative z-20 text-gray-900 bg-white rounded-md shadow-lg dark:bg-gray-700 dark:text-white"
-                                    @click.away="modal = false"
-                                    x-show="modal"
-                                    x-transition:enter="transition transform duration-300"
-                                    x-transition:enter-start="scale-0"
-                                    x-transition:enter-end="scale-100"
-                                    x-transition:leave="transition transform duration-300"
-                                    x-transition:leave-start="scale-100"
-                                    x-transition:leave-end="scale-0"
-                                >
-                                    <header
-                                        class="flex items-center justify-between p-2 bg-gray-200 dark:bg-gray-600 dark:text-white"
-                                    >
-                                        <h2
-                                            class="font-semibold capitalize small-caps"
-                                            x-text="proj.title"
-                                        >
-                                            .
-                                        </h2>
-                                        <button
-                                            class="p-2 text-red-600 focus:outline-none dark:text-red-500 hover:text-red-700 dark:hover:text-red-600"
-                                            @click.prevent="modal = false"
-                                        >
-                                            <svg
-                                                class="fill-current"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                width="18"
-                                                height="18"
-                                                viewbox="0 0 18 18"
-                                            >
-                                                <path
-                                                    d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"
-                                                ></path>
-                                            </svg>
-                                        </button>
-                                    </header>
-                                    <main class="p-2 text-center">
-                                        <article
-                                            x-data="{                                              currentIndex: 1,                                              back() {                                                  if (this.currentIndex > 1) {                                                      this.currentIndex = this.currentIndex - 1;                                                  }                                              },                                              next() {                                                  if (this.currentIndex < this.proj.img.length) {                                                      this.currentIndex = this.currentIndex + 1;                                                  } else if (this.currentIndex <= this.proj.img.length){                                                      this.currentIndex = this.proj.img.length - this.currentIndex + 1                                                  }                                              },                                          }"
-                                            class="relative flex flex-shrink-0 w-full overflow-hidden shadow-2xl"
-                                        >
-                                            <div
-                                                class="absolute z-20 px-2 text-sm text-center text-white bg-gray-600 rounded-full top-5 right-5"
-                                            >
-                                                <span
-                                                    x-text="currentIndex"
-                                                ></span
-                                                >/
-                                                <span
-                                                    x-text="proj.img ? proj.img.length : 0"
-                                                ></span>
-                                            </div>
-                                        <template
-                                                x-for="(image, index) in proj.img"
-                                            >
-                                                <figure
-                                                    class="h-96"
-                                                    x-show="currentIndex == index + 1"
-                                                    x-transition:enter="transition transform duration-300"
-                                                    x-transition:enter-start="opacity-0"
-                                                    x-transition:enter-end="opacity-100"
-                                                    x-transition:leave="transition transform duration-300"
-                                                    x-transition:leave-start="opacity-100"
-                                                    x-transition:leave-end="opacity-0"
-                                                >
-                                                    <img
-                                                        :src="image"
-                                                        alt="Image"
-                                                        class="absolute inset-0 z-10 object-cover w-full h-full rounded opacity-[.95]"
-                                                    />
-                                                </figure>
-                                            </template>
-                                            <button
-                                                @click.prevent="back()"
-                                                class="absolute z-10 flex items-center justify-center -translate-y-1/2 bg-gray-100 rounded-full shadow-md left-14 top-1/2 w-11 h-11 hover:bg-gray-200 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700"
-                                            >
-                                                <svg
-                                                    class="w-8 h-8 font-bold transition duration-500 ease-in-out transform motion-reduce:transform-none text-gray-500 hover:text-gray-600 hover:-translate-x-0.5"
-                                                    fill="none"
-                                                    stroke="currentColor"
-                                                    viewbox="0 0 24 24"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                >
-                                                    <path
-                                                        stroke-linecap="round"
-                                                        stroke-linejoin="round"
-                                                        stroke-width="2.5"
-                                                        d="M15 19l-7-7 7-7"
-                                                    ></path>
-                                                </svg>
-                                            </button>
-                                            <button
-                                                @click.prevent="next()"
-                                                class="dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700 absolute z-10 flex items-center justify-center -translate-y-1/2 bg-gray-100 rounded-full shadow-md right-14 rtl:!left-14 top-1/2 w-11 h-11 hover:bg-gray-200"
-                                            >
-                                                <svg
-                                                    class="w-8 h-8 font-bold transition duration-500 ease-in-out transform motion-reduce:transform-none text-gray-500 hover:text-gray-600 hover:translate-x-0.5"
-                                                    fill="none"
-                                                    stroke="currentColor"
-                                                    viewbox="0 0 24 24"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                >
-                                                    <path
-                                                        stroke-linecap="round"
-                                                        stroke-linejoin="round"
-                                                        stroke-width="2.5"
-                                                        d="M9 5l7 7-7 7"
-                                                    ></path>
-                                                </svg>
-                                            </button>
-                                        </article>
-                                    </main>
-                                    <footer class="flex justify-center p-2">
-                                        <button
-                                            class="w-32 p-2 font-semibold text-white transition-all duration-300 bg-red-500 rounded-full shadow-lg hover:bg-red-700 focus:outline-none focus:ring hover:shadow-none"
-                                            @click.prevent="modal = false"
-                                            x-text="$t('home.project.back')"
-                                        ></button>
-                                    </footer>
-                                </div>
-                            </div>
-                        </div> -->
 </div>
+
+<!-- project Modal -->
+<Modal
+    modalIsOpend={modalOpend}
+    title={currentProject.title}
+    on:modal={(ev) => {
+        modalOpend = ev.detail.opend;
+    }}
+>
+    <Slider images={currentProject.img} />
+</Modal>
