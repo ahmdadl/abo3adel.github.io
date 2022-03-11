@@ -7,7 +7,7 @@
 
 <section
     id={sectionId}
-    class={`w-full h-full py-4 text-center text-gray-700 dark:text-white ${sectionId}-section`}
+    class={`w-full h-screen py-4 text-center text-gray-700 dark:text-white ${sectionId}-section`}
 >
     <div>
         <h1 class="text-2xl">{$t(`home.title.${sectionId}`)}</h1>

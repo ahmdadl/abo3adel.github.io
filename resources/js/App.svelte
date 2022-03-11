@@ -35,7 +35,7 @@
                 <Skill />
             </Section>
 
-            <Section sectionId="project">
+            <Section sectionId="my_projects">
                 <Project />
             </Section>
         </div>
