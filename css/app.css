@@ -3965,6 +3965,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 [dir="rtl"] .rtl\:right-0 {
   right: 0px;
 }
+[dir="rtl"] .rtl\:text-right {
+  text-align: right;
+}
 .dark .dark\:bg-gray-900 {
   --tw-bg-opacity: 1;
   background-color: rgb(17 24 39 / var(--tw-bg-opacity));

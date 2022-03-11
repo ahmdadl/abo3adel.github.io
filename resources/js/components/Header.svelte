@@ -1,12 +1,20 @@
-<script>
-    import { onMount } from 'svelte'
+<script lang="ts">
+    import { onMount } from 'svelte';
     import { t } from 'svelte-i18n';
     import { runAnimatedDots } from '../helpers/AnimatedDots';
-
+    import AnimatedText from '../helpers/AnimatedText.ts';
 
     onMount(() => {
         runAnimatedDots('canvas');
-    })
+
+        new AnimatedText(document.querySelector('#job-title') as HTMLElement, [
+            'A Back End Web Developer',
+            'A Laravel Developer',
+            'A Full Stack Web Developer',
+            'An Ionic Devloper',
+            'A Flutter Developer',
+        ]).run();
+    });
 </script>
 
 <header id="canvas-header" class="relative w-full h-screen">
