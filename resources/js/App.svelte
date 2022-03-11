@@ -5,8 +5,9 @@
     import Section from './components/Section.svelte';
 
     // sections
-    import About from './components/Sections/About.svelte';
-    import Skill from './components/Sections/Skill.svelte';
+    import About from './components/sections/About.svelte';
+    import Skill from './components/sections/Skill.svelte';
+    import Project from './components/sections/Project.svelte';
 
     let scroll = 0;
 </script>
@@ -32,6 +33,10 @@
 
             <Section sectionId="skill">
                 <Skill />
+            </Section>
+
+            <Section sectionId="project">
+                <Project />
             </Section>
         </div>
     {/if}

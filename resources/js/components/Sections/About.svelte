@@ -28,9 +28,9 @@
             txt: $t('home.about.up_to_date_txt'),
         },
         {
-            title: $t('home.about.Multi_Language'),
+            title: $t('home.about.multi_language'),
             icon: 'language',
-            txt: $t('home.about.Multi_Language_txt'),
+            txt: $t('home.about.multi_language_txt'),
         },
     ];
 </script>

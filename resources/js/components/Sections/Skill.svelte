@@ -58,13 +58,13 @@
             class="w-3/4 p-1 mx-auto border rounded lazy img border-secondary"
             alt="my avatar"
         />
-        <p class="mt-2 text-gray-500 capitalize">{$t('home.skill.info')}</p>
+        <p class="mt-2 text-gray-500 capitalize">{$t('home.skill.skill_info')}</p>
     </div>
     <div>
         {#each skills as { title, value }}
             <div class="flex flex-row w-full my-2">
                 <div
-                    class="w-3/12 text-white capitalize bg-gray-900 rounded-l rtl:rounded-r small-caps"
+                    class="w-3/12 text-white capitalize bg-gray-900 rounded-l rtl:rounded-r small-caps dark:bg-gray-400 dark:text-white"
                 >
                     {title}
                 </div>
