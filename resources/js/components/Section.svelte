@@ -1,13 +1,13 @@
 <script lang="ts">
     import { t } from 'svelte-i18n';
-    export let sectionId = '';
+    export let sectionId: string; // required
 </script>
 
 {@html `<!-- ${sectionId} Start -->`}
 
 <section
     id={sectionId}
-    class={`w-full py-4 text-center text-gray-700 dark:text-white ${sectionId}-section`}
+    class={`w-full h-full py-4 text-center text-gray-700 dark:text-white ${sectionId}-section`}
 >
     <div>
         <h1 class="text-2xl">{$t(`home.title.${sectionId}`)}</h1>

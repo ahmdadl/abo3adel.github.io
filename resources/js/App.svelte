@@ -3,7 +3,10 @@
     import Nav from './components/Nav.svelte';
     import Header from './components/Header.svelte';
     import Section from './components/Section.svelte';
+
+    // sections
     import About from './components/Sections/About.svelte';
+    import Skill from './components/Sections/Skill.svelte';
 
     let scroll = 0;
 </script>
@@ -20,11 +23,15 @@
     {:else}
         <Nav />
 
-        <div id='container'>
+        <div id="container">
             <Header />
 
-            <Section sectionId='about'>
+            <Section sectionId="about">
                 <About />
+            </Section>
+
+            <Section sectionId="skill">
+                <Skill />
             </Section>
         </div>
     {/if}
