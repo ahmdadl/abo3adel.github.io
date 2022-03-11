@@ -12,6 +12,9 @@
         "hello": "Hello i`m",
         "name": "Ahmed Adel",
         "and": "and i`m",
+        "title": {
+            "about": "About"
+        },
         "project": {
             "visit": "Visit",
             "moreInfo": "more Info",

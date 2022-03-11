@@ -2,6 +2,8 @@
     import { t, isLoading, locale, locales } from 'svelte-i18n';
     import Nav from './components/Nav.svelte';
     import Header from './components/Header.svelte';
+    import Section from './components/Section.svelte';
+    import About from './components/Sections/About.svelte';
 
     let scroll = 0;
 </script>
@@ -21,14 +23,9 @@
         <div id='container'>
             <Header />
 
-            {#each ['blog', 'contact', 'my_projects'] as i}
-                <div
-                    id={i}
-                    class="w-full h-screen text-center bg-red-600"
-                >
-                    <h1 class="py-10 my-auto text-6xl">{i} {scroll}</h1>
-                </div>
-            {/each}
+            <Section sectionId='about'>
+                <About />
+            </Section>
         </div>
     {/if}
 </main>
