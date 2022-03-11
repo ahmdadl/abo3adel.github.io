@@ -2,18 +2,14 @@
     import { t, isLoading, locale, locales } from 'svelte-i18n';
     import Nav from './components/Nav.svelte';
 
-
-    let name: string = 'World';
-    let count = 0;
-    let doubled: number;
-    $: {
-        doubled = count * 2;
-        console.log('doubled is' + doubled);
-    }
-
-    
-
+    let scroll = 0;
 </script>
+
+<svelte:window
+    on:scroll={() => {
+        scroll = document.documentElement.scrollTop;
+    }}
+/>
 
 <main>
     {#if $isLoading}
@@ -21,26 +17,20 @@
     {:else}
         <Nav />
 
-        <h1 class="text-4xl text-red-600">Hello {name.toUpperCase()}!</h1>
-        <select bind:value={$locale}>
-            {#each $locales as locale}
-                <option value={locale}>{locale}</option>
+        <div id='container'>
+            {#each ['blog', 'contact', 'my_projects'] as i}
+                <div
+                    id={i}
+                    class="w-full h-screen text-center bg-red-600"
+                >
+                    <h1 class="py-10 my-auto text-6xl">{i} {scroll}</h1>
+                </div>
             {/each}
-        </select>
-        <p>
-            Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to
-            learn how to build Svelte apps.
-        </p>
-        <!-- <img src="" /> -->
-        <button on:click={() => count++}>toWeee</button>
-        <h1 class="text-3xl text-blue-700">
-            {count} is doubled to {doubled}
-            {$t('app_title').toUpperCase()} 
-        </h1>
+        </div>
     {/if}
 </main>
 
 <style>
-    main {
-    }
+    /* main {
+    } */
 </style>

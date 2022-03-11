@@ -7,7 +7,7 @@
   \***********************************/
 /***/ ((module) => {
 
-module.exports = JSON.parse('{"app_title":"Abo3Adel Portfolio"}');
+module.exports = JSON.parse('{"app_title":"Abo3Adel Portfolio","nav":{"portfolio":"MyPortfolio","home":"home","blog":"Blog","contact":"contact me","language":"language","my_projects":"My Projects"},"home":{"hello":"Hello i`m","name":"Ahmed Adel","and":"and i`m","project":{"visit":"Visit","moreInfo":"more Info","download":"Download"}}}');
 
 /***/ })
 

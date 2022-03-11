@@ -3,10 +3,16 @@
     import { fade } from 'svelte/transition';
     import LangSelector from './nav/LangSelector.svelte';
     import DarkModeToggler from './nav/DarkModeToggler.svelte';
+    import tabStore from '../stores/tab';
+    import { scrollto } from 'svelte-scrollto';
 
     let opend = false;
-    let tap = 'no';
-    let navLinks = ['blog', 'contact'];
+
+    let navLinks = [
+        { icon: 'blog', txt: 'blog' },
+        { icon: 'address-book', txt: 'contact' },
+        { icon: 'project-diagram', txt: 'my_projects' },
+    ];
 </script>
 
 <!-- Navigation Start -->
@@ -57,16 +63,20 @@
             <!-- darkMode toggler -->
             <DarkModeToggler addonClassList="md:hidden" />
 
-            {#each navLinks as navLink}
+            {#each navLinks as { icon, txt }}
                 <a
-                    class="px-4 py-2 mt-2 text-sm font-semibold capitalize bg-transparent rounded-lg dark:bg-transparent dark:hover:bg-gray-600 dark:focus:bg-gray-600 dark:focus:text-white dark:hover:text-white dark:text-gray-200 md:mt-0 md:ml-4 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline {tap ===
-                    navLink
+                    class="px-4 py-2 mt-2 text-sm font-semibold capitalize bg-transparent rounded-lg dark:bg-transparent dark:hover:bg-gray-600 dark:focus:bg-gray-600 dark:focus:text-white dark:hover:text-white dark:text-gray-200 md:mt-0 md:ml-4 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline {$tabStore ===
+                    txt
                         ? 'text-gray-900 bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:bg-gray-600 dark:focus:text-white dark:hover:text-white dark:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 active'
                         : ''}"
-                    href={'#' + navLink}
+                    href={'#' + txt}
+                    use:scrollto={`#${txt}`}
+                    on:click|preventDefault={() => {
+                        $tabStore = txt;
+                    }}
                 >
-                    <i class="fas fa fa-address-book" />
-                    <span>{$t(`nav.${navLink}`)}</span>
+                    <i class="fas fa fa-{icon}" />
+                    <span>{$t(`nav.${txt}`)}</span>
                 </a>
             {/each}
 
