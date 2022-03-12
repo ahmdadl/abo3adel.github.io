@@ -164,15 +164,15 @@
                 </div>
             </div>
         {/each}
-        <div class="w-full text-align mt-6 mb-10">
-            <a
-                href={blogLink}
-                target="_blank"
-                class="w-32 p-2 font-semibold text-white transition-all duration-300 bg-blue-500 shadow-lg hover:bg-blue-700 focus:outline-none rounded focus:ring hover:shadow-none capitalize small-caps"
-            >
-                <i class="fa fa-leaf mx-1" />
-                {$t('home.blog.readMore')}
-            </a>
-        </div>
+    </div>
+    <div class="w-full text-align mt-6 mb-10">
+        <a
+            href={blogLink}
+            target="_blank"
+            class="w-32 p-2 font-semibold text-white transition-all duration-300 bg-blue-500 shadow-lg hover:bg-blue-700 focus:outline-none rounded focus:ring hover:shadow-none capitalize small-caps"
+        >
+            <i class="fa fa-leaf mx-1" />
+            {$t('home.blog.readMore')}
+        </a>
     </div>
 {/await}

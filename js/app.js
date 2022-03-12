@@ -5632,9 +5632,9 @@ function create_catch_block(ctx) {
 
 
 function create_then_block(ctx) {
-  var div1;
-  var t0;
   var div0;
+  var t0;
+  var div1;
   var a;
   var i;
   var t1;
@@ -5653,35 +5653,35 @@ function create_then_block(ctx) {
 
   return {
     c: function c() {
-      div1 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_1__.element)("div");
+      div0 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_1__.element)("div");
 
       for (var _i2 = 0; _i2 < each_blocks.length; _i2 += 1) {
         each_blocks[_i2].c();
       }
 
       t0 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_1__.space)();
-      div0 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_1__.element)("div");
+      div1 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_1__.element)("div");
       a = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_1__.element)("a");
       i = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_1__.element)("i");
       t1 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_1__.space)();
       t2 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_1__.text)(t2_value);
+      (0,svelte_internal__WEBPACK_IMPORTED_MODULE_1__.attr)(div0, "class", "grid grid-cols-1 gap-5 p-2 gap-y-8 sm:p-4 md:grid-cols-2 lg:grid-cols-3");
       (0,svelte_internal__WEBPACK_IMPORTED_MODULE_1__.attr)(i, "class", "fa fa-leaf mx-1");
       (0,svelte_internal__WEBPACK_IMPORTED_MODULE_1__.attr)(a, "href", blogLink);
       (0,svelte_internal__WEBPACK_IMPORTED_MODULE_1__.attr)(a, "target", "_blank");
       (0,svelte_internal__WEBPACK_IMPORTED_MODULE_1__.attr)(a, "class", "w-32 p-2 font-semibold text-white transition-all duration-300 bg-blue-500 shadow-lg hover:bg-blue-700 focus:outline-none rounded focus:ring hover:shadow-none capitalize small-caps");
-      (0,svelte_internal__WEBPACK_IMPORTED_MODULE_1__.attr)(div0, "class", "w-full text-align mt-6 mb-10");
-      (0,svelte_internal__WEBPACK_IMPORTED_MODULE_1__.attr)(div1, "class", "grid grid-cols-1 gap-5 p-2 gap-y-8 sm:p-4 md:grid-cols-2 lg:grid-cols-3");
+      (0,svelte_internal__WEBPACK_IMPORTED_MODULE_1__.attr)(div1, "class", "w-full text-align mt-6 mb-10");
     },
     m: function m(target, anchor) {
-      (0,svelte_internal__WEBPACK_IMPORTED_MODULE_1__.insert)(target, div1, anchor);
+      (0,svelte_internal__WEBPACK_IMPORTED_MODULE_1__.insert)(target, div0, anchor);
 
       for (var _i3 = 0; _i3 < each_blocks.length; _i3 += 1) {
-        each_blocks[_i3].m(div1, null);
+        each_blocks[_i3].m(div0, null);
       }
 
-      (0,svelte_internal__WEBPACK_IMPORTED_MODULE_1__.append)(div1, t0);
-      (0,svelte_internal__WEBPACK_IMPORTED_MODULE_1__.append)(div1, div0);
-      (0,svelte_internal__WEBPACK_IMPORTED_MODULE_1__.append)(div0, a);
+      (0,svelte_internal__WEBPACK_IMPORTED_MODULE_1__.insert)(target, t0, anchor);
+      (0,svelte_internal__WEBPACK_IMPORTED_MODULE_1__.insert)(target, div1, anchor);
+      (0,svelte_internal__WEBPACK_IMPORTED_MODULE_1__.append)(div1, a);
       (0,svelte_internal__WEBPACK_IMPORTED_MODULE_1__.append)(a, i);
       (0,svelte_internal__WEBPACK_IMPORTED_MODULE_1__.append)(a, t1);
       (0,svelte_internal__WEBPACK_IMPORTED_MODULE_1__.append)(a, t2);
@@ -5706,7 +5706,7 @@ function create_then_block(ctx) {
 
             each_blocks[_i4].c();
 
-            each_blocks[_i4].m(div1, t0);
+            each_blocks[_i4].m(div0, null);
           }
         }
 
@@ -5724,8 +5724,10 @@ function create_then_block(ctx) {
       ctx[0]('home.blog.readMore') + "")) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_1__.set_data)(t2, t2_value);
     },
     d: function d(detaching) {
-      if (detaching) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_1__.detach)(div1);
+      if (detaching) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_1__.detach)(div0);
       (0,svelte_internal__WEBPACK_IMPORTED_MODULE_1__.destroy_each)(each_blocks, detaching);
+      if (detaching) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_1__.detach)(t0);
+      if (detaching) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_1__.detach)(div1);
     }
   };
 } // (116:8) {#each posts as post}
@@ -5768,6 +5770,7 @@ function create_each_block(ctx) {
   ctx[4].title + "";
   var t8;
   var a2_href_value;
+  var t9;
   return {
     c: function c() {
       div6 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_1__.element)("div");
@@ -5792,6 +5795,7 @@ function create_each_block(ctx) {
       div4 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_1__.element)("div");
       a2 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_1__.element)("a");
       t8 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_1__.text)(t8_value);
+      t9 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_1__.space)();
       (0,svelte_internal__WEBPACK_IMPORTED_MODULE_1__.attr)(a0, "target", "_blank");
       (0,svelte_internal__WEBPACK_IMPORTED_MODULE_1__.attr)(a0, "href", a0_href_value = blogLink + 'category/' +
       /*post*/
@@ -5845,6 +5849,7 @@ function create_each_block(ctx) {
       (0,svelte_internal__WEBPACK_IMPORTED_MODULE_1__.append)(div5, div4);
       (0,svelte_internal__WEBPACK_IMPORTED_MODULE_1__.append)(div4, a2);
       (0,svelte_internal__WEBPACK_IMPORTED_MODULE_1__.append)(a2, t8);
+      (0,svelte_internal__WEBPACK_IMPORTED_MODULE_1__.append)(div6, t9);
     },
     p: svelte_internal__WEBPACK_IMPORTED_MODULE_1__.noop,
     d: function d(detaching) {
@@ -7024,7 +7029,7 @@ function get_each_context_2(ctx, list, i) {
   var child_ctx = ctx.slice();
   child_ctx[18] = list[i];
   return child_ctx;
-} // (124:12) {#each tabs as tab}
+} // (121:12) {#each tabs as tab}
 
 
 function create_each_block_2(ctx) {
@@ -7099,7 +7104,7 @@ function create_catch_block(ctx) {
     o: svelte_internal__WEBPACK_IMPORTED_MODULE_1__.noop,
     d: svelte_internal__WEBPACK_IMPORTED_MODULE_1__.noop
   };
-} // (158:4) {:then projects}
+} // (155:4) {:then projects}
 
 
 function create_then_block(ctx) {
@@ -7199,7 +7204,7 @@ function create_then_block(ctx) {
       (0,svelte_internal__WEBPACK_IMPORTED_MODULE_1__.destroy_each)(each_blocks, detaching);
     }
   };
-} // (163:16) {#if proj.type === activeTab || activeTab === 'all'}
+} // (160:16) {#if proj.type === activeTab || activeTab === 'all'}
 
 
 function create_if_block(ctx) {
@@ -7267,7 +7272,7 @@ function create_if_block(ctx) {
 
   var each_value_1 =
   /*proj*/
-  ctx[12].category;
+  ctx[12].tags;
   var each_blocks = [];
 
   for (var i = 0; i < each_value_1.length; i += 1) {
@@ -7326,7 +7331,7 @@ function create_if_block(ctx) {
       if (!(0,svelte_internal__WEBPACK_IMPORTED_MODULE_1__.src_url_equal)(img.src, img_src_value = "/img/rings.svg")) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_1__.attr)(img, "src", img_src_value);
       (0,svelte_internal__WEBPACK_IMPORTED_MODULE_1__.attr)(img, "data-src", img_data_src_value =
       /*proj*/
-      ctx[12].img[0]);
+      ctx[12].img);
       (0,svelte_internal__WEBPACK_IMPORTED_MODULE_1__.attr)(img, "alt", img_alt_value =
       /*proj*/
       ctx[12].title + ' image');
@@ -7404,7 +7409,7 @@ function create_if_block(ctx) {
       32) {
         each_value_1 =
         /*proj*/
-        ctx[12].category;
+        ctx[12].tags;
 
         var _i8;
 
@@ -7469,13 +7474,13 @@ function create_if_block(ctx) {
       (0,svelte_internal__WEBPACK_IMPORTED_MODULE_1__.run_all)(dispose);
     }
   };
-} // (193:32) {#each proj.category as cat}
+} // (190:32) {#each proj.tags as tag}
 
 
 function create_each_block_1(ctx) {
   var span;
   var t_1_value =
-  /*cat*/
+  /*tag*/
   ctx[15] + "";
   var t_1;
   return {
@@ -7493,7 +7498,7 @@ function create_each_block_1(ctx) {
       if (detaching) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_1__.detach)(span);
     }
   };
-} // (231:32) {#if proj.download_url.length > 1}
+} // (228:32) {#if proj.download_url.length > 1}
 
 
 function create_if_block_1(ctx) {
@@ -7538,7 +7543,7 @@ function create_if_block_1(ctx) {
       if (detaching) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_1__.detach)(a);
     }
   };
-} // (162:12) {#each projects as proj}
+} // (159:12) {#each projects as proj}
 
 
 function create_each_block(ctx) {
@@ -7605,7 +7610,7 @@ function create_each_block(ctx) {
       if (detaching) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_1__.detach)(if_block_anchor);
     }
   };
-} // (148:27)           <div class="w-full mx-auto pt-8 my-5">              <div class="flex items-center justify-center ">                  <div                      class="w-24 h-24 border-l-2 border-blue-800 dark:border-blue-300 text-blue-800 font-bold dark:text-blue-300 rounded-full animate-spin shadow-lg dark:shadow-white"                  >                      <span>....</span>                  </div>              </div>          </div>      {:then projects}
+} // (145:27)           <div class="w-full pt-8 mx-auto my-5">              <div class="flex items-center justify-center ">                  <div                      class="w-24 h-24 font-bold text-blue-800 border-l-2 border-blue-800 rounded-full shadow-lg dark:border-blue-300 dark:text-blue-300 animate-spin dark:shadow-white"                  >                      <span>....</span>                  </div>              </div>          </div>      {:then projects}
 
 
 function create_pending_block(ctx) {
@@ -7613,8 +7618,8 @@ function create_pending_block(ctx) {
   return {
     c: function c() {
       div2 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_1__.element)("div");
-      div2.innerHTML = "<div class=\"flex items-center justify-center \"><div class=\"w-24 h-24 border-l-2 border-blue-800 dark:border-blue-300 text-blue-800 font-bold dark:text-blue-300 rounded-full animate-spin shadow-lg dark:shadow-white\"><span>....</span></div></div>";
-      (0,svelte_internal__WEBPACK_IMPORTED_MODULE_1__.attr)(div2, "class", "w-full mx-auto pt-8 my-5");
+      div2.innerHTML = "<div class=\"flex items-center justify-center \"><div class=\"w-24 h-24 font-bold text-blue-800 border-l-2 border-blue-800 rounded-full shadow-lg dark:border-blue-300 dark:text-blue-300 animate-spin dark:shadow-white\"><span>....</span></div></div>";
+      (0,svelte_internal__WEBPACK_IMPORTED_MODULE_1__.attr)(div2, "class", "w-full pt-8 mx-auto my-5");
     },
     m: function m(target, anchor) {
       (0,svelte_internal__WEBPACK_IMPORTED_MODULE_1__.insert)(target, div2, anchor);
@@ -7626,7 +7631,7 @@ function create_pending_block(ctx) {
       if (detaching) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_1__.detach)(div2);
     }
   };
-} // (253:0) <Modal      modalIsOpend={modalOpend}      title={currentProject.title}      on:modal={(ev) => {          modalOpend = ev.detail.opend;      }}  >
+} // (250:0) <Modal      modalIsOpend={modalOpend}      title={currentProject.title}      on:modal={(ev) => {          modalOpend = ev.detail.opend;      }}  >
 
 
 function create_default_slot(ctx) {
@@ -7636,7 +7641,7 @@ function create_default_slot(ctx) {
     props: {
       images:
       /*currentProject*/
-      ctx[2].img
+      ctx[2].shots
     }
   });
   return {
@@ -7653,7 +7658,7 @@ function create_default_slot(ctx) {
       /*currentProject*/
       4) slider_changes.images =
       /*currentProject*/
-      ctx[2].img;
+      ctx[2].shots;
       slider.$set(slider_changes);
     },
     i: function i(local) {
@@ -7925,51 +7930,54 @@ function instance($$self, $$props, $$invalidate) {
     slug: 'eshop-laravel',
     title: 'eshop',
     link: 'http://eshopt.rf.gd/en/',
-    category: ['Full Stack'],
-    img: ['https://images.test/posts/0.jpg', 'https://images.test/posts/1.jpg', 'https://images.test/posts/2.jpg'],
+    tags: ['Full Stack'],
+    img: 'https://images.test/posts/0.jpg',
+    shots: ['https://images.test/posts/1.jpg', 'https://images.test/posts/2.jpg'],
     type: 'laravel',
-    download_url: '',
-    tags: ['e-commerace', 'multi lang', 'multi user access']
+    download_url: ''
   }, {
     slug: 'google-wewe',
     title: 'google',
     link: 'http://googlet.rf.gd/en/',
-    category: ['api'],
-    img: ['https://images.test/posts/3.jpg', 'https://images.test/posts/4.jpg', 'https://images.test/posts/5.jpg'],
+    tags: ['api'],
+    img: 'https://images.test/posts/3.jpg',
+    shots: ['https://images.test/posts/4.jpg', 'https://images.test/posts/5.jpg'],
     type: 'laravel',
-    download_url: '',
-    tags: ['lumen', 'shop']
+    download_url: ''
   }, {
     slug: 'wesdasd-laravel',
     title: 'ouath',
     link: 'http://api.rf.gd/en/',
-    category: ['api', 'lumen'],
-    img: ['https://images.test/posts/0.jpg', 'https://images.test/posts/1.jpg', 'https://images.test/posts/2.jpg'],
-    tags: [],
+    tags: ['api', 'lumen'],
+    img: 'https://images.test/posts/0.jpg',
+    shots: ['https://images.test/posts/1.jpg', 'https://images.test/posts/2.jpg'],
     type: 'laravel',
     download_url: ''
   }, {
     slug: 'volunterr-data',
     title: 'volunterr',
     link: 'http://volunterrt.rf.gd/en/',
-    category: ['ionic'],
-    img: ['https://images.test/posts/7.jpg', 'https://images.test/posts/8.jpg', 'https://images.test/posts/9.jpg'],
+    tags: ['ionic'],
+    img: 'https://images.test/posts/7.jpg',
+    shots: ['https://images.test/posts/8.jpg', 'https://images.test/posts/9.jpg'],
     type: 'mobile',
     download_url: 'http://volunterrt.rf.gd/en/a.apk'
   }, {
     slug: 'cachier-laravel',
     title: 'cacher',
     link: 'http://cachert.rf.gd/en/',
-    category: ['vueJs'],
-    img: ['https://images.test/posts/10.jpg', 'https://images.test/posts/11.jpg', 'https://images.test/posts/12.jpg'],
+    tags: ['vueJs'],
+    img: 'https://images.test/posts/10.jpg',
+    shots: ['https://images.test/posts/11.jpg', 'https://images.test/posts/12.jpg'],
     type: 'spa',
     download_url: ''
   }, {
     slug: 'azkar-laravel',
     title: 'azkar',
     link: 'http://azkr.rf.gd/en/',
-    category: ['flutter', 'hasApi'],
-    img: ['https://images.test/posts/13.jpg', 'https://images.test/posts/14.jpg', 'https://images.test/posts/15.jpg'],
+    tags: ['flutter', 'hasApi'],
+    img: 'https://images.test/posts/13.jpg',
+    shots: ['https://images.test/posts/14.jpg', 'https://images.test/posts/15.jpg'],
     type: 'mobile',
     download_url: 'http://azkr.rf.gd/en/asd.apk'
   }];

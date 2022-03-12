@@ -31,41 +31,38 @@
             slug: 'eshop-laravel',
             title: 'eshop',
             link: 'http://eshopt.rf.gd/en/',
-            category: ['Full Stack'],
-            img: [
-                'https://images.test/posts/0.jpg',
+            tags: ['Full Stack'],
+            img: 'https://images.test/posts/0.jpg',
+            shots: [
                 'https://images.test/posts/1.jpg',
                 'https://images.test/posts/2.jpg',
             ],
             type: 'laravel',
             download_url: '',
-            tags: ['e-commerace', 'multi lang', 'multi user access'],
         },
         {
             slug: 'google-wewe',
             title: 'google',
             link: 'http://googlet.rf.gd/en/',
-            category: ['api'],
-            img: [
-                'https://images.test/posts/3.jpg',
+            tags: ['api'],
+            img: 'https://images.test/posts/3.jpg',
+            shots: [
                 'https://images.test/posts/4.jpg',
                 'https://images.test/posts/5.jpg',
             ],
             type: 'laravel',
             download_url: '',
-            tags: ['lumen', 'shop'],
         },
         {
             slug: 'wesdasd-laravel',
             title: 'ouath',
             link: 'http://api.rf.gd/en/',
-            category: ['api', 'lumen'],
-            img: [
-                'https://images.test/posts/0.jpg',
+            tags: ['api', 'lumen'],
+            img: 'https://images.test/posts/0.jpg',
+            shots: [
                 'https://images.test/posts/1.jpg',
                 'https://images.test/posts/2.jpg',
             ],
-            tags: [],
             type: 'laravel',
             download_url: '',
         },
@@ -73,9 +70,9 @@
             slug: 'volunterr-data',
             title: 'volunterr',
             link: 'http://volunterrt.rf.gd/en/',
-            category: ['ionic'],
-            img: [
-                'https://images.test/posts/7.jpg',
+            tags: ['ionic'],
+            img: 'https://images.test/posts/7.jpg',
+            shots: [
                 'https://images.test/posts/8.jpg',
                 'https://images.test/posts/9.jpg',
             ],
@@ -86,9 +83,9 @@
             slug: 'cachier-laravel',
             title: 'cacher',
             link: 'http://cachert.rf.gd/en/',
-            category: ['vueJs'],
-            img: [
-                'https://images.test/posts/10.jpg',
+            tags: ['vueJs'],
+            img: 'https://images.test/posts/10.jpg',
+            shots: [
                 'https://images.test/posts/11.jpg',
                 'https://images.test/posts/12.jpg',
             ],
@@ -99,9 +96,9 @@
             slug: 'azkar-laravel',
             title: 'azkar',
             link: 'http://azkr.rf.gd/en/',
-            category: ['flutter', 'hasApi'],
-            img: [
-                'https://images.test/posts/13.jpg',
+            tags: ['flutter', 'hasApi'],
+            img: 'https://images.test/posts/13.jpg',
+            shots: [
                 'https://images.test/posts/14.jpg',
                 'https://images.test/posts/15.jpg',
             ],
@@ -153,10 +150,10 @@
 
     <!-- project list -->
     {#await loadProjects()}
-        <div class="w-full mx-auto pt-8 my-5">
+        <div class="w-full pt-8 mx-auto my-5">
             <div class="flex items-center justify-center ">
                 <div
-                    class="w-24 h-24 border-l-2 border-blue-800 dark:border-blue-300 text-blue-800 font-bold dark:text-blue-300 rounded-full animate-spin shadow-lg dark:shadow-white"
+                    class="w-24 h-24 font-bold text-blue-800 border-l-2 border-blue-800 rounded-full shadow-lg dark:border-blue-300 dark:text-blue-300 animate-spin dark:shadow-white"
                 >
                     <span>....</span>
                 </div>
@@ -182,7 +179,7 @@
                             <img
                                 class="object-cover w-full h-full shadow-sm"
                                 src="/img/rings.svg"
-                                data-src={proj.img[0]}
+                                data-src={proj.img}
                                 alt={proj.title + ' image'}
                                 use:useLazyImage
                             />
@@ -197,10 +194,10 @@
                                     class="bg-blue-500 px-3 py-1.5 rounded-full"
                                     >{proj.type}</span
                                 >
-                                {#each proj.category as cat}
+                                {#each proj.tags as tag}
                                     <span
                                         class="mx-1 bg-blue-500 px-3 py-1.5 rounded-full"
-                                        >{cat}</span
+                                        >{tag}</span
                                     >
                                 {/each}
                             </div>
@@ -264,5 +261,5 @@
         modalOpend = ev.detail.opend;
     }}
 >
-    <Slider images={currentProject.img} />
+    <Slider images={currentProject.shots} />
 </Modal>
