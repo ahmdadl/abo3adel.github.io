@@ -12,10 +12,10 @@ export default class AnimatedText {
 
     public run() {
         this.el.textContent = '';
-        // uncomment below to activate
-        // this.interval = setInterval((_) => {
-        //     this.typeWriter();
-        // }, 150);
+
+        this.interval = setInterval((_) => {
+            this.typeWriter();
+        }, 150);
 
         window.addEventListener('hashchange', () => {
             // @ts-ignore

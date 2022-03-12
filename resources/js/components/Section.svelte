@@ -9,7 +9,7 @@
 
 <section
     id={sectionId}
-    class={`w-full min-h-screen py-4 text-center text-gray-700 dark:text-white ${sectionId}-section`}
+    class={`w-full h-full py-4 text-center text-gray-700 dark:text-white ${sectionId}-section`}
 >
     {#if showTilte}
         <div>

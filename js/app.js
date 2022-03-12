@@ -2361,6 +2361,7 @@ function create_else_block(ctx) {
       t7 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.space)();
       (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.create_component)(footer.$$.fragment);
       (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(div, "id", "container");
+      (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(div, "class", "");
     },
     m: function m(target, anchor) {
       (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.mount_component)(nav, target, anchor);
@@ -2792,7 +2793,7 @@ function create_fragment(ctx) {
       (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(div3, "class", "flex flex-row justify-between w-full text-center");
       (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(div4, "class", "absolute border-4 border-t-8 rounded-full -bottom-40 -left-20 w-80 h-80 border-opacity-30");
       (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(div5, "class", "absolute border-4 border-t-8 rounded-full -top-40 -right-0 w-80 h-80 border-opacity-30");
-      (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(footer, "class", "relative p-5 overflow-hidden text-gray-700 bg-gray-200 border-t border-gray-500 footer dark:bg-gray-800 dark:text-white");
+      (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(footer, "class", "relative p-5 overflow-hidden text-gray-100 bg-blue-900 border-t border-gray-500 footer dark:bg-gray-800 dark:text-white");
     },
     m: function m(target, anchor) {
       (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.insert)(target, footer, anchor);
@@ -2956,7 +2957,7 @@ function create_fragment(ctx) {
       (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.set_style)(div1, "height", "100vh");
       (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.set_style)(div1, "width", "100vw");
       (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(header, "id", "canvas-header");
-      (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(header, "class", "relative w-full h-screen");
+      (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(header, "class", "relative w-full h-screen bg-gray-900");
     },
     m: function m(target, anchor) {
       (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.insert)(target, header, anchor);
@@ -4082,7 +4083,7 @@ function create_fragment(ctx) {
       (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(section, "id",
       /*sectionId*/
       ctx[0]);
-      (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(section, "class", section_class_value = "w-full min-h-screen py-4 text-center text-gray-700 dark:text-white ".concat(
+      (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(section, "class", section_class_value = "w-full h-full py-4 text-center text-gray-700 dark:text-white ".concat(
       /*sectionId*/
       ctx[0], "-section"));
       html_tag_1.a = html_anchor;
@@ -4152,7 +4153,7 @@ function create_fragment(ctx) {
 
       if (!current || dirty &
       /*sectionId*/
-      1 && section_class_value !== (section_class_value = "w-full min-h-screen py-4 text-center text-gray-700 dark:text-white ".concat(
+      1 && section_class_value !== (section_class_value = "w-full h-full py-4 text-center text-gray-700 dark:text-white ".concat(
       /*sectionId*/
       ctx[0], "-section"))) {
         (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(section, "class", section_class_value);
@@ -8740,11 +8741,10 @@ var AnimatedText = /*#__PURE__*/function () {
     value: function run() {
       var _this = this;
 
-      this.el.textContent = ''; // uncomment below to activate
-      // this.interval = setInterval((_) => {
-      //     this.typeWriter();
-      // }, 150);
-
+      this.el.textContent = '';
+      this.interval = setInterval(function (_) {
+        _this.typeWriter();
+      }, 150);
       window.addEventListener('hashchange', function () {
         // @ts-ignore
         clearInterval(_this.interval);
@@ -8851,8 +8851,8 @@ function runAnimatedDots(canvasID) {
   opts.canvasBody = document.querySelector("#".concat(canvasID)), opts.drawArea = opts.canvasBody.getContext('2d'); // change line color
 
   rgb = opts.lineColor.match(/\d+/g);
-  resizeReset(); // uncommment below to activate
-  // setup();
+  resizeReset();
+  setup();
 }
 
 var resizeReset = function resizeReset() {

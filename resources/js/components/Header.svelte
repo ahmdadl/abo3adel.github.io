@@ -17,7 +17,7 @@
     });
 </script>
 
-<header id="canvas-header" class="relative w-full h-screen">
+<header id="canvas-header" class="relative w-full h-screen bg-gray-900">
     <canvas id="canvas" class="w-100 h-100" />
     <div
         class="container absolute top-0 left-0 justify-center w-full align-middle d-flex h-100 align-items-center rtl:right-0"

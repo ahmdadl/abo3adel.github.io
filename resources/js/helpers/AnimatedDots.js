@@ -28,8 +28,8 @@ export function runAnimatedDots(canvasID) {
     rgb = opts.lineColor.match(/\d+/g);
 
     resizeReset();
-    // uncommment below to activate
-    // setup();
+
+    setup();
 }
 
 let resizeReset = () => {

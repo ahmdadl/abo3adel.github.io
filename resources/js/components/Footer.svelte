@@ -2,7 +2,7 @@
 </script>
 
 <footer
-    class="relative p-5 overflow-hidden text-gray-700 bg-gray-200 border-t border-gray-500 footer dark:bg-gray-800 dark:text-white"
+    class="relative p-5 overflow-hidden text-gray-100 bg-blue-900 border-t border-gray-500 footer dark:bg-gray-800 dark:text-white"
 >
     <div
         class="flex flex-row justify-between w-full text-center"

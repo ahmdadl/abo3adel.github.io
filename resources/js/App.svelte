@@ -20,7 +20,7 @@
     {:else}
         <Nav />
 
-        <div id="container">
+        <div id="container" class="">
             <Header />
 
             <Section sectionId="about">
