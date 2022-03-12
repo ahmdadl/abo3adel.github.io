@@ -147,7 +147,7 @@
     <div
         class="grid grid-cols-1 gap-5 p-3 sm:p-4 md:p-6 md:grid-cols-2 lg:grid-cols-3"
     >
-        {#each projects as proj}
+        {#each projects as proj}                
             {#if proj.type === activeTab || activeTab === 'all'}
                 <div
                     class="flex flex-col items-start overflow-hidden shadow-sm span-12 rounded-xl md:span-6 lg:span-4"
