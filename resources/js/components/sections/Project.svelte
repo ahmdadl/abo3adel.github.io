@@ -5,6 +5,9 @@
     import useLazyImage from 'svelte-lazy-image/use-lazy-image';
     import Modal from '../Modal.svelte';
     import Slider from '../Slider.svelte';
+    import axios from 'axios';
+    import { API_URL } from '../../helpers/Config.ts';
+    import { onMount } from 'svelte';
 
     let activeTab = 'all';
     let modalOpend = false;
@@ -12,11 +15,11 @@
         slug: '',
         title: '',
         link: '',
-        category: [],
-        img: [],
+        tags: [],
+        img: '',
+        shots: [],
         type: '',
         download_url: '',
-        tags: [],
     };
 
     const tabs = [
@@ -107,13 +110,11 @@
         },
     ];
 
-    async function loadProjects(): Promise<ProjectInterface[]> {
-        return new Promise((res) => {
-            setTimeout(() => {
-                res(projects);
-            }, 3000);
-        });
-    }
+    onMount(async () => {
+        const p = await axios.get(API_URL + 'projects');
+
+        console.log(p);
+    });
 
     function openModal(proj: ProjectInterface) {
         currentProject = Object.assign({}, proj);
@@ -149,7 +150,7 @@
     </div>
 
     <!-- project list -->
-    {#await loadProjects()}
+    {#await axios.get(API_URL + 'projects')}
         <div class="w-full pt-8 mx-auto my-5">
             <div class="flex items-center justify-center ">
                 <div
@@ -159,11 +160,11 @@
                 </div>
             </div>
         </div>
-    {:then projects}
+    {:then response}
         <div
             class="grid grid-cols-1 gap-5 p-3 sm:p-4 md:p-6 md:grid-cols-2 lg:grid-cols-3"
         >
-            {#each projects as proj}
+            {#each response.data.projects as proj}
                 {#if proj.type === activeTab || activeTab === 'all'}
                     <div
                         class="flex flex-col items-start overflow-hidden shadow-sm span-12 rounded-xl md:span-6 lg:span-4"
@@ -232,7 +233,7 @@
                                         )}</span
                                     >
                                 </button>
-                                {#if proj.download_url.length > 1}
+                                {#if proj.download_url?.length > 1}
                                     <a
                                         href={proj.download_url}
                                         target="_blank"
@@ -249,6 +250,13 @@
                     </div>
                 {/if}
             {/each}
+        </div>
+    {:catch err}
+        <div class="w-4/5 py-2 mx-auto my-6 text-red-900 capitalize bg-red-400 rounded">
+            <i
+                class="inline-block mx-1 text-red-800 fas fa-exclamation-circle"
+            />
+            <strong>{$t('home.project.error')}</strong>
         </div>
     {/await}
 </div>

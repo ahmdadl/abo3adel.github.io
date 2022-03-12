@@ -50,7 +50,8 @@
                 "visit": "Visit",
                 "moreInfo": "more Info",
                 "download": "Download"
-            }
+            },
+            "error": "an Error occured, please try again later"
         },
         "blog": {
             "readMore": "Read More"
