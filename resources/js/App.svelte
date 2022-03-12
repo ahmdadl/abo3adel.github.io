@@ -10,6 +10,7 @@
     import Project from './components/sections/Project.svelte';
     import Blog from './components/sections/Blog.svelte';
 import Testmonial from './components/sections/Testmonial.svelte';
+import Footer from './components/Footer.svelte';
 
     let scroll = 0;
 </script>
@@ -48,7 +49,10 @@ import Testmonial from './components/sections/Testmonial.svelte';
             <Section sectionId="testmonial">
                 <Testmonial />
             </Section>
+            
+            <Footer />
         </div>
+
     {/if}
 </main>
 
