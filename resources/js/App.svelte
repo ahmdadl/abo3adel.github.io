@@ -11,6 +11,7 @@
     import Blog from './components/sections/Blog.svelte';
 import Testmonial from './components/sections/Testmonial.svelte';
 import Footer from './components/Footer.svelte';
+import ContactMe from './components/sections/ContactMe.svelte';
 
     let scroll = 0;
 </script>
@@ -48,6 +49,10 @@ import Footer from './components/Footer.svelte';
 
             <Section sectionId="testmonial">
                 <Testmonial />
+            </Section>
+
+            <Section sectionId='contact_me'>
+                <ContactMe />
             </Section>
             
             <Footer />

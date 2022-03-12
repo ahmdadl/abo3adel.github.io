@@ -10,7 +10,7 @@
 
     let navLinks = [
         { icon: 'blog', txt: 'blog' },
-        { icon: 'address-book', txt: 'contact' },
+        { icon: 'address-book', txt: 'contact_me' },
         { icon: 'project-diagram', txt: 'my_projects' },
     ];
 </script>

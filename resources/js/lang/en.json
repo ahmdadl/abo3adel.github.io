@@ -4,7 +4,7 @@
         "portfolio": "MyPortfolio",
         "home": "home",
         "blog": "Blog",
-        "contact": "contact me",
+        "contact_me": "contact me",
         "language": "language",
         "my_projects": "My Projects"
     },
@@ -18,7 +18,7 @@
             "my_projects": "Projects",
             "blog": "Blog",
             "index": "Portfolio",
-            "contact": "Contact",
+            "contact_me": "Contact",
             "testmonial": "."
         },
         "about": {
@@ -55,11 +55,6 @@
         "blog": {
             "readMore": "Read More"
         },
-        "contact": {
-            "edu": "Education",
-            "personal": "Personal",
-            "social": "Social"
-        },
         "alert": {
             "note": "Note",
             "alertMessage": "All These WebApps are hosted on free hosting providers, so it will take some time to start the app"
@@ -67,6 +62,19 @@
         "test": {
             "donot": "donot",
             "see": "see"
+        }
+    },
+    "contact": {
+        "as_soon": "i will replay as soon as posible",
+        "form": {
+            "name": "name",
+            "email": "email",
+            "message": "message",
+            "send": "send",
+            "error": {
+                "req": "fileld is required",
+                "invalid": "email format is invalid"
+            }
         }
     }
 }
