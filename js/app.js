@@ -9222,7 +9222,7 @@ function create_each_block_2(ctx) {
       dispose();
     }
   };
-} // (161:4) {:catch err}
+} // (162:4) {:catch err}
 
 
 function create_catch_block(ctx) {
@@ -9502,6 +9502,7 @@ function create_if_block(ctx) {
       (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(span0, "class", "bg-blue-500 px-3 py-1.5 rounded-full");
       (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(div0, "class", "absolute top-0 flex items-center w-auto -mt-3 text-xs font-medium leading-none text-white uppercase");
       (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(a1, "class", "inline-block font-semibold link");
+      (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(a1, "target", "_blank");
       (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(a1, "href", a1_href_value =
       /*proj*/
       ctx[11].link);
@@ -9662,7 +9663,7 @@ function create_each_block_1(ctx) {
       if (detaching) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.detach)(span);
     }
   };
-} // (143:32) {#if proj.download_url?.length > 1}
+} // (144:32) {#if proj.download_url?.length > 1}
 
 
 function create_if_block_1(ctx) {
@@ -9795,7 +9796,7 @@ function create_pending_block(ctx) {
       if (detaching) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.detach)(div2);
     }
   };
-} // (172:0) <Modal      modalIsOpend={modalOpend}      title={currentProject.title}      on:modal={(ev) => {          modalOpend = ev.detail.opend;      }}  >
+} // (173:0) <Modal      modalIsOpend={modalOpend}      title={currentProject.title}      on:modal={(ev) => {          modalOpend = ev.detail.opend;      }}  >
 
 
 function create_default_slot(ctx) {

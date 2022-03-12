@@ -119,6 +119,7 @@
                             >
                                 <a
                                     class="inline-block font-semibold link"
+                                    target="_blank"
                                     href={proj.link}>{proj.title}</a
                                 >
                             </h2>
