@@ -7,7 +7,6 @@
     import Slider from '../Slider.svelte';
     import axios from 'axios';
     import { API_URL } from '../../helpers/Config.ts';
-    import { onMount } from 'svelte';
 
     let activeTab = 'all';
     let modalOpend = false;
@@ -28,93 +27,6 @@
         { title: $t('home.project.tabs.spa'), value: 'spa' },
         { title: $t('home.project.tabs.mobile'), value: 'mobile' },
     ];
-
-    const projects: ProjectInterface[] = [
-        {
-            slug: 'eshop-laravel',
-            title: 'eshop',
-            link: 'http://eshopt.rf.gd/en/',
-            tags: ['Full Stack'],
-            img: 'https://images.test/posts/0.jpg',
-            shots: [
-                'https://images.test/posts/1.jpg',
-                'https://images.test/posts/2.jpg',
-            ],
-            type: 'laravel',
-            download_url: '',
-        },
-        {
-            slug: 'google-wewe',
-            title: 'google',
-            link: 'http://googlet.rf.gd/en/',
-            tags: ['api'],
-            img: 'https://images.test/posts/3.jpg',
-            shots: [
-                'https://images.test/posts/4.jpg',
-                'https://images.test/posts/5.jpg',
-            ],
-            type: 'laravel',
-            download_url: '',
-        },
-        {
-            slug: 'wesdasd-laravel',
-            title: 'ouath',
-            link: 'http://api.rf.gd/en/',
-            tags: ['api', 'lumen'],
-            img: 'https://images.test/posts/0.jpg',
-            shots: [
-                'https://images.test/posts/1.jpg',
-                'https://images.test/posts/2.jpg',
-            ],
-            type: 'laravel',
-            download_url: '',
-        },
-        {
-            slug: 'volunterr-data',
-            title: 'volunterr',
-            link: 'http://volunterrt.rf.gd/en/',
-            tags: ['ionic'],
-            img: 'https://images.test/posts/7.jpg',
-            shots: [
-                'https://images.test/posts/8.jpg',
-                'https://images.test/posts/9.jpg',
-            ],
-            type: 'mobile',
-            download_url: 'http://volunterrt.rf.gd/en/a.apk',
-        },
-        {
-            slug: 'cachier-laravel',
-            title: 'cacher',
-            link: 'http://cachert.rf.gd/en/',
-            tags: ['vueJs'],
-            img: 'https://images.test/posts/10.jpg',
-            shots: [
-                'https://images.test/posts/11.jpg',
-                'https://images.test/posts/12.jpg',
-            ],
-            type: 'spa',
-            download_url: '',
-        },
-        {
-            slug: 'azkar-laravel',
-            title: 'azkar',
-            link: 'http://azkr.rf.gd/en/',
-            tags: ['flutter', 'hasApi'],
-            img: 'https://images.test/posts/13.jpg',
-            shots: [
-                'https://images.test/posts/14.jpg',
-                'https://images.test/posts/15.jpg',
-            ],
-            type: 'mobile',
-            download_url: 'http://azkr.rf.gd/en/asd.apk',
-        },
-    ];
-
-    onMount(async () => {
-        const p = await axios.get(API_URL + 'projects');
-
-        console.log(p);
-    });
 
     function openModal(proj: ProjectInterface) {
         currentProject = Object.assign({}, proj);

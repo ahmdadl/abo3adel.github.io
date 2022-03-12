@@ -5,6 +5,7 @@ export default interface PostInterface {
     title: string;
     slug: string;
     img: string;
+    body: string;
     category: {
         slug: string;
         title: string;
