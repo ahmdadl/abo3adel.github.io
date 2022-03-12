@@ -110,6 +110,14 @@
         },
     ];
 
+    async function loadProjects(): Promise<ProjectInterface[]> {
+        return new Promise((res) => {
+            setTimeout(() => {
+                res(projects);
+            }, 3000);
+        });
+    }
+
     function openModal(proj: ProjectInterface) {
         currentProject = Object.assign({}, proj);
         modalOpend = true;
@@ -144,90 +152,108 @@
     </div>
 
     <!-- project list -->
-    <div
-        class="grid grid-cols-1 gap-5 p-3 sm:p-4 md:p-6 md:grid-cols-2 lg:grid-cols-3"
-    >
-        {#each projects as proj}                
-            {#if proj.type === activeTab || activeTab === 'all'}
+    {#await loadProjects()}
+        <div class="w-full mx-auto my-5">
+            <div class="flex items-center justify-center ">
                 <div
-                    class="flex flex-col items-start overflow-hidden shadow-sm span-12 rounded-xl md:span-6 lg:span-4"
-                    transition:slide={{ duration: 500 }}
+                    class="w-24 h-24 border-l-2 border-blue-800 dark:border-blue-300 text-blue-800 font-bold dark:text-blue-300 rounded-full animate-spin shadow-lg dark:shadow-white"
                 >
-                    <a
-                        href={'#'}
-                        class="block transition duration-300 ease-out transform hover:scale-110"
-                        on:click|preventDefault={() => {
-                            openModal(proj);
-                        }}
-                    >
-                        <img
-                            class="object-cover w-full h-full shadow-sm"
-                            src="/img/rings.svg"
-                            data-src={proj.img[0]}
-                            alt={proj.title + ' image'}
-                            use:useLazyImage
-                        />
-                    </a>
+                    <span>....</span>
+                </div>
+            </div>
+        </div>
+    {:then projects}
+        <div
+            class="grid grid-cols-1 gap-5 p-3 sm:p-4 md:p-6 md:grid-cols-2 lg:grid-cols-3"
+        >
+            {#each projects as proj}
+                {#if proj.type === activeTab || activeTab === 'all'}
                     <div
-                        class="relative flex flex-col items-start w-full px-6 bg-gray-200 border border-t-0 border-gray-400 dark:bg-gray-700 py-7 rounded-b-2xl"
+                        class="flex flex-col items-start overflow-hidden shadow-sm span-12 rounded-xl md:span-6 lg:span-4"
+                        transition:slide={{ duration: 500 }}
                     >
-                        <div
-                            class="absolute top-0 flex items-center w-auto -mt-3 text-xs font-medium leading-none text-white uppercase"
+                        <a
+                            href={'#'}
+                            class="block transition duration-300 ease-out transform hover:scale-110"
+                            on:click|preventDefault={() => {
+                                openModal(proj);
+                            }}
                         >
-                            <span class="bg-blue-500 px-3 py-1.5 rounded-full"
-                                >{proj.type}</span
+                            <img
+                                class="object-cover w-full h-full shadow-sm"
+                                src="/img/rings.svg"
+                                data-src={proj.img[0]}
+                                alt={proj.title + ' image'}
+                                use:useLazyImage
+                            />
+                        </a>
+                        <div
+                            class="relative flex flex-col items-start w-full px-6 bg-gray-200 border border-t-0 border-gray-400 dark:bg-gray-700 py-7 rounded-b-2xl"
+                        >
+                            <div
+                                class="absolute top-0 flex items-center w-auto -mt-3 text-xs font-medium leading-none text-white uppercase"
                             >
-                            {#each proj.category as cat}
                                 <span
-                                    class="mx-1 bg-blue-500 px-3 py-1.5 rounded-full"
-                                    >{cat}</span
+                                    class="bg-blue-500 px-3 py-1.5 rounded-full"
+                                    >{proj.type}</span
                                 >
-                            {/each}
-                        </div>
-                        <h2
-                            class="text-base font-bold text-gray-800 capitalize dark:text-gray-300 sm:text-lg md:text-xl small-caps hover:text-blue-700 dark:hover:text-blue-400"
-                        >
-                            <a
-                                class="inline-block font-semibold link"
-                                href={proj.link}>{proj.title}</a
+                                {#each proj.category as cat}
+                                    <span
+                                        class="mx-1 bg-blue-500 px-3 py-1.5 rounded-full"
+                                        >{cat}</span
+                                    >
+                                {/each}
+                            </div>
+                            <h2
+                                class="text-base font-bold text-gray-800 capitalize dark:text-gray-300 sm:text-lg md:text-xl small-caps hover:text-blue-700 dark:hover:text-blue-400"
                             >
-                        </h2>
-                        <div
-                            class={'flex flex-row items-end justify-end w-full px-2 pt-2 space-x-2 text-sm capitalize' +
-                                (proj.download_url ? 'text-xs' : '')}
-                        >
-                            <a href={proj.link} target="_blank" class="btn">
-                                <i class="inline-block mx-1 fas fa-link" />
-                                <span>{$t('home.project.modal.visit')}</span>
-                            </a>
-                            <button
-                                class="inline-block mx-1 text-green-800 border-green-600 btn hover:bg-green-700 dark:text-green-400 dark:border-green-400"
-                                type="button"
-                                on:click|preventDefault={() => {
-                                    openModal(proj);
-                                }}
-                            >
-                                <i class="fas fa-at" />
-                                <span>{$t('home.project.modal.moreInfo')}</span>
-                            </button>
-                            {#if proj.download_url.length > 1}
                                 <a
-                                    href={proj.download_url}
-                                    target="_blank"
-                                    class="text-red-800 border-red-600 btn hover:bg-red-700 dark:text-red-400 dark:border-red-400"
+                                    class="inline-block font-semibold link"
+                                    href={proj.link}>{proj.title}</a
                                 >
-                                    <i class="fas fa-download" />
-                                    <span>
-                                        {$t('home.project.modal.download')}
-                                    </span>
+                            </h2>
+                            <div
+                                class={'flex flex-row items-end justify-end w-full px-2 pt-2 space-x-2 text-sm capitalize' +
+                                    (proj.download_url ? 'text-xs' : '')}
+                            >
+                                <a href={proj.link} target="_blank" class="btn">
+                                    <i class="inline-block mx-1 fas fa-link" />
+                                    <span>{$t('home.project.modal.visit')}</span
+                                    >
                                 </a>
-                            {/if}
+                                <button
+                                    class="inline-block mx-1 text-green-800 border-green-600 btn hover:bg-green-700 dark:text-green-400 dark:border-green-400"
+                                    type="button"
+                                    on:click|preventDefault={() => {
+                                        openModal(proj);
+                                    }}
+                                >
+                                    <i class="fas fa-at" />
+                                    <span
+                                        >{$t(
+                                            'home.project.modal.moreInfo'
+                                        )}</span
+                                    >
+                                </button>
+                                {#if proj.download_url.length > 1}
+                                    <a
+                                        href={proj.download_url}
+                                        target="_blank"
+                                        class="text-red-800 border-red-600 btn hover:bg-red-700 dark:text-red-400 dark:border-red-400"
+                                    >
+                                        <i class="fas fa-download" />
+                                        <span>
+                                            {$t('home.project.modal.download')}
+                                        </span>
+                                    </a>
+                                {/if}
+                            </div>
                         </div>
                     </div>
-                </div>
-            {/if}
-        {/each}
-    </div>
+                {/if}
+            {/each}
+        </div>
+    {/await}
 </div>
 
 <!-- project Modal -->
