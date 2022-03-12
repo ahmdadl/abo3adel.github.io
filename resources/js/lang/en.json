@@ -18,7 +18,8 @@
             "my_projects": "Projects",
             "blog": "Blog",
             "index": "Portfolio",
-            "contact": "Contact"
+            "contact": "Contact",
+            "testmonial": "."
         },
         "about": {
             "responsive": "Responsive",
@@ -62,6 +63,10 @@
         "alert": {
             "note": "Note",
             "alertMessage": "All These WebApps are hosted on free hosting providers, so it will take some time to start the app"
+        },
+        "test": {
+            "donot": "donot",
+            "see": "see"
         }
     }
 }
