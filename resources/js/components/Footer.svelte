@@ -12,35 +12,35 @@
                 <a
                     href="https://github.com/abo3adel"
                     target="_blank"
-                    class="mt-2 mr-2 !text-gray-700 !border-gray-700 btn hover:bg-gray-600"
+                    class="my-2 mr-2 inline-block !text-gray-700 !border-gray-700 btn hover:bg-gray-600"
                 >
                     <i class="fab fa-github" />
                 </a>
                 <a
                     href="https://codepen.io/abo3adel"
                     target="_blank"
-                    class="mt-2 mr-2 !text-red-700 !border-red-700 btn hover:bg-red-600"
+                    class="my-2 mr-2 inline-block !text-red-700 !border-red-700 btn hover:bg-red-600"
                 >
                     <i class="fab fa-codepen" />
                 </a>
                 <a
                     href="https://www.linkedin.com/in/ahmed-adel-30a932119/"
                     target="_blank"
-                    class="mt-2 mr-2 !text-orange-700 !border-orange-700 btn hover:bg-orange-600"
+                    class="my-2 mr-2 inline-block !text-orange-700 !border-orange-700 btn hover:bg-orange-600"
                 >
                     <i class="fab fa-linkedin-in" />
                 </a>
                 <a
                     href="https://fb.com/a7md200"
                     target="_blank"
-                    class="mt-2 mr-2 btn"
+                    class="my-2 mr-2 inline-block btn"
                 >
                     <i class="fab fa-facebook-f" />
                 </a>
                 <a
                     href="https://wa.me/201143647417"
                     target="_blank"
-                    class="mt-2 mr-2 !text-green-700 !border-green-700 btn hover:bg-green-600"
+                    class="my-2 mr-2 inline-block !text-green-700 !border-green-700 btn hover:bg-green-600"
                 >
                     <i class="fab fa-whatsapp" />
                 </a>
