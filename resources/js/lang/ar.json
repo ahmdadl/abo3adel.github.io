@@ -51,6 +51,9 @@
                 "download": "تحميل"
             }
         },
+        "blog": {
+            "readMore": "إقرأ المزيد"
+        },
         "contact": {
             "edu": "التعليم",
             "personal": "معلومات شخصية",

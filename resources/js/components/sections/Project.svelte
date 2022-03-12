@@ -2,6 +2,7 @@
     import { slide } from 'svelte/transition';
     import { t } from 'svelte-i18n';
     import type ProjectInterface from '../../interfaces/ProjectInterface';
+    import useLazyImage from 'svelte-lazy-image/use-lazy-image';
     import Modal from '../Modal.svelte';
     import Slider from '../Slider.svelte';
 
@@ -161,8 +162,10 @@
                     >
                         <img
                             class="object-cover w-full h-full shadow-sm"
-                            src={proj.img[0]}
+                            src="/img/rings.svg"
+                            data-src={proj.img[0]}
                             alt={proj.title + ' image'}
+                            use:useLazyImage
                         />
                     </a>
                     <div
