@@ -1,6 +1,8 @@
 <script lang="ts">
     import { crossfade } from 'svelte/transition';
     import { t } from 'svelte-i18n';
+    import axios from 'axios';
+    import { API_URL } from '../../helpers/Config.ts';
 
     let name: string = '';
     let email: string = '';
@@ -21,28 +23,51 @@
         return false;
     }
 
-    function submitForm() {
+    async function submitForm() {
         // validate
         if (sending || !name.length || !testMail(email) || !message.length) {
-            // return;
+            return;
         }
 
         sending = true;
 
-        setTimeout(() => {
+        const res = await axios
+            .post(API_URL + 'send-mail', {
+                name,
+                email,
+                message,
+            })
+            .catch((err) => {
+                done = -1;
+                sending = false;
+                return;
+            });
+
+        if (!res || !res.data || !res.data.done) {
+            done = -1; // error
             sending = false;
-            done = 1;
-        }, 2000);
+            return;
+        }
+
+        // reset form
+        name = '';
+        email = '';
+        message = '';
+
+        sending = false;
+        done = 1;
+
+        setTimeout(() => (done = 0), 3000);
     }
 </script>
 
 <!-- contact form -->
 <div
-    class="pt-6 pattern bg-blue-700 dark:bg-transparent text-left rtl:text-right"
+    class="pt-6 text-left bg-blue-700 pattern dark:bg-transparent rtl:text-right"
 >
-    <div class="relative justify-around overflow-hidden md:flex bg-transparent">
+    <div class="relative justify-around overflow-hidden bg-transparent md:flex">
         <div>
-            <p class="mt-1 text-white capitalize text-center font-semibold">
+            <p class="mt-1 font-semibold text-center text-white capitalize">
                 {$t('contact.as_soon')}
             </p>
         </div>
@@ -56,7 +81,7 @@
             </label>
             <div class="w-full sm:w-10/12">
                 <input
-                    class="block w-full px-4 py-3 mb-3 leading-tight text-gray-800 dark:text-gray-200 bg-gray-200 border rounded appearance-none dark:bg-gray-500 dark:focus:bg-gray-600 invalid:border-red-500 focus:outline-none focus:bg-white"
+                    class="block w-full px-4 py-3 mb-3 leading-tight text-gray-800 bg-gray-200 border rounded appearance-none dark:text-gray-200 dark:bg-gray-500 dark:focus:bg-gray-600 invalid:border-red-500 focus:outline-none focus:bg-white"
                     id="grid-name"
                     type="text"
                     placeholder="Ahmed Adel"
@@ -65,7 +90,7 @@
                 />
                 {#if !name.length}
                     <p
-                        class="block w-full text-xs italic text-red-300 font-semibold dark:text-red-500"
+                        class="block w-full text-xs italic font-semibold text-red-300 dark:text-red-500"
                     >
                         {$t('contact.form.error.req')}
                     </p>
@@ -80,7 +105,7 @@
             </label>
             <div class="w-full sm:w-10/12">
                 <input
-                    class="block w-full px-4 py-3 mb-3 leading-tight text-gray-800 dark:text-gray-200 bg-gray-200 border rounded appearance-none dark:bg-gray-500 dark:focus:bg-gray-600 invalid:border-red-500 focus:outline-none focus:bg-white"
+                    class="block w-full px-4 py-3 mb-3 leading-tight text-gray-800 bg-gray-200 border rounded appearance-none dark:text-gray-200 dark:bg-gray-500 dark:focus:bg-gray-600 invalid:border-red-500 focus:outline-none focus:bg-white"
                     id="grid-email"
                     type="email"
                     placeholder="abo3adel@gmail.com"
@@ -89,13 +114,13 @@
                 />
                 {#if !email.length}
                     <p
-                        class="block w-full text-xs italic text-red-300 font-semibold dark:text-red-500"
+                        class="block w-full text-xs italic font-semibold text-red-300 dark:text-red-500"
                     >
                         {$t('contact.form.error.req')}
                     </p>
                 {:else if !testMail(email)}
                     <p
-                        class="block w-full text-xs italic text-red-300 font-semibold dark:text-red-500"
+                        class="block w-full text-xs italic font-semibold text-red-300 dark:text-red-500"
                     >
                         {$t('contact.form.error.invalid')}
                     </p>
@@ -110,14 +135,14 @@
             </label>
             <div class="w-full sm:w-10/12">
                 <textarea
-                    class="block w-full h-48 px-4 py-3 mb-3 leading-tight text-gray-800 dark:text-gray-200 bg-gray-200 border border-gray-200 rounded appearance-none resize-none dark:bg-gray-500 dark:focus:bg-gray-600 invalid:border-red-500 no-resize focus:outline-none focus:bg-white focus:border-gray-500"
+                    class="block w-full h-48 px-4 py-3 mb-3 leading-tight text-gray-800 bg-gray-200 border border-gray-200 rounded appearance-none resize-none dark:text-gray-200 dark:bg-gray-500 dark:focus:bg-gray-600 invalid:border-red-500 no-resize focus:outline-none focus:bg-white focus:border-gray-500"
                     id="message"
                     bind:value={message}
                     required
                 />
                 {#if !message.length}
                     <p
-                        class="block w-full text-xs italic text-red-300 font-semibold dark:text-red-500"
+                        class="block w-full text-xs italic font-semibold text-red-300 dark:text-red-500"
                     >
                         {$t('contact.form.error.req')}
                     </p>
@@ -145,7 +170,7 @@
         {#if done === 1}
             <div class="flex items-center w-full" transition:crossfade>
                 <div
-                    class="flex max-w-sm my-4 mx-auto bg-green-300 dark:bg-green-600"
+                    class="flex max-w-sm mx-auto my-4 bg-green-300 dark:bg-green-600"
                 >
                     <div class="w-16 bg-green-500 dark:bg-green-700">
                         <div class="p-4">
@@ -176,8 +201,7 @@
         {:else if done === -1}
             <div class="flex items-center w-full" transition:crossfade>
                 <div
-                    class="flex max-w-sm my-4 mx-auto bg-red-300 dark:bg-red-600"
-                    transition:crossfade
+                    class="flex max-w-sm mx-auto my-4 bg-red-300 dark:bg-red-600"
                 >
                     <div class="w-16 bg-red-500 dark:bg-red-700">
                         <div class="p-4">
