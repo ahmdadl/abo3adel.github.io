@@ -9,18 +9,10 @@
     import Skill from './components/sections/Skill.svelte';
     import Project from './components/sections/Project.svelte';
     import Blog from './components/sections/Blog.svelte';
-import Testmonial from './components/sections/Testmonial.svelte';
-import Footer from './components/Footer.svelte';
-import ContactMe from './components/sections/ContactMe.svelte';
-
-    let scroll = 0;
+    import Testmonial from './components/sections/Testmonial.svelte';
+    import Footer from './components/Footer.svelte';
+    import ContactMe from './components/sections/ContactMe.svelte';
 </script>
-
-<svelte:window
-    on:scroll={() => {
-        scroll = document.documentElement.scrollTop;
-    }}
-/>
 
 <main>
     {#if $isLoading}
@@ -43,21 +35,20 @@ import ContactMe from './components/sections/ContactMe.svelte';
                 <Project />
             </Section>
 
-            <Section sectionId="blog">
-                <Blog />
-            </Section>
-
             <Section sectionId="testmonial" showTilte={false}>
                 <Testmonial />
             </Section>
 
-            <Section sectionId='contact_me' showTilte={false}>
+            <Section sectionId="blog">
+                <Blog />
+            </Section>
+
+            <Section sectionId="contact_me" showTilte={false}>
                 <ContactMe />
             </Section>
-            
+
             <Footer />
         </div>
-
     {/if}
 </main>
 

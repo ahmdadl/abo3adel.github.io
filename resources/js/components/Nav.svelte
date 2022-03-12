@@ -5,6 +5,8 @@
     import DarkModeToggler from './nav/DarkModeToggler.svelte';
     import tabStore from '../stores/tab';
     import { scrollto } from 'svelte-scrollto';
+    import { onMount } from 'svelte';
+    import ScrollObserver from '../helpers/ScrollObserver.ts';
 
     let opend = false;
 
@@ -13,6 +15,30 @@
         { icon: 'address-book', txt: 'contact_me' },
         { icon: 'project-diagram', txt: 'my_projects' },
     ];
+
+    onMount(() => {
+        const toBeObserved = ['my_projects', 'blog', 'contact_me'];
+        const observer = new ScrollObserver(
+            (entries: IntersectionObserverEntry[]) => {
+                const ent = entries[0];
+
+                if (false === ent.isIntersecting) return;
+
+                tabStore.set('');
+
+                if (
+                    toBeObserved.indexOf(ent.target.id) > -1 &&
+                    ent.target.id !== $tabStore
+                ) {
+                    tabStore.set(ent.target.id);
+                }
+            }
+        ).observer;
+
+        toBeObserved.forEach((id) =>
+            observer.observe(document.querySelector(`section#${id}`))
+        );
+    });
 </script>
 
 <!-- Navigation Start -->

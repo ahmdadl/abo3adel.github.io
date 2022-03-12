@@ -1,8 +1,8 @@
 <script lang="ts">
-    import { t } from 'svelte-i18n';
     export let sectionId: string; // required
-
     export let showTilte: boolean = true;
+
+    import { t } from 'svelte-i18n';
 </script>
 
 {@html `<!-- ${sectionId} Start -->`}

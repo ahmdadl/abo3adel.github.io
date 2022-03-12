@@ -4,7 +4,7 @@ import * as animateScroll from 'svelte-scrollto';
 const tabStore = writable('');
 
 if (location.hash.length) {
-    const sectionId = location.hash.replace('#', '');
+    const sectionId = location.hash.replace('#', '').replace('-section', '');
     tabStore.set(sectionId);
 
     // wait for element to be loaded
@@ -19,7 +19,7 @@ if (location.hash.length) {
 tabStore.subscribe((val) => {
     if (!val) return;
 
-    location.hash = val;
+    location.hash = val + '-section';
 
     // animation will be done by actions in <Nav /> componet
 });

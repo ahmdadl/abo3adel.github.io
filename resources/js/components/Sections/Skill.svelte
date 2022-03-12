@@ -25,30 +25,36 @@
         { title: 'flutter', value: 50 },
     ];
 
-    function animateSkillBar(el: HTMLElement, value: number) {
+    onMount(() => {
         const observer = new ScrollObserver(
             (entries: IntersectionObserverEntry[]) => {
                 const initalValue = 20;
-                if (
-                    true === entries[0].isIntersecting &&
-                    el.style.width === `${initalValue}%`
-                ) {
-                    setTimeout(() => {
-                        for (let i = 0; i < value - initalValue; i++) {
-                            el.style.width = `${
-                                parseInt(el.style.width.replace('%', '')) + 1
-                            }%`;
-                        }
-                    }, 150);
-                    return;
-                }
+                // loop through all progress bars
+                const bars = document.querySelectorAll('.bar');
+                bars.forEach((el: HTMLElement) => {
+                    const value = parseInt(el.getAttribute('data-value'));
+                    if (
+                        true === entries[0].isIntersecting &&
+                        el.style.width === `${initalValue}%`
+                    ) {
+                        setTimeout(() => {
+                            for (let i = 0; i < value - initalValue; i++) {
+                                el.style.width = `${
+                                    parseInt(el.style.width.replace('%', '')) +
+                                    1
+                                }%`;
+                            }
+                        }, 150);
+                        return;
+                    }
 
-                el.style.width = `${initalValue}%`;
+                    el.style.width = `${initalValue}%`;
+                });
             }
         ).observer;
 
         observer.observe(document.getElementById('skill'));
-    }
+    });
 </script>
 
 <div class="grid w-full grid-cols-1 p-2 md:grid-cols-2 gap-y-7 md:gap-4">
@@ -58,7 +64,9 @@
             class="w-3/4 p-1 mx-auto border rounded lazy img border-secondary"
             alt="my avatar"
         />
-        <p class="mt-2 text-gray-500 capitalize">{$t('home.skill.skill_info')}</p>
+        <p class="mt-2 text-gray-500 capitalize">
+            {$t('home.skill.skill_info')}
+        </p>
     </div>
     <div>
         {#each skills as { title, value }}
@@ -72,9 +80,9 @@
                     class="w-9/12 bg-gray-300 rounded-r-full rtl:rounded-l-full"
                 >
                     <div
-                        class="text-center bg-teal-900 rounded-r-full rtl:rounded-l-full transation duration-[750ms]"
-                        style="width: 0%"
-                        use:animateSkillBar={value}
+                        class="text-center bg-teal-900 rounded-r-full rtl:rounded-l-full transation duration-[750ms] bar"
+                        style="width: 20%"
+                        data-value={value}
                     >
                         <div
                             class="inline-block px-2 text-xs text-white bg-teal-700 rounded-full"
