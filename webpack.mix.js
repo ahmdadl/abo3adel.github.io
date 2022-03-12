@@ -12,11 +12,11 @@ const postcssPlugins = [
 
 mix.setPublicPath('')
     .ts('resources/js/app.ts', 'js')
-    // .postCss(
-    //     'resources/css/app.css',
-    //     'css',
-    //     postcssPlugins.concat([require('tailwindcss')('./tailwind.config.js')])
-    // )
+    .postCss(
+        'resources/css/app.css',
+        'css',
+        postcssPlugins.concat([require('tailwindcss')('./tailwind.config.js')])
+    )
 
     .svelte({
         dev: true,

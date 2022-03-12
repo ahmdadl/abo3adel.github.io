@@ -1,51 +1,62 @@
 <script lang="ts">
+    import { crossfade } from 'svelte/transition';
     import { t } from 'svelte-i18n';
 
     let name: string = '';
     let email: string = '';
     let message: string = '';
 
-    function testMail(email: string): boolean {
-        return true;
+    let sending: boolean = false;
+    let done: number = 0;
+
+    function testMail(mail: string): boolean {
+        if (
+            mail.match(
+                /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+(?:[A-Z]{2}|com|org|net|gov|mil|biz|info|mobi|name|aero|jobs|museum)\b/
+            )
+        ) {
+            return true;
+        }
+
+        return false;
+    }
+
+    function submitForm() {
+        // validate
+        if (sending || !name.length || !testMail(email) || !message.length) {
+            // return;
+        }
+
+        sending = true;
+
+        setTimeout(() => {
+            sending = false;
+            done = 1;
+        }, 2000);
     }
 </script>
 
 <!-- contact form -->
-<div class="pt-6 pattern text-left rtl:text-right">
-    <div
-        class="relative justify-around overflow-hidden md:flex bg-[transparent]"
-    >
+<div
+    class="pt-6 pattern bg-blue-700 dark:bg-transparent text-left rtl:text-right"
+>
+    <div class="relative justify-around overflow-hidden md:flex bg-transparent">
         <div>
-            <!-- <h1
-                class="font-sans text-4xl font-bold text-white capitalize small-caps"
-            >
-                {$t('contact.send_message')}
-            </h1> -->
-            <p class="mt-1 text-white">{$t('contact.as_soon')}</p>
+            <p class="mt-1 text-white capitalize text-center font-semibold">
+                {$t('contact.as_soon')}
+            </p>
         </div>
-        <div
-            class="absolute border-4 border-t-8 rounded-full -bottom-32 -left-40 w-80 h-80 border-opacity-30"
-        />
-        <div
-            class="absolute border-4 border-t-8 rounded-full -bottom-40 -left-20 w-80 h-80 border-opacity-30"
-        />
-        <div
-            class="absolute border-4 border-t-8 rounded-full -top-40 -right-0 w-80 h-80 border-opacity-30"
-        />
-        <div
-            class="absolute border-4 border-t-8 rounded-full -top-20 -right-20 w-80 h-80 border-opacity-30"
-        />
     </div>
-    <form class="w-full px-2 py-6">
-        <div class="flex flex-wrap items-center">
+    <form on:submit|preventDefault={submitForm} class="w-full px-2 py-6">
+        <div class="flex flex-wrap items-baseline">
             <label
-                class="w-full mb-2 text-xs font-bold tracking-wide text-center text-gray-700 uppercase sm:w-2/12 dark:text-gray-200"
+                class="w-full mb-2 text-xs font-bold tracking-wide text-center text-gray-200 uppercase sm:w-2/12 dark:text-gray-200"
                 for="grid-name"
                 >{$t('contact.form.name')}
             </label>
             <div class="w-full sm:w-10/12">
                 <input
-                    class="block w-full px-4 py-3 mb-3 leading-tight text-gray-700 bg-gray-200 border rounded appearance-none dark:bg-gray-500 dark:text-white dark:focus:bg-gray-600 invalid:border-red-500 focus:outline-none focus:bg-white"
+                    class="block w-full px-4 py-3 mb-3 leading-tight text-gray-800 dark:text-gray-200 bg-gray-200 border rounded appearance-none dark:bg-gray-500 dark:focus:bg-gray-600 invalid:border-red-500 focus:outline-none focus:bg-white"
                     id="grid-name"
                     type="text"
                     placeholder="Ahmed Adel"
@@ -53,21 +64,23 @@
                     required
                 />
                 {#if !name.length}
-                    <p class="block w-full text-xs italic text-red-500">
+                    <p
+                        class="block w-full text-xs italic text-red-300 font-semibold dark:text-red-500"
+                    >
                         {$t('contact.form.error.req')}
                     </p>
                 {/if}
             </div>
         </div>
-        <div class="flex flex-wrap items-center my-6">
+        <div class="flex flex-wrap items-baseline my-6">
             <label
-                class="w-full mb-2 text-xs font-bold tracking-wide text-center text-gray-700 uppercase sm:block sm:w-2/12 dark:text-gray-200"
+                class="w-full mb-2 text-xs font-bold tracking-wide text-center text-gray-200 uppercase sm:block sm:w-2/12 dark:text-gray-200"
                 for="grid-email"
                 >{$t('contact.form.email')}
             </label>
             <div class="w-full sm:w-10/12">
                 <input
-                    class="block w-full px-4 py-3 mb-3 leading-tight text-gray-700 bg-gray-200 border rounded appearance-none dark:bg-gray-500 dark:text-white dark:focus:bg-gray-600 invalid:border-red-500 focus:outline-none focus:bg-white"
+                    class="block w-full px-4 py-3 mb-3 leading-tight text-gray-800 dark:text-gray-200 bg-gray-200 border rounded appearance-none dark:bg-gray-500 dark:focus:bg-gray-600 invalid:border-red-500 focus:outline-none focus:bg-white"
                     id="grid-email"
                     type="email"
                     placeholder="abo3adel@gmail.com"
@@ -75,11 +88,15 @@
                     required
                 />
                 {#if !email.length}
-                    <p class="block w-full text-xs italic text-red-500">
+                    <p
+                        class="block w-full text-xs italic text-red-300 font-semibold dark:text-red-500"
+                    >
                         {$t('contact.form.error.req')}
                     </p>
                 {:else if !testMail(email)}
-                    <p class="block w-full text-xs italic text-red-500">
+                    <p
+                        class="block w-full text-xs italic text-red-300 font-semibold dark:text-red-500"
+                    >
                         {$t('contact.form.error.invalid')}
                     </p>
                 {/if}
@@ -87,34 +104,50 @@
         </div>
         <div class="flex flex-wrap my-2 mb-6">
             <label
-                class="block w-full mb-2 text-xs font-bold tracking-wide text-center text-gray-700 uppercase sm:w-2/12 dark:text-gray-200"
+                class="block w-full mb-2 text-xs font-bold tracking-wide text-center text-gray-200 uppercase sm:w-2/12 dark:text-gray-200"
                 for="grid-message"
                 >{$t('contact.form.message')}
             </label>
             <div class="w-full sm:w-10/12">
                 <textarea
-                    class="block w-full h-48 px-4 py-3 mb-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none resize-none dark:bg-gray-500 dark:text-white dark:focus:bg-gray-600 invalid:border-red-500 no-resize focus:outline-none focus:bg-white focus:border-gray-500"
+                    class="block w-full h-48 px-4 py-3 mb-3 leading-tight text-gray-800 dark:text-gray-200 bg-gray-200 border border-gray-200 rounded appearance-none resize-none dark:bg-gray-500 dark:focus:bg-gray-600 invalid:border-red-500 no-resize focus:outline-none focus:bg-white focus:border-gray-500"
                     id="message"
                     bind:value={message}
                     required
                 />
                 {#if !message.length}
-                    <p class="block w-full text-xs italic text-red-500">
+                    <p
+                        class="block w-full text-xs italic text-red-300 font-semibold dark:text-red-500"
+                    >
                         {$t('contact.form.error.req')}
                     </p>
                 {/if}
             </div>
         </div>
         <div class="flex items-center my-2">
-            <div class="w-2/12" />
+            <div class="w-0 md:w-2/12" />
             <div class="w-9/12">
-                <button class="w-1/4 btn" type="button">
-                    <i class="fa fa-save" />
+                <button
+                    class="w-1/4 btn !text-white !border-white hover:bg-blue-900"
+                    type="submit"
+                    disabled={!name.length ||
+                        !testMail(email) ||
+                        !message.length}
+                >
+                    <i
+                        class={'mx-1 fa ' +
+                            (sending ? 'fa-spin fa-redo' : 'fa-save')}
+                    />
                     <span>{$t('contact.form.send')}</span>
                 </button>
-
-                <div class="flex max-w-sm mb-4 bg-green-lighter">
-                    <div class="w-16 bg-green">
+            </div>
+        </div>
+        {#if done === 1}
+            <div class="flex items-center w-full" transition:crossfade>
+                <div
+                    class="flex max-w-sm my-4 mx-auto bg-green-300 dark:bg-green-600"
+                >
+                    <div class="w-16 bg-green-500 dark:bg-green-700">
                         <div class="p-4">
                             <svg
                                 class="w-8 h-8 text-white fill-current"
@@ -128,18 +161,25 @@
                             >
                         </div>
                     </div>
-                    <div class="items-center w-auto p-4 text-grey-darker">
-                        <span class="pb-4 text-lg font-bold"> Heads Up! </span>
+                    <div
+                        class="items-center w-auto p-4 text-grey-700 dark:text-gray-300"
+                    >
+                        <span class="pb-4 text-lg font-bold">
+                            {$t('contact.alert.heads')}
+                        </span>
                         <p class="leading-tight">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing
-                            elit. Ab beatae consequuntur dolore doloribus eius
-                            fugit, porro quidem repellat temporibus unde?
+                            {$t('contact.alert.success')}
                         </p>
                     </div>
                 </div>
-
-                <div class="flex max-w-sm mb-4 bg-red-lighter">
-                    <div class="w-16 bg-red">
+            </div>
+        {:else if done === -1}
+            <div class="flex items-center w-full" transition:crossfade>
+                <div
+                    class="flex max-w-sm my-4 mx-auto bg-red-300 dark:bg-red-600"
+                    transition:crossfade
+                >
+                    <div class="w-16 bg-red-500 dark:bg-red-700">
                         <div class="p-4">
                             <svg
                                 class="w-8 h-8 text-white fill-current"
@@ -158,15 +198,18 @@
                             >
                         </div>
                     </div>
-                    <div class="items-center w-auto p-4 text-black opacity-75">
-                        <span class="pb-4 text-lg font-bold"> Heads Up! </span>
+                    <div
+                        class="items-center w-auto p-4 text-grey-700 dark:text-gray-300"
+                    >
+                        <span class="pb-4 text-lg font-bold">
+                            {$t('contact.alert.heads')}
+                        </span>
                         <p class="leading-tight">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing
-                            elit. Aperiam, nemo!
+                            {$t('contact.alert.error')}
                         </p>
                     </div>
                 </div>
             </div>
-        </div>
+        {/if}
     </form>
 </div>

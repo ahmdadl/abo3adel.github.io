@@ -47,11 +47,11 @@ import ContactMe from './components/sections/ContactMe.svelte';
                 <Blog />
             </Section>
 
-            <Section sectionId="testmonial">
+            <Section sectionId="testmonial" showTilte={false}>
                 <Testmonial />
             </Section>
 
-            <Section sectionId='contact_me'>
+            <Section sectionId='contact_me' showTilte={false}>
                 <ContactMe />
             </Section>
             

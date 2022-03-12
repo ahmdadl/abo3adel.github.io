@@ -72,9 +72,14 @@
             "message": "message",
             "send": "send",
             "error": {
-                "req": "fileld is required",
-                "invalid": "email format is invalid"
+                "req": "This field is required.",
+                "invalid": "This must be a valid email address."
             }
+        },
+        "alert": {
+            "heads": "Heads Up!",
+            "success": "Message send successfully",
+            "error": "an Error occured, please try again later"
         }
     }
 }
