@@ -153,7 +153,7 @@
 
     <!-- project list -->
     {#await loadProjects()}
-        <div class="w-full mx-auto my-5">
+        <div class="w-full mx-auto pt-8 my-5">
             <div class="flex items-center justify-center ">
                 <div
                     class="w-24 h-24 border-l-2 border-blue-800 dark:border-blue-300 text-blue-800 font-bold dark:text-blue-300 rounded-full animate-spin shadow-lg dark:shadow-white"

@@ -60,8 +60,7 @@
             "alertMessage": "All These WebApps are hosted on free hosting providers, so it will take some time to start the app"
         },
         "test": {
-            "donot": "donot",
-            "see": "see"
+            "donot": "Find some testimonials about me"
         }
     },
     "contact": {
