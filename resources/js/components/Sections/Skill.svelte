@@ -77,10 +77,10 @@
                     {title}
                 </div>
                 <div
-                    class="w-9/12 bg-gray-300 rounded-r-full rtl:rounded-l-full"
+                    class="w-9/12 bg-gray-300 rounded-r rtl:rounded-l"
                 >
                     <div
-                        class="text-center bg-teal-900 rounded-r-full rtl:rounded-l-full transation duration-[750ms] bar"
+                        class="text-center bg-teal-900 rounded-r rtl:rounded-l transation duration-[750ms] bar"
                         style="width: 20%"
                         data-value={value}
                     >
