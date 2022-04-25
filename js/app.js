@@ -4586,7 +4586,7 @@ function create_else_block(ctx) {
       (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.destroy_component)(footer);
     }
   };
-} // (16:4) {#if $isLoading}
+} // (21:4) {#if $isLoading}
 
 
 function create_if_block(ctx) {
@@ -4606,7 +4606,7 @@ function create_if_block(ctx) {
       if (detaching) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.detach)(h1);
     }
   };
-} // (24:12) <Section sectionId="about">
+} // (29:12) <Section sectionId="about">
 
 
 function create_default_slot_5(ctx) {
@@ -4634,7 +4634,7 @@ function create_default_slot_5(ctx) {
       (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.destroy_component)(about, detaching);
     }
   };
-} // (28:12) <Section sectionId="skill">
+} // (33:12) <Section sectionId="skill">
 
 
 function create_default_slot_4(ctx) {
@@ -4662,7 +4662,7 @@ function create_default_slot_4(ctx) {
       (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.destroy_component)(skill, detaching);
     }
   };
-} // (32:12) <Section sectionId="my_projects">
+} // (37:12) <Section sectionId="my_projects">
 
 
 function create_default_slot_3(ctx) {
@@ -4690,7 +4690,7 @@ function create_default_slot_3(ctx) {
       (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.destroy_component)(project, detaching);
     }
   };
-} // (36:12) <Section sectionId="testmonial" showTilte={false}>
+} // (41:12) <Section sectionId="testmonial" showTilte={false}>
 
 
 function create_default_slot_2(ctx) {
@@ -4718,7 +4718,7 @@ function create_default_slot_2(ctx) {
       (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.destroy_component)(testmonial, detaching);
     }
   };
-} // (40:12) <Section sectionId="blog">
+} // (45:12) <Section sectionId="blog">
 
 
 function create_default_slot_1(ctx) {
@@ -4746,7 +4746,7 @@ function create_default_slot_1(ctx) {
       (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.destroy_component)(blog, detaching);
     }
   };
-} // (44:12) <Section sectionId="contact_me" showTilte={false}>
+} // (49:12) <Section sectionId="contact_me" showTilte={false}>
 
 
 function create_default_slot(ctx) {
@@ -4847,6 +4847,11 @@ function instance($$self, $$props, $$invalidate) {
   var $isLoading;
   (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.component_subscribe)($$self, svelte_i18n__WEBPACK_IMPORTED_MODULE_1__.isLoading, function ($$value) {
     return $$invalidate(0, $isLoading = $$value);
+  });
+  svelte_i18n__WEBPACK_IMPORTED_MODULE_1__.isLoading.subscribe(function (val) {
+    if (!val) {
+      document.querySelector('#splashScreen').style.display = 'none';
+    }
   });
   return [$isLoading];
 }

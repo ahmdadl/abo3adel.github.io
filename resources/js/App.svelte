@@ -12,6 +12,14 @@
     import Testmonial from './components/sections/Testmonial.svelte';
     import Footer from './components/Footer.svelte';
     import ContactMe from './components/sections/ContactMe.svelte';
+
+    isLoading.subscribe((val) => {
+        if (!val) {
+            (
+                document.querySelector('#splashScreen') as HTMLDivElement
+            ).style.display = 'none';
+        }
+    });
 </script>
 
 <main>
