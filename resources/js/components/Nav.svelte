@@ -39,11 +39,15 @@
             observer.observe(document.querySelector(`section#${id}`))
         );
     });
+
+    let scrollY;
 </script>
+
+<svelte:window bind:scrollY={scrollY} />
 
 <!-- Navigation Start -->
 <div
-    class="fixed z-50 w-full text-gray-200 transition bg-blue-700 dark:bg-gray-800 ltr:left-0 rtl:right-0"
+    class="fixed z-50 w-full text-gray-200 transition bg-blue-700 dark:bg-gray-800 ltr:left-0 rtl:right-0 {scrollY > 150 ? '' : 'bg-transparent dark:bg-transparent'}"
 >
     <div
         class="flex flex-col max-w-screen-xl px-4 mx-auto md:items-center md:justify-between md:flex-row md:px-6 lg:px-8"
