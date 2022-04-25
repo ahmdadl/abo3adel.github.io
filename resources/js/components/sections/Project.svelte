@@ -32,6 +32,13 @@
         currentProject = Object.assign({}, proj);
         modalOpend = true;
     }
+
+    function getTags(tags: any) {
+        if (typeof tags === 'string') {
+            return tags.split(',');
+        }
+        return tags;
+    }
 </script>
 
 <div>
@@ -107,8 +114,8 @@
                                     class="bg-blue-500 px-3 py-1.5 rounded-full"
                                     >{proj.type}</span
                                 >
-                                {#if proj.tags && proj.tags[0].length}
-                                    {#each proj.tags as tag}
+                                {#if getTags(proj.tags) && getTags(proj.tags)[0].length}
+                                    {#each getTags(proj.tags) as tag}
                                         <span
                                             class="mx-1 bg-blue-500 px-3 py-1.5 rounded-full"
                                             >{tag}</span
@@ -186,5 +193,5 @@
         modalOpend = ev.detail.opend;
     }}
 >
-    <Slider images={currentProject.shots} />
+    <Slider images={getTags(currentProject.shots)} />
 </Modal>
