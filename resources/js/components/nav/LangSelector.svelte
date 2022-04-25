@@ -58,6 +58,7 @@
                         on:click|preventDefault={() => {
                             if ($locale === loc) return;
                             $locale = loc;
+                            location.reload();
                         }}
                         >{loc
                             .replace('en', 'English')

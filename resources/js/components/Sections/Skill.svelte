@@ -9,7 +9,6 @@
         { title: 'mysql', value: 80 },
         { title: 'laravel', value: 95 },
         { title: 'livewire', value: 80 },
-        { title: 'lumen', value: 90 },
         { title: 'ionic', value: 85 },
         { title: 'unit Testing', value: 85 },
         { title: 'html', value: 90 },
@@ -17,12 +16,10 @@
         { title: 'javascipt', value: 85 },
         { title: 'typescript', value: 85 },
         { title: 'vue', value: 90 },
-        { title: 'jquery', value: 80 },
         { title: 'alpine Js', value: 85 },
-        { title: 'bootstrap', value: 85 },
         { title: 'tailwindcss', value: 90 },
         { title: 'spa', value: 85 },
-        { title: 'flutter', value: 50 },
+        // { title: 'flutter', value: 50 },
     ];
 
     onMount(() => {

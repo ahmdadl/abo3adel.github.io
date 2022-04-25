@@ -107,12 +107,14 @@
                                     class="bg-blue-500 px-3 py-1.5 rounded-full"
                                     >{proj.type}</span
                                 >
-                                {#each proj.tags as tag}
-                                    <span
-                                        class="mx-1 bg-blue-500 px-3 py-1.5 rounded-full"
-                                        >{tag}</span
-                                    >
-                                {/each}
+                                {#if proj.tags && proj.tags[0].length}
+                                    {#each proj.tags as tag}
+                                        <span
+                                            class="mx-1 bg-blue-500 px-3 py-1.5 rounded-full"
+                                            >{tag}</span
+                                        >
+                                    {/each}
+                                {/if}
                             </div>
                             <h2
                                 class="text-base font-bold text-gray-800 capitalize dark:text-gray-300 sm:text-lg md:text-xl small-caps hover:text-blue-700 dark:hover:text-blue-400"
@@ -146,7 +148,7 @@
                                         )}</span
                                     >
                                 </button>
-                                {#if proj.download_url?.length > 1}
+                                {#if proj.download_url}
                                     <a
                                         href={proj.download_url}
                                         target="_blank"
@@ -165,7 +167,9 @@
             {/each}
         </div>
     {:catch err}
-        <div class="w-4/5 py-2 mx-auto my-6 text-red-900 capitalize bg-red-400 rounded">
+        <div
+            class="w-4/5 py-2 mx-auto my-6 text-red-900 capitalize bg-red-400 rounded"
+        >
             <i
                 class="inline-block mx-1 text-red-800 fas fa-exclamation-circle"
             />
