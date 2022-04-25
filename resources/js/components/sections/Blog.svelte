@@ -3,6 +3,8 @@
     import axios from 'axios';
     import { API_URL, BLOG_URL } from '../../helpers/Config.ts';
     import type PostInterface from '../../interfaces/PostInterface';
+    import { LazyImage } from 'svelte-lazy-image';
+
 </script>
 
 {#await axios.get(API_URL + 'posts')}
@@ -37,9 +39,10 @@
                 >
                     <div class="relative">
                         <a href={BLOG_URL + post.slug} target="_blank">
-                            <img
+                            <LazyImage
+                                placeholder="/img/rings.svg"
                                 src={post.img}
-                                class="object-cover max-w-full rounded-t-xl"
+                                class="object-cover max-w-full rounded-t-xl min-h-[10rem] mx-auto"
                                 alt={post.title}
                             />
                         </a>

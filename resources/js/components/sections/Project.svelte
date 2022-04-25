@@ -84,13 +84,13 @@
                     >
                         <a
                             href={'#'}
-                            class="block transition duration-300 ease-out transform hover:scale-110"
+                            class="block transition duration-300 ease-out transform hover:scale-110 text-center mx-auto"
                             on:click|preventDefault={() => {
                                 openModal(proj);
                             }}
                         >
                             <img
-                                class="object-cover w-full h-full shadow-sm"
+                                class="object-cover w-full min-h-[10rem] shadow-sm mx-auto"
                                 src="/img/rings.svg"
                                 data-src={proj.img}
                                 alt={proj.title + ' image'}
