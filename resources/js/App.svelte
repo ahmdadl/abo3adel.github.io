@@ -15,9 +15,8 @@
 
     isLoading.subscribe((val) => {
         if (!val) {
-            (
-                document.querySelector('#splashScreen') as HTMLDivElement
-            ).style.display = 'none';
+            const splash = document.querySelector('#splashScreen');
+            splash.parentNode.removeChild(splash);
         }
     });
 </script>
