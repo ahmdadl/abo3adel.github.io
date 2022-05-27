@@ -12,7 +12,7 @@
             'A Laravel Developer',
             'A Full Stack Web Developer',
             'An Ionic Devloper',
-            'A Flutter Developer',
+            // 'A Flutter Developer',
         ]).run();
     });
 </script>
