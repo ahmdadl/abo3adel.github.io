@@ -4,20 +4,63 @@
     import { API_URL, BLOG_URL } from '../../helpers/Config.ts';
     import type PostInterface from '../../interfaces/PostInterface';
     import { LazyImage } from 'svelte-lazy-image';
+    import { onMount } from 'svelte';
 
+    let loading: boolean = false;
+    let hasError: boolean = false;
+    let posts: PostInterface[] = [];
+    let attempts: number = 0;
+
+    async function loadingPosts() {
+        if (loading || posts.length) return;
+        loading = true;
+        hasError = false;
+        attempts++;
+
+        const res = await axios.get(API_URL + 'posts').catch((err) => {
+            hasError = true;
+            loading = false;
+        });
+
+        loading = false;
+
+        if (!res || !res.data || !res.data.posts) {
+            hasError = true;
+            return;
+        }
+
+        posts = res.data.posts;
+    }
+
+    onMount(() => {
+        setTimeout(() => loadingPosts(), 500);
+    });
 </script>
 
-{#await axios.get(API_URL + 'posts')}
+{#if loading}
     <div class="flex items-center justify-center my-10 pt-14">
         <div
             class="w-24 h-24 border-2 border-blue-500 border-solid rounded-full animate-spin border-t-transparent"
         />
     </div>
-{:then response}
+{:else if hasError}
+    <div
+        class="w-4/5 py-2 mx-auto my-6 text-red-900 capitalize bg-red-400 rounded"
+    >
+        <i class="inline-block mx-1 text-red-800 fas fa-exclamation-circle" />
+        <strong>{$t('home.project.error')}</strong>
+    </div>
+
+    {#if attempts < 3}
+        <button class="btn" on:click|preventDefault={loadingPosts}>
+            {$t('home.project.tryAgain')}
+        </button>
+    {/if}
+{:else}
     <div
         class="grid grid-cols-1 gap-5 p-2 gap-y-8 sm:p-4 md:grid-cols-2 lg:grid-cols-3"
     >
-        {#each response.data.posts as post}
+        {#each posts as post}
             <div
                 class="relative pl-1 transition duration-500 transform cursor-pointer rounded-xl hover:scale-105"
             >
@@ -76,11 +119,4 @@
             {$t('home.blog.readMore')}
         </a>
     </div>
-{:catch err}
-    <div
-        class="w-4/5 py-2 mx-auto my-6 text-red-900 capitalize bg-red-400 rounded"
-    >
-        <i class="inline-block mx-1 text-red-800 fas fa-exclamation-circle" />
-        <strong>{$t('home.project.error')}</strong>
-    </div>
-{/await}
+{/if}
