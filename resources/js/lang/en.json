@@ -51,7 +51,8 @@
                 "moreInfo": "more Info",
                 "download": "Download"
             },
-            "error": "an Error occured, please try again later"
+            "error": "an Error occured, please try again later",
+            "tryAgain": "Reload"
         },
         "blog": {
             "readMore": "Read More"

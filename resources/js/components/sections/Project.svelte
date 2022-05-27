@@ -7,6 +7,7 @@
     import Slider from '../Slider.svelte';
     import axios from 'axios';
     import { API_URL } from '../../helpers/Config.ts';
+    import { onMount } from 'svelte';
 
     let activeTab = 'all';
     let modalOpend = false;
@@ -28,6 +29,11 @@
         { title: $t('home.project.tabs.mobile'), value: 'mobile' },
     ];
 
+    let loading: boolean = false;
+    let hasError: boolean = false;
+    let projects: ProjectInterface[] = [];
+    let attempts: number = 0;
+
     function openModal(proj: ProjectInterface) {
         currentProject = Object.assign({}, proj);
         modalOpend = true;
@@ -39,6 +45,31 @@
         }
         return tags;
     }
+
+    async function loadingProjects() {
+        if (loading || projects.length) return;
+        loading = true;
+        hasError = false;
+        attempts++;
+
+        const res = await axios.get(API_URL + 'projects').catch((err) => {
+            hasError = true;
+            loading = false;
+        });
+
+        loading = false;
+
+        if (!res || !res.data || !res.data.projects) {
+            hasError = true;
+            return;
+        }
+
+        projects = res.data.projects;
+    }
+
+    onMount(() => {
+        loadingProjects();
+    });
 </script>
 
 <div>
@@ -69,7 +100,7 @@
     </div>
 
     <!-- project list -->
-    {#await axios.get(API_URL + 'projects')}
+    {#if loading}
         <div class="w-full pt-8 mx-auto my-5">
             <div class="flex items-center justify-center ">
                 <div
@@ -79,11 +110,29 @@
                 </div>
             </div>
         </div>
-    {:then response}
+    {:else if hasError}
+        <div
+            class="w-4/5 py-2 mx-auto my-6 text-red-900 capitalize bg-red-400 rounded"
+        >
+            <i
+                class="inline-block mx-1 text-red-800 fas fa-exclamation-circle"
+            />
+            <strong>{$t('home.project.error')}</strong>
+        </div>
+
+        {#if attempts < 3}
+            <button
+                class="btn"
+                on:click|preventDefault={loadingProjects}
+            >
+                {$t('home.project.tryAgain')}
+            </button>
+        {/if}
+    {:else}
         <div
             class="grid grid-cols-1 gap-5 p-3 sm:p-4 md:p-6 md:grid-cols-2 lg:grid-cols-3"
         >
-            {#each response.data.projects as proj}
+            {#each projects as proj}
                 {#if proj.type === activeTab || activeTab === 'all'}
                     <div
                         class="flex flex-col items-start overflow-hidden shadow-sm span-12 rounded-xl md:span-6 lg:span-4"
@@ -175,16 +224,7 @@
                 {/if}
             {/each}
         </div>
-    {:catch err}
-        <div
-            class="w-4/5 py-2 mx-auto my-6 text-red-900 capitalize bg-red-400 rounded"
-        >
-            <i
-                class="inline-block mx-1 text-red-800 fas fa-exclamation-circle"
-            />
-            <strong>{$t('home.project.error')}</strong>
-        </div>
-    {/await}
+    {/if}
 </div>
 
 <!-- project Modal -->
