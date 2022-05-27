@@ -10,6 +10,7 @@ export default class AnimatedText {
         this.arr = arr;
     }
 
+
     public run() {
         this.el.textContent = '';
 

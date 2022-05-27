@@ -1,3 +1,3 @@
-export const SERVER_URL = 'https://aboadel-portfolio.herokuapp.com/';
+export const SERVER_URL = 'http://portfolio-server2.test/';
 export const API_URL = SERVER_URL + 'api/';
-export const BLOG_URL = 'https://aboadel-portfolio.herokuapp.com/';
+export const BLOG_URL = 'http://portfolio-server2.test/';

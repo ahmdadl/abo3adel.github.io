@@ -91,7 +91,7 @@
                     >
                         <a
                             href={'#'}
-                            class="block transition duration-300 ease-out transform hover:scale-110 text-center mx-auto"
+                            class="block mx-auto text-center transition duration-300 ease-out transform hover:scale-110"
                             on:click|preventDefault={() => {
                                 openModal(proj);
                             }}
@@ -108,30 +108,32 @@
                             class="relative flex flex-col items-start w-full px-6 bg-gray-200 border border-t-0 border-gray-400 dark:bg-gray-700 py-7 rounded-b-2xl"
                         >
                             <div
-                                class="absolute top-0 flex items-center w-auto -mt-3 text-xs font-medium leading-none text-white uppercase"
+                                class="absolute top-0 flex flex-wrap items-center w-auto max-w-full -mt-3 text-xs font-medium leading-none text-white uppercase"
                             >
                                 <span
-                                    class="bg-blue-500 px-3 py-1.5 rounded-full"
+                                    class="bg-blue-500 px-3 py-1.5 rounded-full my-1"
                                     >{proj.type}</span
                                 >
                                 {#if getTags(proj.tags) && getTags(proj.tags)[0].length}
                                     {#each getTags(proj.tags) as tag}
                                         <span
-                                            class="mx-1 bg-blue-500 px-3 py-1.5 rounded-full"
+                                            class="mx-1 bg-blue-500 px-3 py-1.5 rounded-full my-1"
                                             >{tag}</span
                                         >
                                     {/each}
                                 {/if}
                             </div>
-                            <h2
-                                class="text-base font-bold text-gray-800 capitalize dark:text-gray-300 sm:text-lg md:text-xl small-caps hover:text-blue-700 dark:hover:text-blue-400"
-                            >
-                                <a
-                                    class="inline-block font-semibold link"
-                                    target="_blank"
-                                    href={proj.link}>{proj.title}</a
+                            <div class="mt-5">
+                                <h2
+                                    class="text-base font-bold text-gray-800 capitalize dark:text-gray-300 sm:text-lg md:text-xl small-caps hover:text-blue-700 dark:hover:text-blue-400"
                                 >
-                            </h2>
+                                    <a
+                                        class="inline-block font-semibold link"
+                                        target="_blank"
+                                        href={proj.link}>{proj.title}</a
+                                    >
+                                </h2>
+                            </div>
                             <div
                                 class={'flex flex-row items-end justify-end w-full px-2 pt-2 space-x-2 text-sm capitalize' +
                                     (proj.download_url ? 'text-xs' : '')}
