@@ -29,7 +29,7 @@
     "postcss": "^8.4.5",
     "postcss-import": "^14.0.2",
     "precss": "^4.0.0",
-    "svelte": "^3.46.3",
+    "svelte": "^3.49.0",
     "svelte-check": "^2.4.1",
     "svelte-i18n": "^3.3.13",
     "svelte-loader": "^3.1.2",
